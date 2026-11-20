@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
             B
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white font-display">
-            BytecGlobal <span className="text-[#f5c518]">Admin</span>
+            Newbhar Technologies <span className="text-[#f5c518]">Admin</span>
           </h1>
           <p className="mt-1 text-sm text-[#c6bea8]">
             Enterprise Content Management &amp; Operations Portal
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@bytecglobal.com"
+                  placeholder="admin@newbhar.com"
                   className="w-full rounded-xl border border-[#3b362c] bg-[#181613] py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:border-[#f5c518] focus:outline-none focus:ring-1 focus:ring-[#f5c518] transition"
                 />
               </div>
@@ -141,7 +141,7 @@ export default function AdminLoginPage() {
             href="/"
             className="text-xs text-[#c6bea8] hover:text-[#f5c518] transition inline-flex items-center gap-1"
           >
-            <span>&larr; Return to BytecGlobal Website</span>
+            <span>&larr; Return to Newbhar Technologies Website</span>
           </Link>
         </div>
       </div>

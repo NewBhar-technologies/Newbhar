@@ -2,7 +2,7 @@
 
 **Audit Date:** November 16, 2026  
 **Auditor:** Principal Full-Stack & Application Security Engineer  
-**Target Application:** BytecCloud / BytecGlobal Web Application  
+**Target Application:** Newbhar Technologies / Newbhar Technologies Web Application  
 **Framework Stack:** Next.js 14.2.35 (App Router), React 18.3.1, TypeScript 5.9.3, Node.js v24.22.1  
 **Repository Branch:** `main` (clean working tree)  
 
@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary
 
-A comprehensive security audit and code hardening was performed on the BytecCloud repository. The audit encompassed OWASP Top 10 vulnerabilities, Next.js production attack vectors, server-side and client-side form submission flows, rate limiting, bot protection, email header injection, environment variable exposure, and dependency health.
+A comprehensive security audit and code hardening was performed on the Newbhar Technologies repository. The audit encompassed OWASP Top 10 vulnerabilities, Next.js production attack vectors, server-side and client-side form submission flows, rate limiting, bot protection, email header injection, environment variable exposure, and dependency health.
 
 All identified vulnerabilities, security misconfigurations, and architectural entry point gaps have been mitigated and verified using automated test suites, type-checking, and production builds.
 
@@ -47,7 +47,7 @@ All identified vulnerabilities, security misconfigurations, and architectural en
 ### 2.2 Broken Authentication & Access Control
 - **IDOR / BOLA / Broken Object Level Authorization:**
   - **Status:** **VERIFIED** (Not Applicable)
-  - **Details:** The BytecCloud public website does not have administrative portals or authenticated member areas. No unnecessary or mock authentication systems were introduced, maintaining a minimal attack surface.
+  - **Details:** The Newbhar Technologies public website does not have administrative portals or authenticated member areas. No unnecessary or mock authentication systems were introduced, maintaining a minimal attack surface.
 - **API Endpoint Exposure:**
   - **Status:** **VERIFIED**
   - **Details:** The only API route is `POST /api/contact`, strictly protected with method checks, body size limits, rate limiting, and honeypot filtering.

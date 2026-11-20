@@ -27,7 +27,7 @@ export default function MeetingsManagementPage() {
     date: new Date().toISOString().split("T")[0],
     time: "14:00",
     durationMinutes: 30,
-    meetingLink: "https://calendly.com/team-bytecglobal/30min",
+    meetingLink: "https://calendly.com/team-newbhar/30min",
     notes: "",
   });
 
@@ -63,7 +63,7 @@ export default function MeetingsManagementPage() {
           date: new Date().toISOString().split("T")[0],
           time: "14:00",
           durationMinutes: 30,
-          meetingLink: "https://calendly.com/team-bytecglobal/30min",
+          meetingLink: "https://calendly.com/team-newbhar/30min",
           notes: "",
         });
         fetchMeetings();
@@ -119,11 +119,11 @@ export default function MeetingsManagementPage() {
         <div className="flex items-center gap-3">
           <Compass size={18} className="text-[#806000] shrink-0" />
           <span>
-            <strong>External Scheduler Connected:</strong> BytecGlobal Calendly link is configured across the website navigation and footer.
+            <strong>External Scheduler Connected:</strong> Newbhar Technologies Calendly link is configured across the website navigation and footer.
           </span>
         </div>
         <a
-          href="https://calendly.com/team-bytecglobal/30min"
+          href="https://calendly.com/team-newbhar/30min"
           target="_blank"
           rel="noopener noreferrer"
           className="underline font-bold text-[#806000]"

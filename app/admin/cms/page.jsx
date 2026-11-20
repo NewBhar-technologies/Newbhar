@@ -60,7 +60,7 @@ export default function CMSOverviewPage() {
           Website Content Management System (CMS)
         </h1>
         <p className="text-xs text-gray-500 mt-1">
-          Direct real-time control over all public BytecGlobal marketing pages, services, case studies, and brand copy.
+          Direct real-time control over all public Newbhar Technologies marketing pages, services, case studies, and brand copy.
         </p>
       </div>
 

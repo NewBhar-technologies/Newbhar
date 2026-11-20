@@ -18,7 +18,7 @@ export async function POST(req) {
     }
 
     const response = NextResponse.json({ success: true, message: "Logged out successfully." });
-    response.cookies.delete("bytec_admin_session");
+    response.cookies.delete("newbhar_admin_session");
     return response;
   } catch (err) {
     console.error("Logout error:", err);

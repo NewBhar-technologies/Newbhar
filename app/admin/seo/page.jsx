@@ -25,12 +25,12 @@ export default function SeoManagementPage() {
   });
 
   const [globalSettings, setGlobalSettings] = useState({
-    siteName: "BytecGlobal",
-    defaultTitle: "BytecGlobal | Custom Software, AI & Cloud Engineering",
-    defaultDescription: "BytecGlobal builds enterprise custom software, web platforms, mobile apps, and AI solutions tailored to operational business needs.",
-    canonicalBase: "https://bytecglobal.com",
+    siteName: "Newbhar Technologies",
+    defaultTitle: "Newbhar Technologies | Custom Software, AI & Cloud Engineering",
+    defaultDescription: "Newbhar Technologies builds enterprise custom software, web platforms, mobile apps, and AI solutions tailored to operational business needs.",
+    canonicalBase: "https://newbhar.com",
     robots: "index, follow",
-    ogImage: "/bytecglobal-banner.jpg",
+    ogImage: "/newbhar-banner.jpg",
   });
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function SeoManagementPage() {
       setCurrentPageSeo(seoData.pages[selectedPath]);
     } else {
       setCurrentPageSeo({
-        title: `${PAGES.find((p) => p.path === selectedPath)?.label} | BytecGlobal`,
+        title: `${PAGES.find((p) => p.path === selectedPath)?.label} | Newbhar Technologies`,
         description: globalSettings.defaultDescription,
       });
     }
@@ -247,11 +247,11 @@ export default function SeoManagementPage() {
                   <div className="inline-block h-8 w-8 rounded-lg bg-[#f5c518] text-[#29251b] font-black text-sm leading-8">
                     B
                   </div>
-                  <div className="text-xs font-bold text-[#f5c518] mt-1 font-display">BytecGlobal</div>
+                  <div className="text-xs font-bold text-[#f5c518] mt-1 font-display">Newbhar Technologies</div>
                 </div>
               </div>
               <div className="p-3 bg-gray-50 text-xs border-t border-gray-100">
-                <span className="font-mono text-[10px] text-gray-400 uppercase">bytecglobal.com</span>
+                <span className="font-mono text-[10px] text-gray-400 uppercase">newbhar.com</span>
                 <div className="font-bold text-gray-900 truncate mt-0.5">{currentPageSeo.title}</div>
                 <div className="text-gray-500 line-clamp-1 text-[11px] mt-0.5">{currentPageSeo.description}</div>
               </div>

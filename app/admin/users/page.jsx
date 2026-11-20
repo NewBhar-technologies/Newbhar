@@ -268,7 +268,7 @@ export default function UsersManagementPage() {
                 disabled={Boolean(editingUser)}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="admin@bytecglobal.com"
+                placeholder="admin@newbhar.com"
                 className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518] disabled:bg-gray-100"
               />
             </div>

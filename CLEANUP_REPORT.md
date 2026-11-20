@@ -1,6 +1,6 @@
 # BYTECCLOUD — ADVANCED CODE CLEANUP & REFACTORING REPORT
 
-**Project Name:** BytecCloud / BytecGlobal  
+**Project Name:** Newbhar Technologies / Newbhar Technologies  
 **Audit & Execution Date:** November 16, 2026  
 **Architect:** Principal Full-Stack Software Architect & Next.js Engineer  
 **Build Status:** Production Build Succeeded (32 Routes Compiled, 0 Errors, 0 Warnings)  
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-In accordance with the advanced cleanup directive, a complete audit was performed across all directories of the BytecCloud project (`app/`, `components/`, `components/ui/`, `lib/`, `public/`, `requirements/`, and root configurations).
+In accordance with the advanced cleanup directive, a complete audit was performed across all directories of the Newbhar Technologies project (`app/`, `components/`, `components/ui/`, `lib/`, `public/`, `requirements/`, and root configurations).
 
 All genuinely unnecessary files, unreferenced image duplicates, obsolete assets, specification documents, and dead code have been permanently removed from the project. The recovered WhatsApp contact button and Calendly integration were fully preserved and verified. The codebase size was reduced by **1,784,814 bytes (~1.78 MB)** without any regression in design, functionality, responsive layouts, or performance.
 
@@ -37,10 +37,10 @@ Every deletion was verified against the codebase using AST/regex reference searc
 | 14 | `public/project-screenshots/project-screenshot-06.jpeg` | 252,306 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel5.jpg`. | Pass |
 | 15 | `public/project-screenshots/project-screenshot-07.jpeg` | 72,292 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/dr1.jpg`. | Pass |
 | 16 | `public/project-screenshots/project-screenshot-08.jpeg` | 98,024 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/p2p1.jpg`. | Pass |
-| 17 | `public/bytecglobal-logo.png` | 77,091 B | Unused full logo image. Header & footer use `bytecglobal-mark.png` + CSS text. | Pass |
+| 17 | `public/bytecglobal-logo.png` | 77,091 B | Unused full logo image. Header & footer use `newbhar-mark.png` + CSS text. | Pass |
 | 18 | `public/bytecglobal-logo-dark.png` | 114,109 B | Unused dark logo variant. No references in codebase. | Pass |
 | 19 | `public/favicon.png` | 2,497 B | Byte-for-byte SHA256 duplicate of `public/favicon.ico`. | Pass |
-| 20 | `public/icon-192.png` | 60,725 B | Unreferenced PWA icon. `bytecglobal-mark.png` serves icon metadata. | Pass |
+| 20 | `public/icon-192.png` | 60,725 B | Unreferenced PWA icon. `newbhar-mark.png` serves icon metadata. | Pass |
 | 21 | `.cursor/rules/design-system.mdc` | 2,617 B | Cursor IDE prompt file. Not used in production build or runtime. | Pass |
 
 **Total Dead Storage Removed:** **1,784,814 bytes (~1.78 MB)** across 21 files.
@@ -58,8 +58,8 @@ Every deletion was verified against the codebase using AST/regex reference searc
 
 ### Calendly Meeting Scheduler Integration:
 - **Status:** **FULLY PRESERVED**.
-- **Header Action:** `components/navbar.jsx` line 90 (`<Button href="https://calendly.com/team-bytecglobal/30min" variant="accent" size="sm" className="vx-meeting">Book a Meeting</Button>`).
-- **Footer Action:** `components/footer.jsx` line 14 (`<Button href="https://calendly.com/team-bytecglobal/30min" variant="accent" size="sm">Book a Meeting</Button>`).
+- **Header Action:** `components/navbar.jsx` line 90 (`<Button href="https://calendly.com/team-newbhar/30min" variant="accent" size="sm" className="vx-meeting">Book a Meeting</Button>`).
+- **Footer Action:** `components/footer.jsx` line 14 (`<Button href="https://calendly.com/team-newbhar/30min" variant="accent" size="sm">Book a Meeting</Button>`).
 - **CSP Compatibility:** Configured in `next.config.mjs` to ensure outbound navigation and meeting scheduling work without restriction.
 
 ---
@@ -102,8 +102,8 @@ Every file remaining in `public/` is actively used:
 
 | Asset Path | Size | Active Usage |
 | :--- | :--- | :--- |
-| `public/bytecglobal-banner.jpg` | 39.3 KB | Open Graph (`og:image`) & Twitter Card (`twitter:image`) preview banner. |
-| `public/bytecglobal-mark.png` | 30.7 KB | Website logo component (`Logo`), Apple touch icon, structured data logo. |
+| `public/newbhar-banner.jpg` | 39.3 KB | Open Graph (`og:image`) & Twitter Card (`twitter:image`) preview banner. |
+| `public/newbhar-mark.png` | 30.7 KB | Website logo component (`Logo`), Apple touch icon, structured data logo. |
 | `public/favicon.ico` | 2.5 KB | Browser tab favicon (`metadata.icons.icon`). |
 | `public/client_work_images/dr1.jpg` | 72.3 KB | DR Project case study thumbnail & gallery. |
 | `public/client_work_images/loop1.jpg` | 105.3 KB | Loop Application case study thumbnail & gallery. |

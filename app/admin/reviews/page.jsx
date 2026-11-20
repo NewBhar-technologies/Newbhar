@@ -262,7 +262,7 @@ export default function ReviewsManagementPage() {
                 required
                 value={form.reviewText}
                 onChange={(e) => setForm({ ...form, reviewText: e.target.value })}
-                placeholder="BytecGlobal replaced our disjointed spreadsheets with a clean ERP..."
+                placeholder="Newbhar Technologies replaced our disjointed spreadsheets with a clean ERP..."
                 className="w-full rounded-xl border border-gray-200 p-2.5 text-xs leading-relaxed focus:ring-1 focus:ring-[#f5c518]"
               />
             </div>

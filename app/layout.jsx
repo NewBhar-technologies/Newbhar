@@ -2,9 +2,9 @@ import "./globals.css";
 import { SITE } from "@/lib/site";
 import PublicShell from "@/components/public-shell";
 
-const siteTitle = `${SITE.name} | Software, AI & Cloud Engineering`;
+const siteTitle = `${SITE.name} | Custom Software & Digital Engineering`;
 const siteDescription =
-  "Custom software development, web platforms, mobile apps, enterprise AI, data science, and cloud engineering.";
+  "Custom software development, web platforms, mobile apps, and cloud engineering.";
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -23,9 +23,9 @@ export const metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/bytecglobal-mark.png", type: "image/png" },
+      { url: "/newbhar-mark.png", type: "image/png" },
     ],
-    apple: "/bytecglobal-mark.png",
+    apple: "/newbhar-mark.png",
   },
   openGraph: {
     title: siteTitle,
@@ -34,7 +34,7 @@ export const metadata = {
     siteName: SITE.name,
     images: [
       {
-        url: "/bytecglobal-banner.jpg",
+        url: "/newbhar-banner.jpg",
         width: 1200,
         height: 630,
         alt: `${SITE.name} Digital Engineering`,
@@ -47,7 +47,7 @@ export const metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/bytecglobal-banner.jpg"],
+    images: ["/newbhar-banner.jpg"],
   },
   robots: {
     index: true,
@@ -73,10 +73,10 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: SITE.name,
-  alternateName: "BytecCloud",
+  alternateName: "Newbhar Technologies",
   url: SITE.url,
-  logo: `${SITE.url}/bytecglobal-mark.png`,
-  image: `${SITE.url}/bytecglobal-banner.jpg`,
+  logo: `${SITE.url}/newbhar-mark.png`,
+  image: `${SITE.url}/newbhar-banner.jpg`,
   description: siteDescription,
   address: {
     "@type": "PostalAddress",

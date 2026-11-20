@@ -31,7 +31,7 @@ export function Introduction() {
 			window.removeEventListener("scroll", onScroll);
 		};
 	}, []);
-	const statement = "BytecGlobal is a software and AI engineering team helping businesses replace manual processes with reliable digital systems.";
+	const statement = "Newbhar Technologies helps businesses replace manual processes with reliable digital systems.";
 	return (
 		<section id="introduction" className="home-introduction">
 			<div className="intro-orbit" aria-hidden="true" />
@@ -41,13 +41,13 @@ export function Introduction() {
 				</p>
 				<p className="home-statement" ref={ref}>
 					{statement.split(" ").map((word, i) => (
-						<span className={`statement-word ${i > 15 ? "highlight" : ""}`} key={i}>
+						<span className={`statement-word ${i >= 8 ? "highlight" : ""}`} key={i}>
 							{word}{" "}
 						</span>
 					))}
 				</p>
 				<Link href="/about" className="text-link" data-reveal>
-					About BytecGlobal <ArrowUpRight />
+					About Newbhar Technologies <ArrowUpRight />
 				</Link>
 			</div>
 		</section>
@@ -69,7 +69,7 @@ function Dashboard({ kind = 0 }) {
 						<i />
 						<i />
 					</span>
-					<span>BytecGlobal</span>
+					<span>Newbhar Technologies</span>
 					<span className="demo-live">
 						<i />
 						Live
@@ -77,7 +77,7 @@ function Dashboard({ kind = 0 }) {
 				</div>
 				<div className="demo-body">
 					<aside className="demo-sidebar">
-						<span className="demo-monogram">b.</span>
+						<span className="demo-monogram">n.</span>
 						{[Layers, BarChart3, Globe, Code2].map((I, i) => (
 							<I key={i} size={15} />
 						))}
@@ -250,6 +250,21 @@ export function SolutionsShowcase() {
 
 export function ServicesShowcase() {
 	const [active, setActive] = useState(0);
+	const [hovered, setHovered] = useState(false);
+	const [focused, setFocused] = useState(false);
+	const accordionRef = useRef(null);
+	useEffect(() => {
+		if (hovered || focused) return;
+		const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+		const timer = setInterval(() => {
+			if (document.hidden || reduced.matches || !accordionRef.current) return;
+			const rect = accordionRef.current.getBoundingClientRect();
+			if (rect.top < innerHeight && rect.bottom > 0) {
+				setActive(index => index === null ? 0 : (index + 1) % SERVICES.length);
+			}
+		}, 7000);
+		return () => clearInterval(timer);
+	}, [active, hovered, focused]);
 	return (
 		<section id="services" className="home-services">
 			<div className="site-wrap">
@@ -258,14 +273,25 @@ export function ServicesShowcase() {
 					<h2>Everything you need to go digital</h2>
 					<p>From first idea to launch and beyond, one team across software, web, mobile, AI, data and cloud.</p>
 				</div>
-				<div className="service-accordion">
+				<div
+					className="service-accordion"
+					ref={accordionRef}
+					onPointerEnter={event => { if (event.pointerType === "mouse") setHovered(true); }}
+					onPointerLeave={() => setHovered(false)}
+					onFocusCapture={() => setFocused(true)}
+					onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
+				>
 					{SERVICES.map((s, i) => (
-						<article key={s.slug} className={`service-panel ${active === i ? "expanded" : ""} ${i % 2 ? "service-dark" : ""}`}>
+						<article
+							key={s.slug}
+							className={`service-panel ${active === i ? "expanded" : ""} ${i % 2 ? "service-dark" : ""}`}
+							onPointerEnter={event => { if (event.pointerType === "mouse") setActive(i); }}
+						>
 							<button
 								type="button"
 								id={`service-tab-${i}`}
 								className="service-rail"
-								onClick={() => setActive(active === i ? null : i)}
+								onClick={() => setActive(i)}
 								aria-expanded={active === i}
 								aria-controls={`service-content-${i}`}
 							>
@@ -301,7 +327,7 @@ export function WhyUs() {
 			<div className="site-wrap">
 				<div className="home-section-head" data-reveal>
 					<p className="eyebrow">Why us</p>
-					<h2>Why choose BytecGlobal?</h2>
+					<h2>Why choose Newbhar Technologies?</h2>
 					<p>{SHARED_CONTENT.whyChooseIntro}</p>
 				</div>
 				<div className="why-grid">
@@ -344,7 +370,8 @@ export function FAQ({ items = SHARED_CONTENT.generalFAQs }) {
 	return (
 		<div className="faq-list">
 			{items.map(({ q, a }, i) => (
-				<div className={`faq-entry ${open === i ? "is-open" : ""}`} key={q}>
+				<div className={`faq-entry ${open === i ? "is-open" : ""}`} key={q}
+					onPointerEnter={event => { if (event.pointerType === "mouse") setOpen(i); }}>
 					<h3>
 						<button type="button" aria-expanded={open === i} aria-controls={`${faqId}-${i}`} onClick={() => setOpen(open === i ? null : i)}>
 							<span>{q}</span>
@@ -371,7 +398,7 @@ export function HomeFAQ() {
 					<h2>Working with us</h2>
 					<p>{SHARED_CONTENT.generalFAQs[5].a}</p>
 					<Button href="/contact" variant="secondary">
-						Contact <span className="sr-only">BytecGlobal</span>
+						Contact <span className="sr-only">Newbhar Technologies</span>
 					</Button>
 				</div>
 				<FAQ />

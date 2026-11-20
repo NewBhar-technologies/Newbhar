@@ -106,8 +106,8 @@ export default function ServicePage({ params }) {
 
 			{/* ── Shared Conversion Content ── */}
 
-			{/* Why Choose BytecGlobal */}
-			<Section eyebrow="Why us" title="Why choose BytecGlobal?" intro={whyChooseIntro}>
+			{/* Why Choose Newbhar Technologies */}
+			<Section eyebrow="Why us" title="Why choose Newbhar Technologies?" intro={whyChooseIntro}>
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{whyChoosePoints.map(({ title, text }) => (
 						<div key={title} className={card}>

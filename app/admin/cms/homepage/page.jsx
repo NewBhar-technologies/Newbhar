@@ -53,7 +53,7 @@ export default function HomepageCMSPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ section: "heroAnimation", data: heroAnimation, publish }),
       });
-      setSavedMessage(publish ? "Published live to BytecGlobal homepage!" : "Draft changes saved successfully.");
+      setSavedMessage(publish ? "Published live to Newbhar Technologies homepage!" : "Draft changes saved successfully.");
       setTimeout(() => setSavedMessage(""), 4000);
     } catch {}
   };

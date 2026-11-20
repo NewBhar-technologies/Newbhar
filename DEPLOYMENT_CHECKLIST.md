@@ -1,6 +1,6 @@
 # BYTECCLOUD — PRODUCTION DEPLOYMENT CHECKLIST & RUNBOOK
 
-**Target Website:** BytecCloud / BytecGlobal  
+**Target Website:** Newbhar Technologies / Newbhar Technologies  
 **Release Readiness Version:** 1.0.0 (Production Hardened)  
 **Deployment Classification:** **READY WITH MANUAL ACTIONS** (Requires Operator API Keys & Domain DNS)  
 
@@ -32,10 +32,10 @@ Configure the following environment variables in your production hosting dashboa
 
 | Variable Name | Required | Exposure Level | Example Value | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `NEXT_PUBLIC_SITE_URL` | **Yes** | Client & Server | `https://bytecglobal.com` | Primary canonical URL (no trailing slash). |
-| `CONTACT_RECIPIENT_EMAIL` | **Yes** | **Server Only** | `inquiries@bytecglobal.com` | Target inbox for client inquiries. |
+| `NEXT_PUBLIC_SITE_URL` | **Yes** | Client & Server | `https://newbhar.com` | Primary canonical URL (no trailing slash). |
+| `CONTACT_RECIPIENT_EMAIL` | **Yes** | **Server Only** | `inquiries@newbhar.com` | Target inbox for client inquiries. |
 | `RESEND_API_KEY` | **Yes** | **Server Only** | `re_1234567890abcdef...` | Resend API secret key for email dispatch. |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Optional | Client & Server | `bytecglobal@gmail.com` | Fallback email displayed in UI. |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Optional | Client & Server | `info@newbhar.com` | Fallback email displayed in UI. |
 | `NEXT_PUBLIC_CONTACT_PHONE` | Optional | Client & Server | `+91 98765 43210` | Business phone displayed on site. |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER`| Optional | Client & Server | `919876543210` | WhatsApp number (digits only). If omitted, floating WhatsApp button is hidden. |
 
@@ -52,11 +52,11 @@ Configure authoritative DNS records at your registrar or Cloudflare:
 | Type | Name | Content / Target | Proxy Status | Note |
 | :--- | :--- | :--- | :--- | :--- |
 | `A` / `CNAME` | `@` (apex) | Host IP / `cname.vercel-dns.com` | Proxied | Primary apex domain record |
-| `CNAME` | `www` | `bytecglobal.com` | Proxied | Canonical redirect to apex |
+| `CNAME` | `www` | `newbhar.com` | Proxied | Canonical redirect to apex |
 | `TXT` | `@` | Resend SPF / DKIM records | DNS Only | For email deliverability |
 
 ### 3.2 Canonical Domain Redirect (Apex vs. WWW)
-- Enforce a single canonical origin in your host dashboard: redirect `https://www.bytecglobal.com/*` $\rightarrow$ `https://bytecglobal.com/*` with a permanent HTTP 301 redirect.
+- Enforce a single canonical origin in your host dashboard: redirect `https://www.newbhar.com/*` $\rightarrow$ `https://newbhar.com/*` with a permanent HTTP 301 redirect.
 - Avoid duplicate indexing by search engines.
 
 ### 3.3 SSL/TLS & HSTS Preload
@@ -96,7 +96,7 @@ Once the website is live on the production domain, perform these verifications:
 - [ ] **Client Work Galleries:** Visit `/client-work/travel-booking-platform` and test slideshow next/prev and keyboard controls.
 - [ ] **Contact Form Submission:**
   - Submit a test inquiry with valid data: verify immediate confirmation banner.
-  - Check the designated recipient inbox (`inquiries@bytecglobal.com`) for the formatted email.
+  - Check the designated recipient inbox (`inquiries@newbhar.com`) for the formatted email.
   - Test validation rejection with invalid email or missing fields.
   - Submit 6 rapid requests to verify IP rate limiter returns HTTP 429.
 - [ ] **Start Project Form Submission:**
@@ -105,13 +105,13 @@ Once the website is live on the production domain, perform these verifications:
   - If `NEXT_PUBLIC_WHATSAPP_NUMBER` is set, verify clicking opens `https://wa.me/<number>`.
   - If unset, verify the floating button is completely removed from the DOM.
 - [ ] **Security Headers Test:**
-  - Run a scan on [securityheaders.com](https://securityheaders.com) targeting `https://bytecglobal.com`.
+  - Run a scan on [securityheaders.com](https://securityheaders.com) targeting `https://newbhar.com`.
   - Expected rating: **A+ / A**.
 - [ ] **Error Handling (404 / 500):**
   - Visit `/this-route-does-not-exist` to verify custom 404 page.
   - Verify no sensitive server paths are displayed.
 - [ ] **Sitemap & Robots:**
-  - Fetch `https://bytecglobal.com/robots.txt` and `https://bytecglobal.com/sitemap.xml`.
+  - Fetch `https://newbhar.com/robots.txt` and `https://newbhar.com/sitemap.xml`.
   - Verify all 32 URLs are present and formatted with priorities.
 
 ---

@@ -7,7 +7,7 @@ import Button from "@/components/ui/button";
 export default function Footer() {
   const footerConfig = {
     contactEmail: SITE.email,
-    meetingUrl: "https://calendly.com/team-bytecglobal/30min",
+    meetingUrl: "https://calendly.com/team-newbhar/30min",
     adminLoginLink: {
       label: "Admin Login",
       url: "/admin/login",
@@ -64,7 +64,7 @@ export default function Footer() {
             </Button>
             {showAdminLogin && (
               <div className="vx-footer-admin-link">
-                <Link href={adminLoginUrl} className="vx-admin-login-link" title="BytecGlobal Staff & Admin Portal">
+                <Link href={adminLoginUrl} className="vx-admin-login-link" title="Newbhar Technologies Staff & Admin Portal">
                   {showLock && <Lock size={12} aria-hidden="true" />}
                   <span>{adminLoginLabel}</span>
                 </Link>

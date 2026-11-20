@@ -1,8 +1,8 @@
 {
-  "name": "bytecglobal",
+  "name": "newbhar-technologies",
   "version": "1.0.0",
   "private": true,
-  "description": "BytecGlobal / BytecCloud - Engineering Digital Excellence. Premium custom software, web and mobile apps, AI engineering, data science, and cloud solutions.",
+  "description": "Newbhar Technologies - Engineering Digital Excellence. Custom software, web platforms, mobile apps, and cloud engineering.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,6 +11,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "jose": "^6.2.17",

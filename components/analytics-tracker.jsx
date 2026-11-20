@@ -13,17 +13,17 @@ export default function AnalyticsTracker() {
 
     try {
       // 1. Get or create persistent anonymous visitor ID
-      let visitorId = localStorage.getItem("bytec_visitor_id");
+      let visitorId = localStorage.getItem("newbhar_visitor_id");
       if (!visitorId) {
         visitorId = `vis_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-        localStorage.setItem("bytec_visitor_id", visitorId);
+        localStorage.setItem("newbhar_visitor_id", visitorId);
       }
 
       // 2. Get or create session ID (stored in sessionStorage)
-      let sessionId = sessionStorage.getItem("bytec_session_id");
+      let sessionId = sessionStorage.getItem("newbhar_session_id");
       if (!sessionId) {
         sessionId = `ses_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-        sessionStorage.setItem("bytec_session_id", sessionId);
+        sessionStorage.setItem("newbhar_session_id", sessionId);
       }
 
       // 3. Send page view beacon
@@ -48,7 +48,7 @@ export default function AnalyticsTracker() {
     } catch {}
   }, [pathname]);
 
-  // Global click listener for important website actions (WhatsApp, Calendly, CTA buttons)
+  // Global click listener for important website actions (Calendly, CTA buttons)
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
@@ -62,9 +62,7 @@ export default function AnalyticsTracker() {
         const text = (target.textContent || "").trim();
 
         let eventName = null;
-        if (href.includes("wa.me") || target.closest(".vx-whatsapp")) {
-          eventName = "whatsapp_click";
-        } else if (href.includes("calendly.com") || text.includes("Book a Meeting")) {
+        if (href.includes("calendly.com") || text.includes("Book a Meeting")) {
           eventName = "meeting_click";
         } else if (text.includes("Let's talk") || text.includes("Start Your Software Project") || text.includes("Start a Project")) {
           eventName = "lets_talk_click";
@@ -73,8 +71,8 @@ export default function AnalyticsTracker() {
         }
 
         if (eventName) {
-          const visitorId = localStorage.getItem("bytec_visitor_id");
-          const sessionId = sessionStorage.getItem("bytec_session_id");
+          const visitorId = localStorage.getItem("newbhar_visitor_id");
+          const sessionId = sessionStorage.getItem("newbhar_session_id");
           const payload = {
             eventName,
             path: window.location.pathname,

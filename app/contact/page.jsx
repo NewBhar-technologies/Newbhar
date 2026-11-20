@@ -1,17 +1,16 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { PageHeader, Section, card } from "@/components/section";
 import ContactForm from "@/components/contact-form";
 
 export const metadata = {
   title: "Contact",
-  description: "Get in touch with BytecCloud. Inquire about custom software development, AI solutions, web and mobile apps, or cloud consulting.",
+  description: "Get in touch with Newbhar Technologies. Inquire about custom software development, AI solutions, web and mobile apps, or cloud consulting.",
 };
 
 export default function Contact() {
   const items = [
     [Mail, "Email", SITE.email, `mailto:${SITE.email}`],
-    [Phone, "Phone", SITE.phone, `tel:${SITE.phone.replace(/\s/g, "")}`],
     [MapPin, "Location", SITE.location, null],
   ];
 

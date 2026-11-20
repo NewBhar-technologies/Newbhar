@@ -5,12 +5,12 @@ import StartProjectForm from "@/components/start-project-form";
 
 export const metadata = {
   title: "Start a Project",
-  description: "Initiate a project discussion with BytecCloud. Submit your requirements, timeline, and goals for a clear estimate and roadmap.",
+  description: "Initiate a project discussion with Newbhar Technologies. Submit your requirements, timeline, and goals for a clear estimate and roadmap.",
 };
 
 const subject = encodeURIComponent("New project enquiry");
 const body = encodeURIComponent(
-  "Hi BytecCloud Team,\n\nWhat we want to build:\nBudget range:\nTarget timeline:\nOur company/website:\n"
+  "Hi Newbhar Technologies Team,\n\nWhat we want to build:\nBudget range:\nTarget timeline:\nOur company/website:\n"
 );
 
 export default function StartProject() {

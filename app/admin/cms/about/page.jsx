@@ -7,7 +7,7 @@ export default function AboutCMSPage() {
   const [about, setAbout] = useState({
     heading: "Engineering Digital Excellence for Forward-Thinking Enterprises",
     subheading: "Custom solutions crafted around how your business really operates.",
-    content: "BytecGlobal is a premier technology partner specializing in enterprise custom software, cloud architecture, and artificial intelligence solutions. We replace manual friction with seamless, reliable software.",
+    content: "Newbhar Technologies is a premier technology partner specializing in enterprise custom software, cloud architecture, and artificial intelligence solutions. We replace manual friction with seamless, reliable software.",
     visibility: true,
   });
 

@@ -69,7 +69,6 @@ const SIDEBAR_SECTIONS = [
       { label: "Automation Management", href: "/admin/automations", icon: Zap },
       { label: "Template Management", href: "/admin/templates", icon: FileCode },
       { label: "Notifications", href: "/admin/notifications", icon: Bell },
-      { label: "WhatsApp Management", href: "/admin/whatsapp", icon: MessageSquare },
       { label: "Newsletter", href: "/admin/newsletter", icon: Newspaper },
     ],
   },
@@ -173,7 +172,7 @@ export default function AdminLayout({ children }) {
       <div className="flex min-h-screen items-center justify-center bg-[#f7f8fb]">
         <div className="flex flex-col items-center gap-3">
           <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#29251b] border-t-[#f5c518]" />
-          <p className="text-sm font-medium text-gray-600">Loading BytecGlobal Admin...</p>
+          <p className="text-sm font-medium text-gray-600">Loading Newbhar Technologies Admin...</p>
         </div>
       </div>
     );
@@ -195,7 +194,7 @@ export default function AdminLayout({ children }) {
             </div>
             {!collapsed && (
               <div className="flex flex-col">
-                <span className="font-extrabold tracking-tight text-white text-base">BytecGlobal</span>
+                <span className="font-extrabold tracking-tight text-white text-base">Newbhar Technologies</span>
                 <span className="text-[10px] font-mono tracking-widest text-[#f5c518] uppercase -mt-0.5">Enterprise Admin</span>
               </div>
             )}
@@ -286,7 +285,7 @@ export default function AdminLayout({ children }) {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f5c518] text-[#1c1a16] font-bold text-base">
                   B
                 </div>
-                <span className="font-extrabold text-white text-base">BytecGlobal</span>
+                <span className="font-extrabold text-white text-base">Newbhar Technologies</span>
               </div>
               <button
                 type="button"

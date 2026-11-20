@@ -10,7 +10,7 @@ const values = [
 export default function About() {
   return (
     <>
-      <PageHeader eyebrow="About us" title="We build software that fits how you actually work." intro="BytecGlobal is a software and AI engineering team helping businesses replace manual processes with reliable digital systems." />
+      <PageHeader eyebrow="About us" title="We build software that fits how you actually work." intro="Newbhar Technologies helps businesses replace manual processes with reliable digital systems." />
       <Section className="grid items-center gap-10 lg:grid-cols-2">
         <div className="space-y-4 leading-relaxed text-muted">
           <p>Our team combines product thinking, engineering and cloud expertise, so ideas move from sketch to production without hand-offs getting lost.</p>

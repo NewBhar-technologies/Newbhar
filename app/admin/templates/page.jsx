@@ -301,7 +301,7 @@ export default function TemplatesManagementPage() {
                 required
                 value={form.subject}
                 onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                placeholder="e.g. Thanks for contacting BytecGlobal, {{customer_name}}"
+                placeholder="e.g. Thanks for contacting Newbhar Technologies, {{customer_name}}"
                 className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
               />
             </div>

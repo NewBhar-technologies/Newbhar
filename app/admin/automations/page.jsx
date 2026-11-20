@@ -66,9 +66,9 @@ export default function AutomationsManagementPage() {
           trigger,
           testPayload: {
             name: "Automated Verification Test",
-            email: "qa-test@bytecglobal.com",
+            email: "qa-test@newbhar.com",
             service: "Software Development",
-            companyName: "Bytec Automation Lab",
+            companyName: "Newbhar Technologies Lab",
           },
         }),
       });
