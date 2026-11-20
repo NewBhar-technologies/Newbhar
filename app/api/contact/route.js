@@ -119,31 +119,45 @@ export async function POST(req) {
     const companyName = data.companyName || data.company || "";
     const subject = data.subject || `Inquiry: ${data.service || "Software & Cloud Services"}`;
 
-    const newContact = await ContactRepository.create({
-      name: data.name,
-      email: data.email,
-      companyName,
-      service: data.service || "General Inquiry",
-      subject,
-      message: data.message,
-      budget: data.budget || "",
-      timeline: data.timeline || "",
-      sourcePage: parsedJson.sourcePage || "/contact",
-      clientIp,
-    });
+    let newContact = null;
+    let dbError = null;
+
+    try {
+      newContact = await ContactRepository.create({
+        name: data.name,
+        email: data.email,
+        companyName,
+        service: data.service || "General Inquiry",
+        subject,
+        message: data.message,
+        budget: data.budget || "",
+        timeline: data.timeline || "",
+        sourcePage: parsedJson.sourcePage || "/contact",
+        clientIp,
+      });
+    } catch (err) {
+      dbError = err;
+      console.error("[Contact API] Supabase contact storage error:", err.message);
+    }
 
     // 8. Execute automated workflows (creates lead, notifies admins, logs email)
-    await triggerWorkflow("contact_submit", {
-      contactId: newContact.id,
-      name: data.name,
-      email: data.email,
-      companyName,
-      service: data.service,
-      subject,
-      message: data.message,
-      budget: data.budget,
-      timeline: data.timeline,
-    });
+    if (newContact) {
+      try {
+        await triggerWorkflow("contact_submit", {
+          contactId: newContact.id,
+          name: data.name,
+          email: data.email,
+          companyName,
+          service: data.service,
+          subject,
+          message: data.message,
+          budget: data.budget,
+          timeline: data.timeline,
+        });
+      } catch (workflowErr) {
+        console.warn("[Contact API] Automated workflow warning:", workflowErr.message);
+      }
+    }
 
     // 9. Email notification via Resend API if configured
     const resendApiKey = getResendApiKey();
@@ -192,9 +206,10 @@ export async function POST(req) {
       </div>
     `;
 
+    let emailSent = false;
     if (resendApiKey && resendApiKey !== "re_your_api_key_here") {
       try {
-        await fetch("https://api.resend.com/emails", {
+        const emailRes = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -208,9 +223,24 @@ export async function POST(req) {
             html: htmlBody,
           }),
         });
+        emailSent = emailRes.ok;
       } catch (err) {
-        console.error("Resend API warning:", err.message);
+        console.error("[Contact API] Resend dispatch warning:", err.message);
       }
+    }
+
+    // If database storage failed and email could not be delivered
+    if (!newContact && !emailSent && dbError) {
+      const isDev = process.env.NODE_ENV !== "production";
+      return NextResponse.json(
+        {
+          success: false,
+          message: isDev
+            ? "Database table 'contacts' is not yet migrated in Supabase. Please execute APPLY_ALL_MIGRATIONS.sql in your Supabase SQL Editor."
+            : "We are currently experiencing a brief technical maintenance with our database. Please email us directly at info@newbhar.com and we will respond immediately.",
+        },
+        { status: 503 }
+      );
     }
 
     return NextResponse.json(

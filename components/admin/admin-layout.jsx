@@ -190,7 +190,7 @@ export default function AdminLayout({ children }) {
         <div className="flex h-16 items-center justify-between px-4 border-b border-[#2d2922]">
           <Link href="/admin/dashboard" className="flex items-center gap-3 overflow-hidden">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f5c518] text-[#1c1a16] font-extrabold text-lg shadow-sm">
-              B
+              N
             </div>
             {!collapsed && (
               <div className="flex flex-col">
@@ -283,7 +283,7 @@ export default function AdminLayout({ children }) {
             <div className="flex items-center justify-between border-b border-[#2d2922] pb-3">
               <div className="flex items-center gap-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f5c518] text-[#1c1a16] font-bold text-base">
-                  B
+                  N
                 </div>
                 <span className="font-extrabold text-white text-base">Newbhar Technologies</span>
               </div>
