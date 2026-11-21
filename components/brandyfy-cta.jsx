@@ -34,9 +34,9 @@ export default function BrandyfyCTA() {
               <Button href="/start-project" variant="accent" size="default">
                 Start a Project
               </Button>
-              <Button href={MEETING_EMAIL_URL} variant="secondary" size="default">
+              {/* <Button href={MEETING_EMAIL_URL} variant="secondary" size="default">
                 Schedule a Call
-              </Button>
+              </Button> */}
             </div>
 
             <div className="mt-12 pt-8 border-t border-white/[0.08] flex flex-wrap items-center gap-6 sm:gap-10 text-xs sm:text-sm text-zinc-400 font-mono">
