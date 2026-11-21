@@ -1,10 +1,35 @@
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
-import { PROJECTS } from "@/lib/site";
+import { SITE, PROJECTS } from "@/lib/site";
 import { PageHeader, Section, CTA, Visual, card, wrap } from "@/components/section";
 
 export const generateStaticParams = () => PROJECTS.map((p) => ({ slug: p.slug }));
-export const generateMetadata = ({ params }) => ({ title: PROJECTS.find((p) => p.slug === params.slug)?.title });
+
+export const generateMetadata = ({ params }) => {
+  const p = PROJECTS.find((x) => x.slug === params.slug);
+  if (!p) return { title: "Project Not Found" };
+  const title = p.title;
+  const description = p.summary || p.solution || "Custom engineering project case study by Newbhar Technologies.";
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/projects/${p.slug}`,
+    },
+    openGraph: {
+      title: `${title} | ${SITE.name}`,
+      description,
+      url: `${SITE.url}/projects/${p.slug}`,
+      siteName: SITE.name,
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE.name}`,
+      description,
+    },
+  };
+};
 
 export default function Project({ params }) {
   const p = PROJECTS.find((x) => x.slug === params.slug);

@@ -6,8 +6,8 @@ import { Footprints, Lock, CheckCircle2, Save, Eye, ArrowUpRight } from "lucide-
 export default function FooterCMSPage() {
   const [footer, setFooter] = useState({
     brandDescription: "Software, AI and cloud engineering for ambitious businesses.",
-    contactEmail: "info@newbhar.com",
-    meetingUrl: "https://calendly.com/team-newbhar/30min",
+    contactEmail: "newbhartechnologies@gmail.com",
+    meetingUrl: "",
     meetingLabel: "Book a Meeting",
     copyrightText: `© ${new Date().getFullYear()} Newbhar Technologies. All rights reserved.`,
     adminLoginLink: {
