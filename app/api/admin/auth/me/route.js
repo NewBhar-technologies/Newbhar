@@ -1,7 +1,8 @@
-
 import { NextResponse } from "next/server";
 import { getCurrentAdmin } from "@/lib/auth/session";
 import { NotificationRepository } from "@/lib/repositories/notification.repository";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {

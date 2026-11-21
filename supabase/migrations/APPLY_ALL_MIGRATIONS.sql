@@ -756,3 +756,24 @@ VALUES
   ('b1c2d3e4-0001-4000-8000-000000000001', 'Website Inquiry Ingestion', 'contact_submit', 'Automatically ingests contact form submissions, records them, notifies admins, and sends inquiry confirmation.', true, '[{"type": "save_inquiry", "params": {}}, {"type": "create_lead", "params": {}}, {"type": "notify_admin", "params": {"channels": ["in_app"]}}, {"type": "send_template_email", "params": {"templateId": "a1b2c3d4-0001-4000-8000-000000000001"}}]'::jsonb),
   ('b1c2d3e4-0002-4000-8000-000000000002', 'Meeting Confirmation Workflow', 'meeting_booked', 'Dispatches in-app notification and confirmation email when a client meeting is scheduled.', true, '[{"type": "notify_admin", "params": {"channels": ["in_app"]}}, {"type": "send_template_email", "params": {"templateId": "a1b2c3d4-0002-4000-8000-000000000002"}}]'::jsonb)
 ON CONFLICT (id) DO NOTHING;
+
+-- ------------------------------------------------------------------------------
+-- PART 5: ROLE PERMISSIONS & GRANTS
+-- Grants access to the Supabase service_role, anon, and authenticated roles.
+-- ------------------------------------------------------------------------------
+GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
+
+GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, service_role;
+GRANT ALL ON ALL ROUTINES IN SCHEMA public TO postgres, service_role;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon, authenticated;
+GRANT INSERT ON TABLE public.contacts TO anon, authenticated, service_role;
+GRANT INSERT ON TABLE public.newsletter_subscribers TO anon, authenticated, service_role;
+GRANT INSERT ON TABLE public.visitors TO anon, authenticated, service_role;
+GRANT INSERT ON TABLE public.analytics_events TO anon, authenticated, service_role;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO postgres, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO postgres, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO postgres, service_role;
+

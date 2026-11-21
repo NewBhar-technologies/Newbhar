@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CalendarCheck, Plus, Clock, Video, CheckCircle2, XCircle, Edit3, Trash2, Link as LinkIcon, Compass } from "lucide-react";
+import { CalendarCheck, Plus, Clock, Video, CheckCircle2, XCircle, Edit3, Trash2, Link as LinkIcon, Compass, ArrowUpRight } from "lucide-react";
 import { Modal, ConfirmDialog } from "@/components/admin/modal";
 
 const STATUS_COLORS = {
-  confirmed: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  requested: "bg-amber-100 text-amber-800 border-amber-200",
-  rescheduled: "bg-purple-100 text-purple-800 border-purple-200",
-  completed: "bg-blue-100 text-blue-800 border-blue-200",
-  cancelled: "bg-gray-100 text-gray-600 border-gray-200",
+  confirmed: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
+  requested: "border-amber-500/30 bg-amber-500/10 text-amber-400",
+  rescheduled: "border-violet-500/30 bg-violet-500/10 text-violet-400",
+  completed: "border-cyan-500/30 bg-cyan-500/10 text-cyan-400",
+  cancelled: "border-neutral-500/30 bg-neutral-500/10 text-neutral-400",
 };
 
 export default function MeetingsManagementPage() {
@@ -96,53 +96,61 @@ export default function MeetingsManagementPage() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 font-display">
-            Meeting &amp; Consultation Bookings
+          <div className="flex items-center gap-2 mb-1">
+            <span className="flex h-2 w-2 rounded-full bg-[#98f90d] shadow-[0_0_8px_#98f90d]" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#98f90d]">Consultation Pipelines</span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight text-white font-display">
+            Bookings & Consultations
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Discovery calls, architecture sessions, and scheduled client reviews.
+          <p className="text-xs text-neutral-400 mt-0.5">
+            Technical discovery calls, architecture reviews, and client advisory appointments.
           </p>
         </div>
 
         <button
           type="button"
           onClick={() => setShowScheduleModal(true)}
-          className="inline-flex items-center gap-2 rounded-full bg-[#29251b] px-4 py-2 text-xs font-semibold text-[#f5c518] hover:bg-[#181613] transition shadow-xs"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#98f90d] px-4 py-2.5 text-xs font-bold text-black transition-all hover:bg-[#86dc0b] hover:shadow-[0_0_20px_rgba(152,249,13,0.3)]"
         >
           <Plus size={15} />
-          <span>Schedule Meeting</span>
+          <span>Schedule Session</span>
         </button>
       </div>
 
       {/* Calendly Integration Notice Banner */}
-      <div className="flex items-center justify-between rounded-2xl border border-amber-200/80 bg-amber-50/70 p-4 text-xs text-amber-900">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-3xl border border-white/10 bg-[#0f111a]/90 p-4 text-xs text-neutral-300 shadow-xl backdrop-blur-xl">
         <div className="flex items-center gap-3">
-          <Compass size={18} className="text-[#806000] shrink-0" />
-          <span>
-            <strong>External Scheduler Connected:</strong> Newbhar Technologies Calendly link is configured across the website navigation and footer.
-          </span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#98f90d]/10 text-[#98f90d] border border-[#98f90d]/20 shrink-0">
+            <Compass size={18} />
+          </div>
+          <div>
+            <span className="font-bold text-white">Calendly Scheduler Integrated:</span>{" "}
+            <span className="text-neutral-400">Public booking link is enabled across your hero, pricing, and contact pages.</span>
+          </div>
         </div>
         <a
           href="https://calendly.com/team-newbhar/30min"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline font-bold text-[#806000]"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-[#98f90d] hover:bg-white/10 transition-all shrink-0"
         >
-          View Public Booking Page &rarr;
+          <span>Open Booking Page</span>
+          <ArrowUpRight size={14} />
         </a>
       </div>
 
       {/* Filter Bar */}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {["all", "confirmed", "requested", "rescheduled", "completed", "cancelled"].map((st) => (
           <button
             key={st}
             type="button"
             onClick={() => setStatusFilter(st)}
-            className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize transition ${
+            className={`rounded-xl px-3.5 py-1.5 text-xs font-semibold capitalize transition-all border ${
               statusFilter === st
-                ? "bg-[#29251b] text-[#f5c518]"
-                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                ? "border-[#98f90d] bg-[#98f90d]/15 text-[#98f90d]"
+                : "border-white/10 bg-[#0f111a]/90 text-neutral-400 hover:text-white hover:border-white/20"
             }`}
           >
             {st}
@@ -151,77 +159,85 @@ export default function MeetingsManagementPage() {
       </div>
 
       {/* Meetings Table */}
-      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0f111a]/90 shadow-2xl backdrop-blur-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-gray-100 bg-gray-50/60 font-mono font-medium text-gray-500 uppercase">
+            <thead className="border-b border-white/10 bg-white/[0.02] font-mono text-[11px] uppercase tracking-wider text-neutral-400">
               <tr>
-                <th className="py-3 px-4">Session Title</th>
-                <th className="py-3 px-4">Client / Inquirer</th>
-                <th className="py-3 px-4">Date &amp; Time</th>
-                <th className="py-3 px-4">Meeting Link</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-3.5 px-4 font-semibold">Session Title</th>
+                <th className="py-3.5 px-4 font-semibold">Client / Inquirer</th>
+                <th className="py-3.5 px-4 font-semibold">Date & Time</th>
+                <th className="py-3.5 px-4 font-semibold">Meeting Link</th>
+                <th className="py-3.5 px-4 font-semibold">Status</th>
+                <th className="py-3.5 px-4 text-right font-semibold">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 font-sans">
+            <tbody className="divide-y divide-white/5 font-sans">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-gray-400">Loading scheduled meetings...</td>
+                  <td colSpan={6} className="py-12 text-center text-neutral-400">
+                    <div className="inline-flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-[#98f90d] animate-ping" />
+                      <span>Fetching appointments from database...</span>
+                    </div>
+                  </td>
                 </tr>
               ) : meetings.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-gray-400">No scheduled meetings matching filter.</td>
+                  <td colSpan={6} className="py-12 text-center text-neutral-400">
+                    No scheduled meetings matching current filter.
+                  </td>
                 </tr>
               ) : (
                 meetings.map((m) => (
-                  <tr key={m.id} className="hover:bg-gray-50/80 transition">
-                    <td className="py-3 px-4 font-bold text-gray-900">{m.title}</td>
-                    <td className="py-3 px-4">
-                      <div className="font-semibold text-gray-800">{m.clientName}</div>
-                      <div className="text-[11px] text-gray-500 font-mono">{m.clientEmail}</div>
+                  <tr key={m.id} className="hover:bg-white/[0.03] transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-white">{m.title}</td>
+                    <td className="py-3.5 px-4">
+                      <div className="font-semibold text-white">{m.clientName}</div>
+                      <div className="text-[11px] text-neutral-400 font-mono">{m.clientEmail}</div>
                     </td>
-                    <td className="py-3 px-4 font-mono text-gray-700">
-                      <div className="flex items-center gap-1 font-bold">
-                        <Clock size={12} className="text-[#806000]" />
+                    <td className="py-3.5 px-4 font-mono text-neutral-300">
+                      <div className="flex items-center gap-1.5 font-bold text-white">
+                        <Clock size={13} className="text-[#98f90d]" />
                         <span>{m.date} at {m.time}</span>
                       </div>
-                      <span className="text-[10px] text-gray-400">{m.durationMinutes} mins</span>
+                      <span className="text-[10px] text-neutral-500">{m.durationMinutes} mins</span>
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-3.5 px-4">
                       {m.meetingLink ? (
                         <a
                           href={m.meetingLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-[#806000] hover:underline font-mono text-[11px]"
+                          className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-mono text-[11px] transition-colors"
                         >
                           <Video size={13} />
-                          <span>Join Session</span>
+                          <span>Join Room</span>
+                          <ArrowUpRight size={12} />
                         </a>
                       ) : (
-                        <span className="text-gray-400">Direct Call</span>
+                        <span className="text-neutral-500">Direct Call</span>
                       )}
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-3.5 px-4">
                       <select
                         value={m.status}
                         onChange={(e) => handleUpdateStatus(m.id, e.target.value)}
-                        className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold capitalize focus:outline-none ${STATUS_COLORS[m.status] || "bg-gray-100"}`}
+                        className={`rounded-xl border px-3 py-1 text-[11px] font-semibold capitalize focus:outline-none bg-black/40 ${STATUS_COLORS[m.status] || "border-white/10 text-neutral-300"}`}
                       >
-                        <option value="confirmed">Confirmed</option>
-                        <option value="requested">Requested</option>
-                        <option value="rescheduled">Rescheduled</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option value="confirmed" className="bg-[#0f111a] text-white">Confirmed</option>
+                        <option value="requested" className="bg-[#0f111a] text-white">Requested</option>
+                        <option value="rescheduled" className="bg-[#0f111a] text-white">Rescheduled</option>
+                        <option value="completed" className="bg-[#0f111a] text-white">Completed</option>
+                        <option value="cancelled" className="bg-[#0f111a] text-white">Cancelled</option>
                       </select>
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3.5 px-4 text-right">
                       <button
                         type="button"
                         onClick={() => setDeleteTargetId(m.id)}
-                        className="rounded-lg p-1.5 text-gray-400 hover:text-red-500 transition"
-                        title="Cancel meeting"
+                        className="rounded-lg p-2 text-neutral-400 hover:bg-rose-500/10 hover:text-rose-400 transition"
+                        title="Remove booking"
                       >
                         <Trash2 size={14} />
                       </button>
@@ -242,102 +258,102 @@ export default function MeetingsManagementPage() {
           title="Schedule New Client Meeting"
         >
           <form onSubmit={handleScheduleMeeting} className="space-y-4 text-xs">
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Meeting Title *</label>
+            <div className="space-y-1">
+              <label className="block font-semibold text-neutral-300">Meeting Title *</label>
               <input
                 type="text"
                 required
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 placeholder="e.g. Discovery & Technical Architecture Review"
-                className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none focus:ring-1 focus:ring-[#98f90d]"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Client Name *</label>
+              <div className="space-y-1">
+                <label className="block font-semibold text-neutral-300">Client Name *</label>
                 <input
                   type="text"
                   required
                   value={form.clientName}
                   onChange={(e) => setForm({ ...form, clientName: e.target.value })}
                   placeholder="e.g. David Vance"
-                  className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none focus:ring-1 focus:ring-[#98f90d]"
                 />
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Client Email</label>
+              <div className="space-y-1">
+                <label className="block font-semibold text-neutral-300">Client Email</label>
                 <input
                   type="email"
                   value={form.clientEmail}
                   onChange={(e) => setForm({ ...form, clientEmail: e.target.value })}
                   placeholder="client@company.com"
-                  className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none focus:ring-1 focus:ring-[#98f90d]"
                 />
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Date *</label>
+              <div className="space-y-1">
+                <label className="block font-semibold text-neutral-300">Date *</label>
                 <input
                   type="date"
                   required
                   value={form.date}
                   onChange={(e) => setForm({ ...form, date: e.target.value })}
-                  className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white focus:border-[#98f90d] focus:outline-none"
                 />
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Time *</label>
+              <div className="space-y-1">
+                <label className="block font-semibold text-neutral-300">Time *</label>
                 <input
                   type="time"
                   required
                   value={form.time}
                   onChange={(e) => setForm({ ...form, time: e.target.value })}
-                  className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white focus:border-[#98f90d] focus:outline-none"
                 />
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Duration (Mins)</label>
+              <div className="space-y-1">
+                <label className="block font-semibold text-neutral-300">Duration (Mins)</label>
                 <input
                   type="number"
                   value={form.durationMinutes}
                   onChange={(e) => setForm({ ...form, durationMinutes: e.target.value })}
-                  className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white focus:border-[#98f90d] focus:outline-none"
                 />
               </div>
             </div>
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Meeting Link (Google Meet / Zoom / Calendly)</label>
+            <div className="space-y-1">
+              <label className="block font-semibold text-neutral-300">Meeting Link (Meet / Zoom / Calendly)</label>
               <input
                 type="text"
                 value={form.meetingLink}
                 onChange={(e) => setForm({ ...form, meetingLink: e.target.value })}
                 placeholder="https://meet.google.com/xyz or calendly url"
-                className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
               />
             </div>
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Agenda / Meeting Notes</label>
+            <div className="space-y-1">
+              <label className="block font-semibold text-neutral-300">Agenda / Meeting Notes</label>
               <textarea
                 rows={3}
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                placeholder="Key questions, architecture requirements..."
-                className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                placeholder="Key goals, architecture requirements..."
+                className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
               />
             </div>
-            <div className="flex justify-end gap-2 pt-2">
+            <div className="flex justify-end gap-2.5 pt-3 border-t border-white/10">
               <button
                 type="button"
                 onClick={() => setShowScheduleModal(false)}
-                className="rounded-full px-4 py-2 font-medium text-gray-600 hover:bg-gray-100"
+                className="rounded-xl px-4 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded-full bg-[#29251b] px-5 py-2 font-bold text-[#f5c518] hover:bg-[#181613]"
+                className="rounded-xl bg-[#98f90d] px-5 py-2 text-xs font-bold text-black hover:bg-[#86dc0b] transition-all"
               >
                 Schedule Session
               </button>
@@ -352,7 +368,7 @@ export default function MeetingsManagementPage() {
         onClose={() => setDeleteTargetId(null)}
         onConfirm={handleDelete}
         title="Remove Meeting"
-        message="Are you sure you want to remove this meeting record?"
+        message="Are you sure you want to remove this meeting record from the ledger?"
         confirmText="Remove"
         isDanger={true}
       />

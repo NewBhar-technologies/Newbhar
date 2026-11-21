@@ -1,3 +1,4 @@
+﻿export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { withAdminAuth } from "@/lib/auth/guard";
 import { getAnalyticsOverview } from "@/lib/analytics";
@@ -55,3 +56,4 @@ export async function GET(req) {
 		}
 	});
 }
+

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { withAdminAuth } from "@/lib/auth/guard";
 import { getAnalyticsOverview } from "@/lib/analytics";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req) {
   return withAdminAuth(req, "analytics", async () => {
     try {

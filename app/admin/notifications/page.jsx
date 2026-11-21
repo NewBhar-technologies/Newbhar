@@ -74,11 +74,15 @@ export default function NotificationCenterPage() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 font-display">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="flex h-2 w-2 rounded-full bg-[#98f90d] shadow-[0_0_8px_#98f90d]" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#98f90d]">System Alerts</span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight text-white font-display">
             Notification Center
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
-            System alarms, client inquiry alerts, automated workflow triggers, and security events.
+          <p className="text-xs text-neutral-400 mt-0.5">
+            Real-time event notifications, inquiry triggers, automated workflows, and security alerts.
           </p>
         </div>
 
@@ -87,9 +91,9 @@ export default function NotificationCenterPage() {
             <button
               type="button"
               onClick={handleMarkAllRead}
-              className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-neutral-300 hover:text-white hover:border-[#98f90d]/50 hover:bg-white/10 transition-all"
             >
-              <CheckCheck size={14} className="text-[#806000]" />
+              <CheckCheck size={14} className="text-[#98f90d]" />
               <span>Mark All as Read</span>
             </button>
           )}
@@ -98,7 +102,7 @@ export default function NotificationCenterPage() {
             <button
               type="button"
               onClick={handleDeleteAll}
-              className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 transition shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 px-3.5 py-2 text-xs font-semibold text-rose-300 hover:bg-rose-500/20 transition-all"
             >
               <Trash2 size={13} />
               <span>Clear All</span>
@@ -108,24 +112,31 @@ export default function NotificationCenterPage() {
       </div>
 
       {/* Notifications List */}
-      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs max-w-4xl divide-y divide-gray-100">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0f111a]/90 shadow-2xl backdrop-blur-xl divide-y divide-white/5 max-w-4xl">
         {loading ? (
-          <div className="py-12 text-center text-xs text-gray-400">Loading notifications...</div>
+          <div className="py-12 text-center text-xs text-neutral-400">
+            <div className="inline-flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[#98f90d] animate-ping" />
+              <span>Scanning notification queue...</span>
+            </div>
+          </div>
         ) : filtered.length === 0 ? (
-          <div className="py-12 text-center text-xs text-gray-400">No notifications found.</div>
+          <div className="py-12 text-center text-xs text-neutral-400">No notifications to display.</div>
         ) : (
           filtered.map((n) => {
             const Icon = CATEGORY_ICONS[n.category] || Bell;
             return (
               <div
                 key={n.id}
-                className={`p-4 flex items-start gap-4 transition hover:bg-gray-50/70 ${
-                  !n.read ? "bg-amber-50/30" : ""
+                className={`p-4 flex items-start gap-4 transition-colors hover:bg-white/[0.03] ${
+                  !n.read ? "bg-[#98f90d]/[0.03]" : ""
                 }`}
               >
                 <div
-                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
-                    !n.read ? "bg-[#f5c518] text-[#1c1a16]" : "bg-gray-100 text-gray-500"
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border ${
+                    !n.read
+                      ? "bg-[#98f90d]/15 border-[#98f90d]/30 text-[#98f90d]"
+                      : "bg-white/5 border-white/10 text-neutral-500"
                   }`}
                 >
                   <Icon size={17} />
@@ -133,19 +144,19 @@ export default function NotificationCenterPage() {
 
                 <div className="flex-1 text-xs">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-gray-900 text-sm">{n.title}</h3>
-                    <span className="font-mono text-[10px] text-gray-400">
+                    <h3 className="font-bold text-white text-sm">{n.title}</h3>
+                    <span className="font-mono text-[10px] text-neutral-500">
                       {new Date(n.createdAt).toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-gray-600 mt-1 leading-relaxed">{n.message}</p>
+                  <p className="text-neutral-300 mt-1 leading-relaxed">{n.message}</p>
 
                   <div className="mt-3 flex items-center gap-3">
                     {n.link && (
                       <Link
                         href={n.link}
                         onClick={() => handleMarkSingleRead(n.id)}
-                        className="inline-flex items-center gap-1 font-bold text-[#806000] hover:underline text-[11px]"
+                        className="inline-flex items-center gap-1 font-bold text-[#98f90d] hover:text-[#86dc0b] text-[11px] transition-colors"
                       >
                         <span>View Resource</span>
                         <ArrowRight size={11} />
@@ -155,7 +166,7 @@ export default function NotificationCenterPage() {
                       <button
                         type="button"
                         onClick={() => handleMarkSingleRead(n.id)}
-                        className="text-[11px] font-semibold text-gray-400 hover:text-gray-700"
+                        className="text-[11px] font-semibold text-neutral-400 hover:text-white transition"
                       >
                         Mark Read
                       </button>

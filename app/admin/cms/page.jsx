@@ -56,11 +56,15 @@ export default function CMSOverviewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-black tracking-tight text-gray-900 font-display">
-          Website Content Management System (CMS)
+        <div className="flex items-center gap-2 mb-1">
+          <span className="flex h-2 w-2 rounded-full bg-[#98f90d] shadow-[0_0_8px_#98f90d]" />
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[#98f90d]">Dynamic Page Engine</span>
+        </div>
+        <h1 className="text-2xl font-black tracking-tight text-white font-display">
+          Website Content Management (CMS)
         </h1>
-        <p className="text-xs text-gray-500 mt-1">
-          Direct real-time control over all public Newbhar Technologies marketing pages, services, case studies, and brand copy.
+        <p className="text-xs text-neutral-400 mt-0.5">
+          Real-time database-backed control over all public Newbhar Technologies sections, services, case studies, and brand copy.
         </p>
       </div>
 
@@ -71,21 +75,21 @@ export default function CMSOverviewPage() {
             <Link
               key={card.href}
               href={card.href}
-              className="group rounded-2xl border border-gray-100 bg-white p-5 shadow-xs hover:border-[#f5c518] hover:shadow-md transition flex flex-col justify-between"
+              className="group rounded-3xl border border-white/10 bg-[#0f111a]/90 p-5 shadow-2xl backdrop-blur-xl hover:border-[#98f90d]/40 transition-all flex flex-col justify-between"
             >
               <div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-[#806000] group-hover:bg-[#f5c518] group-hover:text-[#181613] transition">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#98f90d]/10 border border-[#98f90d]/20 text-[#98f90d] group-hover:scale-105 group-hover:bg-[#98f90d] group-hover:text-black transition-all">
                   <Icon size={18} />
                 </div>
-                <h3 className="font-bold text-sm text-gray-900 mt-3 group-hover:text-[#806000] transition">
+                <h3 className="font-bold text-sm text-white mt-3.5 group-hover:text-[#98f90d] transition-colors">
                   {card.title}
                 </h3>
-                <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">{card.description}</p>
+                <p className="text-xs text-neutral-400 mt-1.5 leading-relaxed">{card.description}</p>
               </div>
 
-              <div className="mt-4 flex items-center gap-1 text-[11px] font-bold text-[#806000] border-t border-gray-50 pt-3">
+              <div className="mt-5 flex items-center justify-between text-[11px] font-bold text-[#98f90d] border-t border-white/10 pt-3">
                 <span>Manage Section</span>
-                <ArrowRight size={12} className="group-hover:translate-x-1 transition" />
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
           );

@@ -1,3 +1,4 @@
+﻿export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { withAdminAuth } from "@/lib/auth/guard";
 import { getAdminClient } from "@/lib/supabase/admin";
@@ -149,3 +150,4 @@ export async function POST(req) {
     }
   });
 }
+

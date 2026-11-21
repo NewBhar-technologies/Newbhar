@@ -232,11 +232,14 @@ export async function POST(req) {
     // If database storage failed and email could not be delivered
     if (!newContact && !emailSent && dbError) {
       const isDev = process.env.NODE_ENV !== "production";
+      const isPermError = dbError.message && /permission denied/i.test(dbError.message);
       return NextResponse.json(
         {
           success: false,
           message: isDev
-            ? "Database table 'contacts' is not yet migrated in Supabase. Please execute APPLY_ALL_MIGRATIONS.sql in your Supabase SQL Editor."
+            ? (isPermError
+                ? "Database permissions need to be granted in Supabase. Please execute FIX_PERMISSIONS.sql in your Supabase SQL Editor."
+                : "Database table 'contacts' is not yet migrated in Supabase. Please execute APPLY_ALL_MIGRATIONS.sql in your Supabase SQL Editor.")
             : "We are currently experiencing a brief technical maintenance with our database. Please email us directly at info@newbhar.com and we will respond immediately.",
         },
         { status: 503 }

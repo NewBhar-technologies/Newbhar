@@ -1,3 +1,4 @@
+﻿export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { authenticateAdmin } from "@/lib/auth/session";
 
@@ -58,3 +59,4 @@ export async function POST(req) {
     );
   }
 }
+

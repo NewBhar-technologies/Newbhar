@@ -88,7 +88,11 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="vx-nav-actions">
-            <Button href={MEETING_EMAIL_URL} variant="accent" size="sm" className="vx-meeting">Book a Meeting</Button>
+            <div className="hidden xl:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 border border-lime-400/25 text-[#98f90d] text-xs font-semibold tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-[#98f90d] animate-pulse shadow-[0_0_8px_#98f90d]" />
+              <span>Available for projects</span>
+            </div>
+            <Button href="/start-project" variant="accent" size="sm" className="vx-meeting">Start a Project</Button>
             <button ref={toggleRef} type="button" className="vx-menu-toggle" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-menu">{open ? <X size={21} /> : <Menu size={21} />}</button>
           </div>
         </nav>

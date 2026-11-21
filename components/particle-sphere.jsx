@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { CYCLE_MS, SCATTER_START_MS, SCATTER_DURATION_MS, SHAPE_COUNT, clamp, sampleCycle, scatterPoint, seed, shapePoint } from "@/lib/particle-motion.mjs";
 
-const PALETTE = ["#f5c518", "#d3a408", "#a67c00", "#ffe78c", "#29251b", "#c48e3c"];
+const PALETTE = ["#98f90d", "#84e605", "#b4ff39", "#ffffff", "#4ade80", "#a3e635"];
 
 export default function ParticleSphere({ className, onStageChange, burstKey = 0, paused = false }) {
   const canvasRef = useRef(null);
@@ -63,11 +63,11 @@ export default function ParticleSphere({ className, onStageChange, burstKey = 0,
       const scatter = motion.scatter;
       ctx.clearRect(0, 0, width, height);
 
-      // Diffuse shadow and halo give the particles a volume to inhabit.
+      // Diffuse ambient glow gives the particles volume without any dark background shapes.
       const groundY = Math.min(height - 82, cy + radius * 1.14);
       const shadow = ctx.createRadialGradient(cx, groundY, 0, cx, groundY, radius);
-      shadow.addColorStop(0, `rgba(83,62,15,${.14 * (1 - scatter * .6)})`);
-      shadow.addColorStop(1, "rgba(83,62,15,0)");
+      shadow.addColorStop(0, `rgba(152,249,13,${.05 * (1 - scatter * .6)})`);
+      shadow.addColorStop(1, "rgba(152,249,13,0)");
       ctx.save();
       ctx.translate(cx, groundY);
       ctx.scale(1, .14);
@@ -76,8 +76,8 @@ export default function ParticleSphere({ className, onStageChange, burstKey = 0,
       ctx.fillRect(cx - radius, groundY - radius, radius * 2, radius * 2);
       ctx.restore();
       const halo = ctx.createRadialGradient(cx - radius * .2, cy - radius * .2, 0, cx, cy, radius * 1.45);
-      halo.addColorStop(0, `rgba(245,197,24,${.06 * (1 - scatter)})`);
-      halo.addColorStop(1, "rgba(245,197,24,0)");
+      halo.addColorStop(0, `rgba(152,249,13,${.04 * (1 - scatter)})`);
+      halo.addColorStop(1, "rgba(152,249,13,0)");
       ctx.fillStyle = halo;
       ctx.fillRect(0, 0, width, height);
 
@@ -125,7 +125,7 @@ export default function ParticleSphere({ className, onStageChange, burstKey = 0,
         // Sparse highlights read as beads without expensive per-dot blur.
         if (depth > .69 && size > 1.8) {
           ctx.globalAlpha = (depth - .45) * .66;
-          ctx.fillStyle = "#fff8df";
+          ctx.fillStyle = "#ffffff";
           ctx.beginPath();
           ctx.arc(p.x - size * .26, p.y - size * .3, size * .32, 0, Math.PI * 2);
           ctx.fill();
