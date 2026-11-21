@@ -71,24 +71,36 @@ export const CLIENT_PROJECTS = [
     images: ["/client_work_images/cleancity.png"],
   },
   {
-    slug: "dr-project",
-    title: "DR Project",
+    slug: "collabflow",
+    title: "CollabFlow",
     tag: "Web Application",
     summary:
-      "A data-rich web application built to manage, visualise and report on critical business information efficiently.",
+      "A full-stack project management platform inspired by Linear, Trello, Jira, and Slack that helps teams manage tasks, collaborate in real time, organize sprints, track deadlines, and analyze project performance.",
     challenge:
-      "The client needed a reliable system to consolidate data from multiple sources, generate actionable reports, and support decision-making with clear visual dashboards.",
+      "Modern development teams often struggle with fragmented workflows across separate task boards, chat tools, and sprint trackers, leading to delayed updates and poor visibility into team workloads.",
     solution:
-      "We built a comprehensive data reporting application with interactive dashboards, automated report generation, and role-based access to ensure the right people see the right information.",
+      "We built an all-in-one collaborative workspace featuring live Socket.IO synchronization, drag-and-drop Kanban boards, integrated project chat, role-based access control, sprint calendars, and interactive performance analytics.",
     results: [
-      "Consolidated data from multiple sources",
-      "Interactive dashboards and visual reports",
-      "Role-based access control",
-      "Faster and more informed decision-making",
+      "Real-time Kanban task management with Socket.IO live sync and drag-and-drop",
+      "Granular Role-Based Access Control (Admin, Project Manager, Team Member, Viewer)",
+      "Integrated project chat with typing indicators, online presence, and instant notifications",
+      "Sprint tracking, calendar milestones, global search, and CSV analytics exports",
+      "Secure file attachments with JWT authentication and persistent Dark/Light themes",
     ],
-    stack: ["React", "Python", "Node.js", "PostgreSQL", "REST APIs"],
-    cover: "/client_work_images/dr1.jpg",
-    images: ["/client_work_images/dr1.jpg"],
+    stack: [
+      "React 18",
+      "Vite 6",
+      "Tailwind CSS",
+      "Node.js",
+      "Express.js",
+      "Socket.IO",
+      "MongoDB",
+      "Mongoose",
+      "JWT",
+      "Recharts",
+    ],
+    cover: "/client_work_images/collabflow.png",
+    images: ["/client_work_images/collabflow.png"],
   },
 ];
 

@@ -10,7 +10,8 @@ const PROJECTS_DATA = [
     category: "Web Application",
     cover: "/client_work_images/shop.png",
     link: "/client-work/shopping-platform",
-    description: "End-to-end e-commerce engine with real-time cart synchronization, secure Stripe integration, order workflows, and custom analytics dashboard.",
+    description:
+      "End-to-end e-commerce engine with real-time cart synchronization, secure Stripe integration, order workflows, and custom analytics dashboard.",
     metrics: "40% Faster Checkout · 99.9% Uptime",
     stack: ["React", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
   },
@@ -20,7 +21,8 @@ const PROJECTS_DATA = [
     category: "AI / ML Platform",
     cover: "/client_work_images/analyzai.png",
     link: "/client-work/analyz-ai",
-    description: "Automated machine learning pipeline benchmarking 12+ algorithms, automated feature engineering, and confidence-scored predictions on uploaded datasets.",
+    description:
+      "Automated machine learning pipeline benchmarking 12+ algorithms, automated feature engineering, and confidence-scored predictions on uploaded datasets.",
     metrics: "88.5% Accuracy · 12+ ML Models",
     stack: ["Python", "Flask", "React", "Scikit-Learn", "XGBoost"],
   },
@@ -30,25 +32,37 @@ const PROJECTS_DATA = [
     category: "Community Platform",
     cover: "/client_work_images/cleancity.png",
     link: "/client-work/cleancity",
-    description: "Urban cleanliness initiative enabling neighborhood drives, volunteer dispatch, verified campaign tracking, and administrative analytics.",
+    description:
+      "Urban cleanliness initiative enabling neighborhood drives, volunteer dispatch, verified campaign tracking, and administrative analytics.",
     metrics: "50+ Drives Organized · 10k+ Users",
     stack: ["React", "TypeScript", "Node.js", "Tailwind CSS"],
   },
   {
-    title: "DR Enterprise Portal",
-    tagline: "Mission-Critical Telemetry & Reporting",
-    category: "Enterprise System",
-    cover: "/client_work_images/dr1.jpg",
-    link: "/client-work/dr-project",
-    description: "Centralized data consolidation platform with interactive metrics visualization, role-based security access, and automated executive reporting.",
-    metrics: "Sub-Second Latency · Multi-Tenant",
-    stack: ["PostgreSQL", "Node.js", "React", "REST APIs"],
+    title: "CollabFlow",
+    tagline: "Real-Time Project Management & Collaboration",
+    category: "SaaS Platform",
+    cover: "/client_work_images/collabflow.png",
+    link: "/client-work/collabflow",
+    description:
+      "Full-stack project management platform inspired by Linear, Trello, Jira, and Slack to manage tasks, collaborate in real time, organize sprints, and track performance.",
+    metrics: "Real-Time Kanban · Role-Based Access",
+    stack: [
+      "React 18",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Socket.IO",
+      "Tailwind CSS",
+    ],
   },
 ];
 
 export default function BrandyfyShowcase() {
   return (
-    <section id="creative-showcase" className="py-24 md:py-32 bg-[#060608] relative overflow-hidden border-t border-white/[0.08]">
+    <section
+      id="creative-showcase"
+      className="py-24 md:py-32 bg-[#060608] relative overflow-hidden border-t border-white/[0.08]"
+    >
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="max-w-3xl mb-16 md:mb-20">
@@ -60,7 +74,9 @@ export default function BrandyfyShowcase() {
             We design beautifully. We develop excellently.
           </h2>
           <p className="mt-5 text-lg md:text-xl text-zinc-400 leading-relaxed">
-            We have become experts in engineering top-notch digital products. We care deeply about what we do, and every pixel reflects that dedication.
+            We have become experts in engineering top-notch digital products. We
+            care deeply about what we do, and every pixel reflects that
+            dedication.
           </p>
         </div>
 
@@ -131,7 +147,9 @@ export default function BrandyfyShowcase() {
                 Your Project Here.
               </h3>
               <p className="mt-4 text-zinc-400 text-base leading-relaxed">
-                Have a product idea, complex software challenge, or web platform you need built right? Partner with an agile, senior engineering team ready to execute.
+                Have a product idea, complex software challenge, or web platform
+                you need built right? Partner with an agile, senior engineering
+                team ready to execute.
               </p>
             </div>
 

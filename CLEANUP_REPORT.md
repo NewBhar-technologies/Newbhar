@@ -19,29 +19,29 @@ All genuinely unnecessary files, unreferenced image duplicates, obsolete assets,
 
 Every deletion was verified against the codebase using AST/regex reference searches and confirmed with clean TypeScript checks and production Next.js builds.
 
-| #   | Deleted Item Path                                                   | Size      | Reason for Deletion & How Checked                                          | Verified Build |
-| :-- | :------------------------------------------------------------------ | :-------- | :------------------------------------------------------------------------- | :------------- |
-| 1   | `requirements/Vectryx_All_Seven_Service_Pages.docx`                 | 44,907 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 2   | `requirements/Vectryx_ai_and_ml_development_Service_Page.docx`      | 40,999 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 3   | `requirements/Vectryx_cloud_and_devops_Service_Page.docx`           | 40,895 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 4   | `requirements/Vectryx_data_science_Service_Page.docx`               | 40,903 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 5   | `requirements/Vectryx_mobile_app_development_Service_Page.docx`     | 40,888 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 6   | `requirements/Vectryx_software_development_Service_Page.docx`       | 40,788 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 7   | `requirements/Vectryx_technical_project_guidance_Service_Page.docx` | 40,771 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 8   | `requirements/Vectryx_web_development_Service_Page.docx`            | 40,956 B  | Discovery requirement spec. Unreferenced by app/build.                     | Pass           |
-| 9   | `public/project-screenshots/project-screenshot-01.jpeg`             | 297,517 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel1.jpg`. | Pass           |
-| 10  | `public/project-screenshots/project-screenshot-02.jpeg`             | 130,597 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel2.jpg`. | Pass           |
-| 11  | `public/project-screenshots/project-screenshot-03.jpeg`             | 99,637 B  | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel3.jpg`. | Pass           |
-| 12  | `public/project-screenshots/project-screenshot-04.jpeg`             | 145,075 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel4.jpg`. | Pass           |
-| 13  | `public/project-screenshots/project-screenshot-05.jpeg`             | 105,277 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/loop1.jpg`.   | Pass           |
-| 14  | `public/project-screenshots/project-screenshot-06.jpeg`             | 252,306 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel5.jpg`. | Pass           |
-| 15  | `public/project-screenshots/project-screenshot-07.jpeg`             | 72,292 B  | Byte-for-byte SHA256 duplicate of `public/client_work_images/dr1.jpg`.     | Pass           |
-| 16  | `public/project-screenshots/project-screenshot-08.jpeg`             | 98,024 B  | Byte-for-byte SHA256 duplicate of `public/client_work_images/p2p1.jpg`.    | Pass           |
-| 17  | `public/bytecglobal-logo.png`                                       | 77,091 B  | Unused full logo image. Header & footer use `newbhar-mark.png` + CSS text. | Pass           |
-| 18  | `public/bytecglobal-logo-dark.png`                                  | 114,109 B | Unused dark logo variant. No references in codebase.                       | Pass           |
-| 19  | `public/favicon.png`                                                | 2,497 B   | Byte-for-byte SHA256 duplicate of `public/favicon.ico`.                    | Pass           |
-| 20  | `public/icon-192.png`                                               | 60,725 B  | Unreferenced PWA icon. `newbhar-mark.png` serves icon metadata.            | Pass           |
-| 21  | `.cursor/rules/design-system.mdc`                                   | 2,617 B   | Cursor IDE prompt file. Not used in production build or runtime.           | Pass           |
+| #   | Deleted Item Path                                                   | Size      | Reason for Deletion & How Checked                                             | Verified Build |
+| :-- | :------------------------------------------------------------------ | :-------- | :---------------------------------------------------------------------------- | :------------- |
+| 1   | `requirements/Vectryx_All_Seven_Service_Pages.docx`                 | 44,907 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 2   | `requirements/Vectryx_ai_and_ml_development_Service_Page.docx`      | 40,999 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 3   | `requirements/Vectryx_cloud_and_devops_Service_Page.docx`           | 40,895 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 4   | `requirements/Vectryx_data_science_Service_Page.docx`               | 40,903 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 5   | `requirements/Vectryx_mobile_app_development_Service_Page.docx`     | 40,888 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 6   | `requirements/Vectryx_software_development_Service_Page.docx`       | 40,788 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 7   | `requirements/Vectryx_technical_project_guidance_Service_Page.docx` | 40,771 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 8   | `requirements/Vectryx_web_development_Service_Page.docx`            | 40,956 B  | Discovery requirement spec. Unreferenced by app/build.                        | Pass           |
+| 9   | `public/project-screenshots/project-screenshot-01.jpeg`             | 297,517 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel1.jpg`.    | Pass           |
+| 10  | `public/project-screenshots/project-screenshot-02.jpeg`             | 130,597 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel2.jpg`.    | Pass           |
+| 11  | `public/project-screenshots/project-screenshot-03.jpeg`             | 99,637 B  | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel3.jpg`.    | Pass           |
+| 12  | `public/project-screenshots/project-screenshot-04.jpeg`             | 145,075 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel4.jpg`.    | Pass           |
+| 13  | `public/project-screenshots/project-screenshot-05.jpeg`             | 105,277 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/loop1.jpg`.      | Pass           |
+| 14  | `public/project-screenshots/project-screenshot-06.jpeg`             | 252,306 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/travel5.jpg`.    | Pass           |
+| 15  | `public/project-screenshots/project-screenshot-07.jpeg`             | 450,560 B | Byte-for-byte SHA256 duplicate of `public/client_work_images/collabflow.png`. | Pass           |
+| 16  | `public/project-screenshots/project-screenshot-08.jpeg`             | 98,024 B  | Byte-for-byte SHA256 duplicate of `public/client_work_images/p2p1.jpg`.       | Pass           |
+| 17  | `public/bytecglobal-logo.png`                                       | 77,091 B  | Unused full logo image. Header & footer use `newbhar-mark.png` + CSS text.    | Pass           |
+| 18  | `public/bytecglobal-logo-dark.png`                                  | 114,109 B | Unused dark logo variant. No references in codebase.                          | Pass           |
+| 19  | `public/favicon.png`                                                | 2,497 B   | Byte-for-byte SHA256 duplicate of `public/favicon.ico`.                       | Pass           |
+| 20  | `public/icon-192.png`                                               | 60,725 B  | Unreferenced PWA icon. `newbhar-mark.png` serves icon metadata.               | Pass           |
+| 21  | `.cursor/rules/design-system.mdc`                                   | 2,617 B   | Cursor IDE prompt file. Not used in production build or runtime.              | Pass           |
 
 **Total Dead Storage Removed:** **1,784,814 bytes (~1.78 MB)** across 21 files.
 
@@ -107,7 +107,7 @@ Every file remaining in `public/` is actively used:
 | `public/newbhar-banner.jpg`                           | 39.3 KB  | Open Graph (`og:image`) & Twitter Card (`twitter:image`) preview banner. |
 | `public/newbhar-mark.png`                             | 30.7 KB  | Website logo component (`Logo`), Apple touch icon, structured data logo. |
 | `public/favicon.ico`                                  | 2.5 KB   | Browser tab favicon (`metadata.icons.icon`).                             |
-| `public/client_work_images/dr1.jpg`                   | 72.3 KB  | DR Project case study thumbnail & gallery.                               |
+| `public/client_work_images/collabflow.png`            | 440 KB   | CollabFlow case study thumbnail & gallery.                               |
 | `public/client_work_images/cleancity.png`             | 563.0 KB | CleanCity case study thumbnail & gallery.                                |     |
 | `public/client_work_images/analyzai.png`              | 115.0 KB | Analyz-AI case study thumbnail & gallery.                                |
 | `public/client_work_images/travel1.jpg`               | 297.5 KB | Travel Booking Platform cover & carousel image.                          |
