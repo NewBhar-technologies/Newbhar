@@ -8,6 +8,7 @@ const siteTitle = `${SITE.name} | Custom Software & Digital Engineering`;
 const siteDescription =
   "Custom software development, web platforms, mobile apps, and cloud engineering.";
 
+// Organization + Website Structured Data
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -21,9 +22,9 @@ const structuredData = {
       image: `${SITE.url}/newbhar-banner.jpg`,
       description: siteDescription,
       email: SITE.email,
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "IN",
+      areaServed: {
+        "@type": "Country",
+        name: "India",
       },
     },
     {
@@ -52,7 +53,12 @@ export const metadata = {
 
   applicationName: SITE.name,
 
-  authors: [{ name: SITE.name, url: SITE.url }],
+  authors: [
+    {
+      name: SITE.name,
+      url: SITE.url,
+    },
+  ],
 
   creator: SITE.name,
   publisher: SITE.name,
