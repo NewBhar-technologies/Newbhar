@@ -2,15 +2,41 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MEETING_EMAIL_URL } from "@/lib/meeting";
 import { ArrowLeft, Check } from "lucide-react";
+import { SITE } from "@/lib/site";
 import { CLIENT_PROJECTS } from "@/components/client-work-grid";
 import ClientWorkGallery from "@/components/client-work-gallery";
 
 const card = "rounded-xl border border-border bg-surface p-6 transition-colors hover:border-border-strong hover:bg-subtle";
 
 export const generateStaticParams = () => CLIENT_PROJECTS.map((p) => ({ slug: p.slug }));
-export const generateMetadata = ({ params }) => ({
-  title: CLIENT_PROJECTS.find((p) => p.slug === params.slug)?.title || "Client Work",
-});
+
+export const generateMetadata = ({ params }) => {
+  const project = CLIENT_PROJECTS.find((p) => p.slug === params.slug);
+  if (!project) return { title: "Client Work Not Found" };
+  const title = project.title;
+  const description = project.summary || project.challenge || "Client engineering showcase by Newbhar Technologies.";
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/client-work/${project.slug}`,
+    },
+    openGraph: {
+      title: `${title} | ${SITE.name}`,
+      description,
+      url: `${SITE.url}/client-work/${project.slug}`,
+      siteName: SITE.name,
+      type: "article",
+      images: project.cover ? [{ url: project.cover, alt: title }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE.name}`,
+      description,
+      images: project.cover ? [project.cover] : [],
+    },
+  };
+};
 
 export default function ClientWorkPage({ params }) {
   const project = CLIENT_PROJECTS.find((p) => p.slug === params.slug);

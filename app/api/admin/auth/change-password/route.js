@@ -1,3 +1,4 @@
+﻿export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { getCurrentAdmin, recordAuditLogSync } from "@/lib/auth/session";
 import { AdminRepository } from "@/lib/repositories/admin.repository";
@@ -48,3 +49,4 @@ export async function POST(req) {
     return NextResponse.json({ success: false, error: "Server error" }, { status: 500 });
   }
 }
+

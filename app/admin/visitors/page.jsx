@@ -46,46 +46,51 @@ export default function VisitorsManagementPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-white">
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 font-display">
-            Anonymous Visitors
+          <div className="flex items-center gap-2 mb-1">
+            <span className="flex h-2 w-2 rounded-full bg-[#98f90d] shadow-[0_0_8px_#98f90d]" />
+            <span className="text-[10px] font-mono font-bold tracking-widest text-[#98f90d] uppercase">
+              Supabase Live Table: visitors
+            </span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-display">
+            Live Website Visitors
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Real privacy-compliant tracking of website sessions, landing pages, and traffic referrals.
+          <p className="text-xs text-gray-400 mt-1">
+            Privacy-compliant session telemetry, device signatures, and referral attribution.
           </p>
         </div>
 
         <button
           type="button"
           onClick={handleExportCsv}
-          className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition shadow-xs"
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-bold text-gray-300 hover:bg-white/[0.08] hover:text-white transition shadow-sm"
         >
-          <Download size={14} />
-          <span>Export CSV</span>
+          <Download size={14} className="text-[#98f90d]" />
+          <span>Export Visitors CSV</span>
         </button>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-gray-100 bg-white p-4 shadow-xs">
-        <div className="relative flex-1 min-w-[200px]">
-          <Search size={16} className="absolute inset-y-0 left-3 my-auto text-gray-400" />
+      {/* Search and Filters */}
+      <div className="flex flex-wrap items-center gap-3 rounded-3xl border border-white/10 bg-[#0f111a]/90 p-4 shadow-xl backdrop-blur-xl">
+        <div className="relative flex-1 min-w-[240px]">
+          <Search size={16} className="absolute inset-y-0 left-3.5 my-auto text-gray-500" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by Visitor ID, page, or browser..."
-            className="w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2 pl-9 pr-3 text-xs text-gray-900 focus:border-[#f5c518] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#f5c518]"
+            placeholder="Search by visitor IP hash, landing page, referral source..."
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.03] py-2.5 pl-10 pr-4 text-xs text-white placeholder-gray-500 focus:border-[#98f90d] focus:outline-none focus:ring-1 focus:ring-[#98f90d]"
           />
         </div>
 
-        {/* Device Filter */}
         <select
           value={deviceFilter}
           onChange={(e) => setDeviceFilter(e.target.value)}
-          className="rounded-xl border border-gray-200 bg-gray-50/50 py-2 px-3 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#f5c518]"
+          className="rounded-2xl border border-white/10 bg-[#0c0e15] py-2.5 px-4 text-xs text-gray-300 focus:border-[#98f90d] focus:outline-none"
         >
           <option value="all">All Devices</option>
           <option value="Desktop">Desktop</option>
@@ -93,90 +98,79 @@ export default function VisitorsManagementPage() {
           <option value="Tablet">Tablet</option>
         </select>
 
-        {/* Traffic Source Filter */}
         <select
           value={sourceFilter}
           onChange={(e) => setSourceFilter(e.target.value)}
-          className="rounded-xl border border-gray-200 bg-gray-50/50 py-2 px-3 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#f5c518]"
+          className="rounded-2xl border border-white/10 bg-[#0c0e15] py-2.5 px-4 text-xs text-gray-300 focus:border-[#98f90d] focus:outline-none"
         >
           <option value="all">All Sources</option>
           <option value="Direct">Direct</option>
-          <option value="Organic Search">Organic Search</option>
-          <option value="Social Media">Social Media</option>
-          <option value="Referral">Referral</option>
+          <option value="Google">Google Search</option>
+          <option value="LinkedIn">LinkedIn</option>
+          <option value="Twitter">Twitter / X</option>
+          <option value="GitHub">GitHub</option>
         </select>
       </div>
 
       {/* Visitors Table */}
-      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0f111a]/90 shadow-2xl backdrop-blur-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-gray-100 bg-gray-50/60 font-mono font-medium text-gray-500 uppercase">
+            <thead className="border-b border-white/[0.08] bg-white/[0.02] font-mono font-bold text-gray-400 uppercase text-[11px]">
               <tr>
-                <th className="py-3 px-4">Visitor ID</th>
-                <th className="py-3 px-4">Device &amp; OS</th>
-                <th className="py-3 px-4">Browser</th>
-                <th className="py-3 px-4">Traffic Source</th>
-                <th className="py-3 px-4">Landing Page</th>
-                <th className="py-3 px-4">Visits</th>
-                <th className="py-3 px-4">Last Active</th>
-                <th className="py-3 px-4 text-right">Action</th>
+                <th className="py-3.5 px-5">Visitor ID / Session</th>
+                <th className="py-3.5 px-4">Device &amp; OS</th>
+                <th className="py-3.5 px-4">Landing Page</th>
+                <th className="py-3.5 px-4">Referral Source</th>
+                <th className="py-3.5 px-4">Views</th>
+                <th className="py-3.5 px-4">Last Seen</th>
+                <th className="py-3.5 px-5 text-right">Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 font-sans">
+            <tbody className="divide-y divide-white/[0.06] font-sans">
               {loading ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-gray-400">
-                    Loading visitors database...
+                  <td colSpan={7} className="py-16 text-center text-gray-500 font-mono">
+                    Loading telemetry from Supabase...
                   </td>
                 </tr>
               ) : visitors.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-gray-400">
-                    No matching visitor sessions recorded yet.
+                  <td colSpan={7} className="py-16 text-center text-gray-500 font-mono">
+                    No visitor records found.
                   </td>
                 </tr>
               ) : (
                 visitors.map((v) => (
-                  <tr key={v.visitorId} className="hover:bg-gray-50/80 transition">
-                    <td className="py-3 px-4 font-mono font-semibold text-gray-900">
-                      {v.visitorId.slice(0, 16)}...
-                      {v.totalVisits > 1 ? (
-                        <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] text-amber-800 font-sans font-bold">
-                          Returning
-                        </span>
-                      ) : (
-                        <span className="ml-2 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] text-emerald-800 font-sans font-bold">
-                          New
-                        </span>
-                      )}
+                  <tr key={v.id} className="hover:bg-white/[0.03] transition-colors">
+                    <td className="py-3.5 px-5">
+                      <div className="font-mono text-xs text-white font-bold">{v.id.slice(0, 12)}...</div>
+                      <div className="text-[10px] text-gray-500 font-mono">{v.ipHash || "Anonymous"}</div>
                     </td>
-                    <td className="py-3 px-4 text-gray-700">
-                      <div className="flex items-center gap-1.5">
-                        {v.deviceType === "Mobile" ? <Smartphone size={13} /> : <Monitor size={13} />}
-                        <span>{v.deviceType} ({v.os})</span>
+                    <td className="py-3.5 px-4">
+                      <div className="flex items-center gap-1.5 font-medium text-gray-300">
+                        {v.device === "Mobile" ? <Smartphone size={14} className="text-cyan-400" /> : <Monitor size={14} className="text-[#98f90d]" />}
+                        <span>{v.device}</span>
                       </div>
+                      <div className="text-[10px] text-gray-500 font-mono">{v.browser || "Unknown"}</div>
                     </td>
-                    <td className="py-3 px-4 text-gray-600">{v.browser}</td>
-                    <td className="py-3 px-4">
-                      <span className="rounded-md bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-700">
-                        {v.trafficSource}
+                    <td className="py-3.5 px-4 font-mono text-gray-300">{v.landingPage || "/"}</td>
+                    <td className="py-3.5 px-4">
+                      <span className="inline-block rounded-md bg-white/[0.06] px-2 py-0.5 font-mono text-[11px] text-gray-300">
+                        {v.referrer || "Direct"}
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-mono text-gray-600 max-w-[140px] truncate" title={v.landingPage}>
-                      {v.landingPage}
+                    <td className="py-3.5 px-4 font-mono font-bold text-[#98f90d]">{v.pageviewsCount || 1}</td>
+                    <td className="py-3.5 px-4 text-gray-500 font-mono text-[11px]">
+                      {new Date(v.lastSeen || v.createdAt).toLocaleTimeString()}
                     </td>
-                    <td className="py-3 px-4 font-bold text-gray-800">{v.totalVisits}</td>
-                    <td className="py-3 px-4 text-gray-500 font-mono text-[11px]">
-                      {new Date(v.lastVisit).toLocaleString()}
-                    </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3.5 px-5 text-right">
                       <button
                         type="button"
                         onClick={() => setSelectedVisitor(v)}
-                        className="rounded-lg bg-gray-100 px-2.5 py-1 text-[11px] font-semibold text-gray-700 hover:bg-[#29251b] hover:text-[#f5c518] transition"
+                        className="rounded-xl bg-white/[0.04] border border-white/10 px-3 py-1.5 text-[11px] font-bold text-gray-300 hover:bg-[#98f90d] hover:text-[#050505] transition-all"
                       >
-                        Details
+                        Inspect
                       </button>
                     </td>
                   </tr>
@@ -187,47 +181,38 @@ export default function VisitorsManagementPage() {
         </div>
       </div>
 
-      {/* Visitor Details Modal */}
+      {/* Visitor Detail Modal */}
       {selectedVisitor && (
         <Modal
           isOpen={Boolean(selectedVisitor)}
           onClose={() => setSelectedVisitor(null)}
-          title={`Visitor Dossier: ${selectedVisitor.visitorId}`}
+          title={`Session Dossier: ${selectedVisitor.id.slice(0, 16)}`}
         >
-          <div className="space-y-4 text-xs">
-            <div className="grid grid-cols-2 gap-3 rounded-xl bg-gray-50 p-3">
+          <div className="space-y-4 text-xs text-gray-300">
+            <div className="grid grid-cols-2 gap-3 rounded-2xl bg-white/[0.03] p-4 border border-white/[0.08]">
               <div>
-                <span className="text-gray-400 font-mono uppercase text-[10px]">First Visit</span>
-                <p className="font-semibold text-gray-800">{new Date(selectedVisitor.firstVisit).toLocaleString()}</p>
+                <span className="text-gray-500 font-mono uppercase text-[10px]">Device Category</span>
+                <p className="font-bold text-white mt-0.5">{selectedVisitor.device}</p>
               </div>
               <div>
-                <span className="text-gray-400 font-mono uppercase text-[10px]">Last Visit</span>
-                <p className="font-semibold text-gray-800">{new Date(selectedVisitor.lastVisit).toLocaleString()}</p>
+                <span className="text-gray-500 font-mono uppercase text-[10px]">Browser / Engine</span>
+                <p className="font-bold text-white mt-0.5">{selectedVisitor.browser || "Standard Webkit"}</p>
               </div>
               <div>
-                <span className="text-gray-400 font-mono uppercase text-[10px]">Device / Browser</span>
-                <p className="font-semibold text-gray-800">{selectedVisitor.deviceType} · {selectedVisitor.browser} ({selectedVisitor.os})</p>
+                <span className="text-gray-500 font-mono uppercase text-[10px]">Entry Landing Page</span>
+                <p className="font-mono text-[#98f90d] mt-0.5">{selectedVisitor.landingPage || "/"}</p>
               </div>
               <div>
-                <span className="text-gray-400 font-mono uppercase text-[10px]">Referral Source</span>
-                <p className="font-semibold text-gray-800">{selectedVisitor.trafficSource}</p>
+                <span className="text-gray-500 font-mono uppercase text-[10px]">Total Page Views</span>
+                <p className="font-bold text-white mt-0.5 font-mono">{selectedVisitor.pageviewsCount || 1} pages</p>
               </div>
             </div>
 
             <div>
-              <h4 className="font-bold text-gray-900 mb-2">Browsing Journey &amp; Pages Visited</h4>
-              <div className="space-y-1 max-h-40 overflow-y-auto rounded-lg border border-gray-100 p-2 bg-white">
-                {(selectedVisitor.pagesVisited || []).map((page, idx) => (
-                  <div key={idx} className="flex items-center gap-2 font-mono text-gray-600">
-                    <span className="text-gray-300">#{idx + 1}</span>
-                    <span>{page}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-3 text-amber-800 text-[11px] leading-relaxed">
-              <strong>Privacy Notice:</strong> This visitor is tracked anonymously in compliance with corporate privacy regulations. No Personally Identifiable Information (PII) is recorded without explicit voluntary form submission.
+              <span className="text-gray-500 font-mono uppercase text-[10px]">User-Agent Signature</span>
+              <p className="mt-1 rounded-xl bg-black/40 p-3 border border-white/[0.06] font-mono text-[11px] text-gray-400 break-all">
+                {selectedVisitor.userAgent || "Mozilla/5.0 WebKit/537.36"}
+              </p>
             </div>
           </div>
         </Modal>

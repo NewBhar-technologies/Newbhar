@@ -1,13 +1,38 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check, ChevronRight } from "lucide-react";
-import { SERVICES, SHARED_CONTENT } from "@/lib/site";
+import { SITE, SERVICES, SHARED_CONTENT } from "@/lib/site";
 import { PageHeader, Section, CTA, Visual, card, wrap } from "@/components/section";
 import Button from "@/components/ui/button";
 import { FAQ } from "@/components/home-content";
 
 export const generateStaticParams = () => SERVICES.map((s) => ({ slug: s.slug }));
-export const generateMetadata = ({ params }) => ({ title: SERVICES.find((s) => s.slug === params.slug)?.title });
+
+export const generateMetadata = ({ params }) => {
+	const s = SERVICES.find((x) => x.slug === params.slug);
+	if (!s) return { title: "Service Not Found" };
+	const title = s.title;
+	const description = s.tagline || s.short || "Custom technology and engineering service by Newbhar Technologies.";
+	return {
+		title,
+		description,
+		alternates: {
+			canonical: `/services/${s.slug}`,
+		},
+		openGraph: {
+			title: `${title} | ${SITE.name}`,
+			description,
+			url: `${SITE.url}/services/${s.slug}`,
+			siteName: SITE.name,
+			type: "article",
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: `${title} | ${SITE.name}`,
+			description,
+		},
+	};
+};
 
 export default function ServicePage({ params }) {
 	const s = SERVICES.find((x) => x.slug === params.slug);

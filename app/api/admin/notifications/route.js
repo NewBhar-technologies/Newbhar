@@ -1,3 +1,4 @@
+﻿export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { withAdminAuth } from "@/lib/auth/guard";
 import { NotificationRepository } from "@/lib/repositories/notification.repository";
@@ -63,3 +64,4 @@ export async function DELETE(req) {
     }
   });
 }
+

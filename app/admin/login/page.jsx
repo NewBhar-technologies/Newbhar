@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Shield, Lock, Mail, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Shield, Lock, Mail, ArrowRight, AlertCircle, Sparkles } from "lucide-react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function AdminLoginPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || "Authentication failed.");
+        setError(data.error || "Authentication failed. Please check your credentials.");
         setLoading(false);
         return;
       }
@@ -42,36 +42,39 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#181613] px-4 py-12 text-white">
-      <div className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#08080a] px-4 py-12 text-white relative overflow-hidden">
+      {/* Background radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#98f90d]/[0.04] rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="w-full max-w-md relative z-10">
         {/* Brand Card Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f5c518] text-[#181613] font-black text-2xl shadow-lg mb-4">
-            B
+          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#98f90d] text-[#050505] font-black text-2xl shadow-[0_0_25px_rgba(152,249,13,0.35)] mb-4">
+            N
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white font-display">
-            Newbhar Technologies <span className="text-[#f5c518]">Admin</span>
+            Newbhar Technologies <span className="text-[#98f90d]">Control Plane</span>
           </h1>
-          <p className="mt-1 text-sm text-[#c6bea8]">
-            Enterprise Content Management &amp; Operations Portal
+          <p className="mt-1.5 text-xs text-gray-400 font-mono tracking-wider uppercase">
+            Enterprise Operations &amp; CMS Portal
           </p>
         </div>
 
         {/* Login Box */}
-        <div className="rounded-3xl border border-[#3b362c] bg-[#23201a] p-8 shadow-2xl backdrop-blur-xl">
+        <div className="rounded-3xl border border-white/10 bg-[#0f111a]/90 p-8 shadow-2xl backdrop-blur-2xl">
           {error && (
-            <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-500/30 bg-red-950/40 p-4 text-xs text-red-300">
+            <div className="mb-6 flex items-start gap-3 rounded-2xl border border-red-500/30 bg-red-950/30 p-4 text-xs text-red-300">
               <AlertCircle size={18} className="shrink-0 text-red-400 mt-0.5" />
               <div>
-                <p className="font-semibold text-red-200">Authentication Failed</p>
-                <p className="mt-0.5">{error}</p>
+                <p className="font-semibold text-red-200">Access Denied</p>
+                <p className="mt-0.5 text-red-300/90">{error}</p>
               </div>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-mono font-medium tracking-wider uppercase text-[#c6bea8] mb-2">
+              <label className="block text-[11px] font-mono font-bold tracking-widest uppercase text-gray-400 mb-2">
                 Administrator Email
               </label>
               <div className="relative">
@@ -84,21 +87,21 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@newbhar.com"
-                  className="w-full rounded-xl border border-[#3b362c] bg-[#181613] py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:border-[#f5c518] focus:outline-none focus:ring-1 focus:ring-[#f5c518] transition"
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:border-[#98f90d] focus:outline-none focus:ring-1 focus:ring-[#98f90d] transition"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-xs font-mono font-medium tracking-wider uppercase text-[#c6bea8]">
+                <label className="block text-[11px] font-mono font-bold tracking-widest uppercase text-gray-400">
                   Password
                 </label>
                 <Link
                   href="/admin/forgot-password"
-                  className="text-xs text-[#f5c518] hover:underline transition"
+                  className="text-xs text-[#98f90d] hover:underline transition font-medium"
                 >
-                  Forgot password?
+                  Forgot?
                 </Link>
               </div>
               <div className="relative">
@@ -111,7 +114,7 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full rounded-xl border border-[#3b362c] bg-[#181613] py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:border-[#f5c518] focus:outline-none focus:ring-1 focus:ring-[#f5c518] transition"
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:border-[#98f90d] focus:outline-none focus:ring-1 focus:ring-[#98f90d] transition"
                 />
               </div>
             </div>
@@ -119,30 +122,28 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#f5c518] py-3.5 px-6 font-bold text-[#181613] transition hover:bg-[#dfad0a] focus:outline-none focus:ring-2 focus:ring-[#f5c518] focus:ring-offset-2 focus:ring-offset-[#181613] disabled:opacity-50 shadow-md text-sm cursor-pointer"
+              className="w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#98f90d] py-3.5 px-4 text-xs font-black tracking-wider uppercase text-[#050505] transition-all hover:bg-[#86e00b] shadow-[0_0_20px_rgba(152,249,13,0.3)] disabled:opacity-50"
             >
-              <span>{loading ? "Authenticating Session..." : "Sign In to Admin Portal"}</span>
-              <ArrowRight size={16} />
+              {loading ? (
+                <>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
+                  <span>Authenticating...</span>
+                </>
+              ) : (
+                <>
+                  <span>Sign In to Control Plane</span>
+                  <ArrowRight size={15} />
+                </>
+              )}
             </button>
           </form>
 
-          {/* Quick Setup Assistance for Initial Admin */}
-          <div className="mt-6 border-t border-[#3b362c] pt-5 text-center">
-            <p className="text-xs text-gray-500 flex items-center justify-center gap-1.5">
-              <Shield size={14} className="text-[#f5c518]" />
-              <span>Protected by brute-force rate-limiting and audit logging.</span>
-            </p>
+          <div className="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-gray-500 font-mono">
+            <span>Supabase RLS Protected</span>
+            <Link href="/" className="hover:text-white transition">
+              ← Back to Site
+            </Link>
           </div>
-        </div>
-
-        {/* Back to public website link */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/"
-            className="text-xs text-[#c6bea8] hover:text-[#f5c518] transition inline-flex items-center gap-1"
-          >
-            <span>&larr; Return to Newbhar Technologies Website</span>
-          </Link>
         </div>
       </div>
     </div>

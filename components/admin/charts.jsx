@@ -7,7 +7,7 @@ export function DailyTrafficChart({ data = [] }) {
 
   if (!data || data.length === 0) {
     return (
-      <div className="flex h-56 items-center justify-center text-sm text-gray-400">
+      <div className="flex h-56 items-center justify-center text-xs font-mono text-gray-500">
         No traffic events recorded yet.
       </div>
     );
@@ -22,13 +22,13 @@ export function DailyTrafficChart({ data = [] }) {
   // Generate SVG path points
   const pointsViews = data.map((d, i) => {
     const x = padding + (i / Math.max(data.length - 1, 1)) * (width - padding * 2);
-    const y = height - padding - (d.views / maxVal) * (height - padding * 2);
+    const y = height - padding - ((d.views || 0) / maxVal) * (height - padding * 2);
     return `${x},${y}`;
   });
 
   const pointsVisitors = data.map((d, i) => {
     const x = padding + (i / Math.max(data.length - 1, 1)) * (width - padding * 2);
-    const y = height - padding - (d.visitors / maxVal) * (height - padding * 2);
+    const y = height - padding - ((d.visitors || 0) / maxVal) * (height - padding * 2);
     return `${x},${y}`;
   });
 
@@ -36,19 +36,20 @@ export function DailyTrafficChart({ data = [] }) {
 
   return (
     <div className="relative w-full overflow-hidden">
-      <div className="mb-3 flex items-center justify-between text-xs font-medium text-gray-500">
+      <div className="mb-4 flex items-center justify-between text-xs font-medium text-gray-400">
         <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#f5c518]" /> Page Views
+          <span className="flex items-center gap-1.5 text-xs">
+            <span className="h-2 w-2 rounded-full bg-[#98f90d] shadow-[0_0_8px_#98f90d]" /> Page Views
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#29251b]" /> Unique Visitors
+          <span className="flex items-center gap-1.5 text-xs text-gray-400">
+            <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" /> Unique Visitors
           </span>
         </div>
         {hovered && (
-          <div className="text-xs font-semibold text-gray-700">
-            {hovered.date}: <span className="text-[#9a7300]">{hovered.views} views</span> ·{" "}
-            <span>{hovered.visitors} visitors</span>
+          <div className="text-xs font-mono text-gray-300 bg-white/[0.06] border border-white/10 px-2.5 py-1 rounded-lg backdrop-blur-md">
+            <span className="text-gray-400">{hovered.date}: </span>
+            <span className="text-[#98f90d] font-bold">{hovered.views} views</span> ·{" "}
+            <span className="text-cyan-400 font-bold">{hovered.visitors} visitors</span>
           </div>
         )}
       </div>
@@ -56,8 +57,8 @@ export function DailyTrafficChart({ data = [] }) {
       <svg viewBox={`0 0 ${width} ${height}`} className="h-48 w-full overflow-visible">
         <defs>
           <linearGradient id="viewsGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#f5c518" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#f5c518" stopOpacity="0.0" />
+            <stop offset="0%" stopColor="#98f90d" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#98f90d" stopOpacity="0.0" />
           </linearGradient>
         </defs>
 
@@ -71,7 +72,7 @@ export function DailyTrafficChart({ data = [] }) {
               y1={y}
               x2={width - padding}
               y2={y}
-              stroke="#e5e7eb"
+              stroke="rgba(255, 255, 255, 0.06)"
               strokeDasharray="4 4"
               strokeWidth="1"
             />
@@ -84,7 +85,7 @@ export function DailyTrafficChart({ data = [] }) {
         {/* Line for Views */}
         <polyline
           fill="none"
-          stroke="#f5c518"
+          stroke="#98f90d"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -94,7 +95,7 @@ export function DailyTrafficChart({ data = [] }) {
         {/* Line for Visitors */}
         <polyline
           fill="none"
-          stroke="#29251b"
+          stroke="#22d3ee"
           strokeWidth="2"
           strokeDasharray="3 3"
           strokeLinecap="round"
@@ -105,7 +106,7 @@ export function DailyTrafficChart({ data = [] }) {
         {/* Data points & hover triggers */}
         {data.map((d, i) => {
           const x = padding + (i / Math.max(data.length - 1, 1)) * (width - padding * 2);
-          const y = height - padding - (d.views / maxVal) * (height - padding * 2);
+          const y = height - padding - ((d.views || 0) / maxVal) * (height - padding * 2);
           return (
             <g
               key={i}
@@ -113,14 +114,14 @@ export function DailyTrafficChart({ data = [] }) {
               onMouseEnter={() => setHovered(d)}
               onMouseLeave={() => setHovered(null)}
             >
-              <circle cx={x} cy={y} r="4" fill="#ffffff" stroke="#f5c518" strokeWidth="2.5" />
+              <circle cx={x} cy={y} r="3.5" fill="#0c0e15" stroke="#98f90d" strokeWidth="2" />
             </g>
           );
         })}
       </svg>
 
       {/* X Axis labels */}
-      <div className="mt-2 flex justify-between text-[11px] font-mono text-gray-400">
+      <div className="mt-3 flex justify-between text-[10px] font-mono text-gray-500">
         <span>{data[0]?.date || ""}</span>
         {data.length > 2 && <span>{data[Math.floor(data.length / 2)]?.date || ""}</span>}
         <span>{data[data.length - 1]?.date || ""}</span>
@@ -133,7 +134,7 @@ export function DeviceDonut({ devices = { Desktop: 0, Mobile: 0, Tablet: 0 } }) 
   const total = (devices.Desktop || 0) + (devices.Mobile || 0) + (devices.Tablet || 0);
 
   if (total === 0) {
-    return <div className="py-6 text-center text-xs text-gray-400">No device data yet</div>;
+    return <div className="py-6 text-center text-xs font-mono text-gray-500">No device data recorded yet</div>;
   }
 
   const deskPct = Math.round(((devices.Desktop || 0) / total) * 100);
@@ -141,24 +142,36 @@ export function DeviceDonut({ devices = { Desktop: 0, Mobile: 0, Tablet: 0 } }) 
   const tabPct = 100 - deskPct - mobPct;
 
   return (
-    <div className="space-y-3">
-      <div className="flex h-3 w-full overflow-hidden rounded-full bg-gray-100">
-        <div style={{ width: `${deskPct}%` }} className="bg-[#29251b] transition-all" title={`Desktop: ${deskPct}%`} />
-        <div style={{ width: `${mobPct}%` }} className="bg-[#f5c518] transition-all" title={`Mobile: ${mobPct}%`} />
-        <div style={{ width: `${tabPct}%` }} className="bg-gray-400 transition-all" title={`Tablet: ${tabPct}%`} />
+    <div className="space-y-4">
+      <div className="flex h-3 w-full overflow-hidden rounded-full bg-white/[0.06] p-0.5 border border-white/10">
+        <div
+          style={{ width: `${deskPct}%` }}
+          className="bg-[#98f90d] rounded-full transition-all shadow-[0_0_8px_#98f90d]"
+          title={`Desktop: ${deskPct}%`}
+        />
+        <div
+          style={{ width: `${mobPct}%` }}
+          className="bg-cyan-400 rounded-full transition-all shadow-[0_0_8px_#22d3ee]"
+          title={`Mobile: ${mobPct}%`}
+        />
+        <div
+          style={{ width: `${tabPct}%` }}
+          className="bg-purple-400 rounded-full transition-all shadow-[0_0_8px_#c084fc]"
+          title={`Tablet: ${tabPct}%`}
+        />
       </div>
-      <div className="grid grid-cols-3 gap-2 pt-1 text-center text-xs">
-        <div className="rounded-lg bg-gray-50 p-2">
-          <div className="font-semibold text-gray-800">{deskPct}%</div>
-          <div className="text-[11px] text-gray-500">Desktop</div>
+      <div className="grid grid-cols-3 gap-2.5 pt-1 text-center text-xs">
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+          <div className="font-bold text-white text-sm">{deskPct}%</div>
+          <div className="text-[11px] font-mono text-[#98f90d] mt-0.5">Desktop</div>
         </div>
-        <div className="rounded-lg bg-gray-50 p-2">
-          <div className="font-semibold text-gray-800">{mobPct}%</div>
-          <div className="text-[11px] text-gray-500">Mobile</div>
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+          <div className="font-bold text-white text-sm">{mobPct}%</div>
+          <div className="text-[11px] font-mono text-cyan-400 mt-0.5">Mobile</div>
         </div>
-        <div className="rounded-lg bg-gray-50 p-2">
-          <div className="font-semibold text-gray-800">{tabPct}%</div>
-          <div className="text-[11px] text-gray-500">Tablet</div>
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+          <div className="font-bold text-white text-sm">{tabPct}%</div>
+          <div className="text-[11px] font-mono text-purple-400 mt-0.5">Tablet</div>
         </div>
       </div>
     </div>

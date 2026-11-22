@@ -1,23 +1,27 @@
 import Hero from "@/components/hero";
-import { Section, CTA } from "@/components/section";
-import { Steps, CompanyGrid } from "@/components/cards";
-import ClientWorkGrid from "@/components/client-work-grid";
-import { Introduction, SolutionsShowcase, ServicesShowcase, WhyUs, Marquee, HomeFAQ } from "@/components/home-content";
+import BrandyfyMarquee from "@/components/brandyfy-marquee";
+import { Introduction } from "@/components/home-content";
+import BrandyfyServices from "@/components/brandyfy-services";
+import BrandyfyShowcase from "@/components/brandyfy-showcase";
+import BrandyfyProcess from "@/components/brandyfy-process";
+import BrandyfyComparison from "@/components/brandyfy-comparison";
+import BrandyfyTestimonials from "@/components/brandyfy-testimonials";
+import BrandyfyFAQ from "@/components/brandyfy-faq";
+import BrandyfyCTA from "@/components/brandyfy-cta";
 
 export default function Home() {
   return (
     <>
       <Hero />
+      <BrandyfyMarquee />
       <Introduction />
-      <SolutionsShowcase />
-      <ServicesShowcase />
-      <Section eyebrow="How we work" title="A simple, transparent process"><Steps /></Section>
-      <Section id="selected-work" eyebrow="Selected work" title="Recent client projects"><ClientWorkGrid /></Section>
-      <Section id="our-clients" eyebrow="Our clients" title="Recent companies" intro="A selection of businesses we have partnered with to deliver technology solutions."><CompanyGrid /></Section>
-      <WhyUs />
-      <Marquee />
-      <HomeFAQ />
-      <CTA />
+      <BrandyfyServices />
+      <BrandyfyShowcase />
+      <BrandyfyProcess />
+      <BrandyfyComparison />
+      <BrandyfyTestimonials />
+      <BrandyfyFAQ />
+      <BrandyfyCTA />
     </>
   );
 }

@@ -1,3 +1,4 @@
+﻿export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { withAdminAuth } from "@/lib/auth/guard";
 import { SettingsRepository } from "@/lib/repositories/settings.repository";
@@ -162,3 +163,4 @@ export async function POST(req) {
     }
   });
 }
+

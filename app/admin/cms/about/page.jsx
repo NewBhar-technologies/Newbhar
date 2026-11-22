@@ -44,10 +44,14 @@ export default function AboutCMSPage() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 font-display">
-            About Section CMS
+          <div className="flex items-center gap-2 mb-1">
+            <span className="flex h-2 w-2 rounded-full bg-[#98f90d] shadow-[0_0_8px_#98f90d]" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#98f90d]">Narrative Layer</span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight text-white font-display">
+            About & Ethos CMS
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-neutral-400 mt-0.5">
             Manage company philosophy, mission narratives, and the public /about page copy.
           </p>
         </div>
@@ -57,22 +61,22 @@ export default function AboutCMSPage() {
             href="/about"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition shadow-xs"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-neutral-300 hover:text-white hover:border-[#98f90d]/50 hover:bg-white/10 transition-all"
           >
-            <Eye size={14} />
+            <Eye size={13} className="text-[#98f90d]" />
             <span>View Public /about</span>
           </a>
           <button
             type="button"
             onClick={() => handleSave(false)}
-            className="rounded-full border border-gray-300 bg-white px-4 py-2 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition shadow-xs"
+            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-neutral-300 hover:text-white hover:bg-white/10 transition"
           >
             Save Draft
           </button>
           <button
             type="button"
             onClick={() => handleSave(true)}
-            className="rounded-full bg-[#29251b] px-5 py-2 text-xs font-bold text-[#f5c518] hover:bg-[#181613] transition shadow-xs"
+            className="rounded-xl bg-[#98f90d] px-5 py-2 text-xs font-bold text-black transition-all hover:bg-[#86dc0b] hover:shadow-[0_0_20px_rgba(152,249,13,0.3)]"
           >
             Publish Live
           </button>
@@ -80,53 +84,53 @@ export default function AboutCMSPage() {
       </div>
 
       {savedMessage && (
-        <div className="flex items-center gap-2 rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-xs font-bold text-emerald-900">
-          <CheckCircle2 size={16} className="text-emerald-600" />
+        <div className="flex items-center gap-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 text-xs font-bold text-emerald-400 backdrop-blur-xl">
+          <CheckCircle2 size={16} className="text-[#98f90d]" />
           <span>{savedMessage}</span>
         </div>
       )}
 
-      <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-xs space-y-4 text-xs max-w-3xl">
-        <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-          <h2 className="text-base font-bold text-gray-900">Corporate Identity &amp; Positioning</h2>
+      <div className="rounded-3xl border border-white/10 bg-[#0f111a]/90 p-6 shadow-2xl backdrop-blur-xl space-y-4 text-xs max-w-3xl">
+        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <h2 className="text-sm font-bold text-white uppercase tracking-wider">Corporate Identity & Narrative</h2>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={about.visibility !== false}
               onChange={(e) => setAbout({ ...about, visibility: e.target.checked })}
-              className="rounded text-[#f5c518] focus:ring-[#f5c518]"
+              className="rounded text-[#98f90d] focus:ring-[#98f90d]"
             />
-            <span className="font-semibold text-gray-700">Section Enabled</span>
+            <span className="font-semibold text-neutral-300">Section Enabled</span>
           </label>
         </div>
 
-        <div>
-          <label className="block font-semibold text-gray-700 mb-1">Main Heading</label>
+        <div className="space-y-1">
+          <label className="block font-semibold text-neutral-300">Main Heading</label>
           <input
             type="text"
             value={about.heading}
             onChange={(e) => setAbout({ ...about, heading: e.target.value })}
-            className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+            className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
           />
         </div>
 
-        <div>
-          <label className="block font-semibold text-gray-700 mb-1">Subheading / Value Promise</label>
+        <div className="space-y-1">
+          <label className="block font-semibold text-neutral-300">Subheading / Value Promise</label>
           <input
             type="text"
             value={about.subheading}
             onChange={(e) => setAbout({ ...about, subheading: e.target.value })}
-            className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+            className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
           />
         </div>
 
-        <div>
-          <label className="block font-semibold text-gray-700 mb-1">About Company Story &amp; Ethos</label>
+        <div className="space-y-1">
+          <label className="block font-semibold text-neutral-300">About Company Story & Ethos</label>
           <textarea
             rows={6}
             value={about.content}
             onChange={(e) => setAbout({ ...about, content: e.target.value })}
-            className="w-full rounded-xl border border-gray-200 p-2.5 text-xs leading-relaxed focus:ring-1 focus:ring-[#f5c518]"
+            className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs leading-relaxed text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
           />
         </div>
       </div>

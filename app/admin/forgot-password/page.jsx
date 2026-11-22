@@ -42,44 +42,47 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#181613] px-4 py-12 text-white">
-      <div className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#08080a] px-4 py-12 text-white relative overflow-hidden">
+      {/* Background glow effects */}
+      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[450px] w-[450px] rounded-full bg-[#98f90d]/5 blur-[120px]" />
+
+      <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-8">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f5c518] text-[#181613] font-black text-xl shadow-lg mb-3">
-            B
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#98f90d] text-black font-black text-xl shadow-[0_0_20px_rgba(152,249,13,0.3)] mb-4">
+            N
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white font-display">Reset Password</h1>
-          <p className="mt-1 text-sm text-[#c6bea8]">
+          <h1 className="text-2xl font-black tracking-tight text-white font-display">Reset Credentials</h1>
+          <p className="mt-1 text-xs text-neutral-400">
             Enter your admin email to receive secure recovery instructions.
           </p>
         </div>
 
-        <div className="rounded-3xl border border-[#3b362c] bg-[#23201a] p-8 shadow-2xl">
+        <div className="rounded-3xl border border-white/10 bg-[#0f111a]/90 p-8 shadow-2xl backdrop-blur-xl">
           {error && (
-            <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-500/30 bg-red-950/40 p-4 text-xs text-red-300">
-              <AlertCircle size={18} className="shrink-0 text-red-400 mt-0.5" />
+            <div className="mb-6 flex items-start gap-3 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs text-rose-300">
+              <AlertCircle size={18} className="shrink-0 text-rose-400 mt-0.5" />
               <p>{error}</p>
             </div>
           )}
 
           {submitted ? (
             <div className="space-y-4 text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#98f90d]/10 text-[#98f90d] border border-[#98f90d]/30">
                 <CheckCircle2 size={24} />
               </div>
               <h3 className="text-lg font-bold text-white">Check Your Inbox</h3>
-              <p className="text-xs text-[#c6bea8] leading-relaxed">
-                If the email is associated with an active administrator, a reset link has been dispatched.
+              <p className="text-xs text-neutral-400 leading-relaxed">
+                If the email is associated with an active administrator, a secure password reset link has been dispatched.
               </p>
 
               {demoToken && (
-                <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-950/30 p-3 text-left">
+                <div className="mt-4 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-left">
                   <p className="text-[11px] font-mono text-amber-300 font-bold uppercase mb-1">
-                    Development Reset Link
+                    Development Reset Token
                   </p>
                   <Link
                     href={`/admin/reset-password?token=${demoToken}`}
-                    className="text-xs text-[#f5c518] underline break-all"
+                    className="text-xs text-[#98f90d] underline break-all hover:text-[#86dc0b]"
                   >
                     Click here to reset your password with token
                   </Link>
@@ -89,7 +92,7 @@ export default function ForgotPasswordPage() {
               <div className="pt-4">
                 <Link
                   href="/admin/login"
-                  className="inline-flex items-center gap-2 text-xs font-semibold text-[#f5c518] hover:underline"
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-[#98f90d] hover:underline"
                 >
                   <ArrowLeft size={14} />
                   <span>Back to Admin Login</span>
@@ -98,12 +101,12 @@ export default function ForgotPasswordPage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="block text-xs font-mono font-medium tracking-wider uppercase text-[#c6bea8] mb-2">
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-mono font-medium tracking-wider uppercase text-neutral-400">
                   Admin Email Address
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-500">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-neutral-500">
                     <Mail size={16} />
                   </span>
                   <input
@@ -112,7 +115,7 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@newbhar.com"
-                    className="w-full rounded-xl border border-[#3b362c] bg-[#181613] py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:border-[#f5c518] focus:outline-none focus:ring-1 focus:ring-[#f5c518] transition"
+                    className="w-full rounded-xl border border-white/10 bg-black/40 py-3 pl-10 pr-4 text-sm text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none focus:ring-1 focus:ring-[#98f90d] transition"
                   />
                 </div>
               </div>
@@ -120,7 +123,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-full bg-[#f5c518] py-3.5 px-6 font-bold text-[#181613] transition hover:bg-[#dfad0a] disabled:opacity-50 text-sm cursor-pointer"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#98f90d] py-3.5 px-6 font-bold text-black transition-all hover:bg-[#86dc0b] hover:shadow-[0_0_20px_rgba(152,249,13,0.3)] disabled:opacity-50 text-sm cursor-pointer"
               >
                 <span>{loading ? "Sending Instructions..." : "Send Reset Link"}</span>
                 <ArrowRight size={16} />
@@ -129,7 +132,7 @@ export default function ForgotPasswordPage() {
               <div className="text-center pt-2">
                 <Link
                   href="/admin/login"
-                  className="inline-flex items-center gap-1.5 text-xs text-[#c6bea8] hover:text-[#f5c518] transition"
+                  className="inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white transition"
                 >
                   <ArrowLeft size={14} />
                   <span>Back to Sign In</span>

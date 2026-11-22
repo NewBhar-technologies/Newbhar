@@ -115,11 +115,15 @@ export default function ServicesCMSPage() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-gray-900 font-display">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="flex h-2 w-2 rounded-full bg-[#98f90d] shadow-[0_0_8px_#98f90d]" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#98f90d]">Service Taxonomy</span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight text-white font-display">
             Engineering Services Directory
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Manage public service lines, deliverables, capabilities, and dedicated landing pages.
+          <p className="text-xs text-neutral-400 mt-0.5">
+            Manage public service lines, deliverables, capabilities, and dedicated landing page routes.
           </p>
         </div>
 
@@ -130,7 +134,7 @@ export default function ServicesCMSPage() {
             setForm({ title: "", slug: "", tagline: "", short: "", pointsText: "", techText: "" });
             setShowModal(true);
           }}
-          className="inline-flex items-center gap-2 rounded-full bg-[#29251b] px-4 py-2 text-xs font-semibold text-[#f5c518] hover:bg-[#181613] transition shadow-xs"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#98f90d] px-4 py-2.5 text-xs font-bold text-black transition-all hover:bg-[#86dc0b] hover:shadow-[0_0_20px_rgba(152,249,13,0.3)]"
         >
           <Plus size={15} />
           <span>Add Service</span>
@@ -140,73 +144,82 @@ export default function ServicesCMSPage() {
       {/* Services Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {loading ? (
-          <div className="col-span-full py-12 text-center text-xs text-gray-400">Loading services...</div>
+          <div className="col-span-full py-12 text-center text-xs text-neutral-400">
+            <div className="inline-flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[#98f90d] animate-ping" />
+              <span>Fetching services catalog from database...</span>
+            </div>
+          </div>
         ) : services.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-xs text-gray-400">No services configured.</div>
+          <div className="col-span-full rounded-3xl border border-white/10 bg-[#0f111a]/90 p-12 text-center text-xs text-neutral-400">
+            No services configured in CMS.
+          </div>
         ) : (
           services.map((s, idx) => (
             <div
               key={s.id || s.slug}
-              className={`rounded-2xl border p-5 shadow-xs transition flex flex-col justify-between ${
-                s.visibility !== false ? "bg-white border-gray-100" : "bg-gray-50 border-gray-200 opacity-60"
+              className={`rounded-3xl border p-5 shadow-2xl backdrop-blur-xl transition-all flex flex-col justify-between ${
+                s.visibility !== false
+                  ? "bg-[#0f111a]/90 border-white/10 hover:border-[#98f90d]/30"
+                  : "bg-white/[0.02] border-white/5 opacity-60"
               }`}
             >
               <div>
                 <div className="flex items-start justify-between mb-2">
-                  <span className="font-mono text-xs font-bold text-gray-400">0{idx + 1}</span>
+                  <span className="font-mono text-xs font-bold text-[#98f90d]">0{idx + 1}</span>
                   <div className="flex items-center gap-1">
                     <button
                       type="button"
                       onClick={() => handleToggleVisibility(s)}
-                      className="p-1 text-gray-400 hover:text-gray-900 transition"
+                      className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition"
                       title={s.visibility !== false ? "Hide service" : "Show service"}
                     >
-                      {s.visibility !== false ? <Eye size={15} /> : <EyeOff size={15} />}
+                      {s.visibility !== false ? <Eye size={14} className="text-[#98f90d]" /> : <EyeOff size={14} />}
                     </button>
                     <button
                       type="button"
                       onClick={() => openEdit(s)}
-                      className="p-1 text-gray-400 hover:text-gray-900 transition"
+                      className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition"
                       title="Edit service details"
                     >
-                      <Edit3 size={15} />
+                      <Edit3 size={14} />
                     </button>
                     <button
                       type="button"
                       onClick={() => setDeleteTargetId(s.id)}
-                      className="p-1 text-gray-400 hover:text-red-500 transition"
+                      className="p-1.5 rounded-lg text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition"
                       title="Delete service"
                     >
-                      <Trash2 size={15} />
+                      <Trash2 size={14} />
                     </button>
                   </div>
                 </div>
 
-                <h3 className="font-bold text-base text-gray-900">{s.title}</h3>
-                <p className="text-xs text-[#806000] font-medium mt-0.5">{s.tagline}</p>
-                <p className="text-xs text-gray-600 line-clamp-3 mt-2 leading-relaxed">{s.short}</p>
+                <h3 className="font-bold text-base text-white">{s.title}</h3>
+                <p className="text-xs text-[#98f90d] font-medium mt-0.5">{s.tagline}</p>
+                <p className="text-xs text-neutral-300 line-clamp-3 mt-2 leading-relaxed">{s.short}</p>
 
                 {/* Key Points snippet */}
-                <div className="mt-3 space-y-1">
+                <div className="mt-3.5 space-y-1.5">
                   {(s.points || []).slice(0, 2).map((pt, i) => (
-                    <div key={i} className="text-[11px] text-gray-500 truncate flex items-center gap-1.5">
-                      <span className="h-1 w-1 rounded-full bg-[#f5c518] shrink-0" />
+                    <div key={i} className="text-[11px] text-neutral-400 truncate flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#98f90d] shrink-0" />
                       <span className="truncate">{pt}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
-                <span className="font-mono text-[11px] text-gray-400">/services/{s.slug}</span>
+              <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3">
+                <span className="font-mono text-[11px] text-neutral-400">/services/{s.slug}</span>
                 <a
                   href={`/services/${s.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-[#806000] hover:underline"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#98f90d] hover:text-[#86dc0b] transition-colors"
                 >
                   <span>View Landing Page</span>
-                  <ArrowUpRight size={12} />
+                  <ArrowUpRight size={13} />
                 </a>
               </div>
             </div>
@@ -224,85 +237,85 @@ export default function ServicesCMSPage() {
         >
           <form onSubmit={handleSave} className="space-y-4 text-xs">
             <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">Service Title *</label>
+              <div className="space-y-1">
+                <label className="block font-semibold text-neutral-300">Service Title *</label>
                 <input
                   type="text"
                   required
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
                   placeholder="e.g. Custom AI Platforms"
-                  className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
                 />
               </div>
-              <div>
-                <label className="block font-semibold text-gray-700 mb-1">URL Slug</label>
+              <div className="space-y-1">
+                <label className="block font-semibold text-neutral-300">URL Slug *</label>
                 <input
                   type="text"
                   required
                   value={form.slug}
                   onChange={(e) => setForm({ ...form, slug: e.target.value })}
                   placeholder="custom-ai-platforms"
-                  className="w-full rounded-xl border border-gray-200 p-2.5 text-xs font-mono focus:ring-1 focus:ring-[#f5c518]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs font-mono text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Tagline</label>
+            <div className="space-y-1">
+              <label className="block font-semibold text-neutral-300">Tagline</label>
               <input
                 type="text"
                 value={form.tagline}
                 onChange={(e) => setForm({ ...form, tagline: e.target.value })}
                 placeholder="High-impact marketing subheadline"
-                className="w-full rounded-xl border border-gray-200 p-2.5 text-xs focus:ring-1 focus:ring-[#f5c518]"
+                className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
               />
             </div>
 
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Short Description</label>
+            <div className="space-y-1">
+              <label className="block font-semibold text-neutral-300">Short Description</label>
               <textarea
                 rows={3}
                 value={form.short}
                 onChange={(e) => setForm({ ...form, short: e.target.value })}
                 placeholder="Overview text displayed on cards and search..."
-                className="w-full rounded-xl border border-gray-200 p-2.5 text-xs leading-relaxed focus:ring-1 focus:ring-[#f5c518]"
+                className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs leading-relaxed text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
               />
             </div>
 
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Core Deliverables &amp; Points (One per line)</label>
+            <div className="space-y-1">
+              <label className="block font-semibold text-neutral-300">Core Deliverables & Points (One per line)</label>
               <textarea
                 rows={4}
                 value={form.pointsText}
                 onChange={(e) => setForm({ ...form, pointsText: e.target.value })}
-                placeholder="Custom software: enterprise platforms&#10;API development: REST &amp; cloud services"
-                className="w-full rounded-xl border border-gray-200 p-2.5 text-xs leading-relaxed focus:ring-1 focus:ring-[#f5c518]"
+                placeholder="Custom software: enterprise platforms&#10;API development: REST & cloud services"
+                className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs leading-relaxed text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
               />
             </div>
 
-            <div>
-              <label className="block font-semibold text-gray-700 mb-1">Tech Stack (One per line)</label>
+            <div className="space-y-1">
+              <label className="block font-semibold text-neutral-300">Tech Stack (One per line)</label>
               <textarea
                 rows={3}
                 value={form.techText}
                 onChange={(e) => setForm({ ...form, techText: e.target.value })}
                 placeholder="Frontend: React, Next.js&#10;Backend: Node.js, Python"
-                className="w-full rounded-xl border border-gray-200 p-2.5 text-xs font-mono focus:ring-1 focus:ring-[#f5c518]"
+                className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs font-mono text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
               />
             </div>
 
-            <div className="flex justify-end gap-2 pt-2">
+            <div className="flex justify-end gap-2.5 pt-3 border-t border-white/10">
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="rounded-full px-4 py-2 font-medium text-gray-600 hover:bg-gray-100"
+                className="rounded-xl px-4 py-2 font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded-full bg-[#29251b] px-5 py-2 font-bold text-[#f5c518] hover:bg-[#181613]"
+                className="rounded-xl bg-[#98f90d] px-5 py-2 font-bold text-black hover:bg-[#86dc0b] transition-all"
               >
                 Save &amp; Publish
               </button>
