@@ -18,7 +18,10 @@ const structuredData = {
       name: SITE.name,
       alternateName: "Newbhar",
       url: `${SITE.url}/`,
-      logo: `${SITE.url}/newbhar-mark.png`,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE.url}/newbhar-mark.png`,
+      },
       image: `${SITE.url}/newbhar-banner.jpg`,
       description: siteDescription,
       email: SITE.email,
@@ -67,12 +70,20 @@ export const metadata = {
     canonical: "/",
   },
 
+  // Google Search Favicon
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/newbhar-mark.png", type: "image/png" },
+      {
+        url: "/newbhar-mark.png",
+        type: "image/png",
+        sizes: "96x96",
+      },
     ],
-    apple: "/newbhar-mark.png",
+    apple: [
+      {
+        url: "/newbhar-mark.png",
+      },
+    ],
   },
 
   openGraph: {
