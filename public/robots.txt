@@ -1,0 +1,8 @@
+
+# Robots.txt for Newbhar Technologies
+# Official website: https://newbhar.com/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://newbhar.com/sitemap.xml
