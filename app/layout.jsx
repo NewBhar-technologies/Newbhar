@@ -1,25 +1,66 @@
+
 import "./globals.css";
 import { SITE } from "@/lib/site";
 import PublicShell from "@/components/public-shell";
 
 const siteTitle = `${SITE.name} | Custom Software & Digital Engineering`;
+
 const siteDescription =
   "Custom software development, web platforms, mobile apps, and cloud engineering.";
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE.url}/#organization`,
+      name: SITE.name,
+      alternateName: "Newbhar",
+      url: `${SITE.url}/`,
+      logo: `${SITE.url}/newbhar-mark.png`,
+      image: `${SITE.url}/newbhar-banner.jpg`,
+      description: siteDescription,
+      email: SITE.email,
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "IN",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE.url}/#website`,
+      name: SITE.name,
+      alternateName: "Newbhar",
+      url: `${SITE.url}/`,
+      inLanguage: "en-IN",
+      publisher: {
+        "@id": `${SITE.url}/#organization`,
+      },
+    },
+  ],
+};
+
 export const metadata = {
-  metadataBase: new URL(SITE.url),
+  metadataBase: new URL(`${SITE.url}/`),
+
   title: {
     default: siteTitle,
     template: `%s | ${SITE.name}`,
   },
+
   description: siteDescription,
+
   applicationName: SITE.name,
+
   authors: [{ name: SITE.name, url: SITE.url }],
+
   creator: SITE.name,
   publisher: SITE.name,
+
   alternates: {
-    canonical: "./",
+    canonical: "/",
   },
+
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -27,10 +68,11 @@ export const metadata = {
     ],
     apple: "/newbhar-mark.png",
   },
+
   openGraph: {
     title: siteTitle,
     description: siteDescription,
-    url: SITE.url,
+    url: `${SITE.url}/`,
     siteName: SITE.name,
     images: [
       {
@@ -40,15 +82,17 @@ export const metadata = {
         alt: `${SITE.name} Digital Engineering`,
       },
     ],
-    locale: "en_US",
+    locale: "en_IN",
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
     images: ["/newbhar-banner.jpg"],
   },
+
   robots: {
     index: true,
     follow: true,
@@ -69,35 +113,21 @@ export const viewport = {
   themeColor: "#08080a",
 };
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: SITE.name,
-  alternateName: "Newbhar Technologies",
-  url: SITE.url,
-  logo: `${SITE.url}/newbhar-mark.png`,
-  image: `${SITE.url}/newbhar-banner.jpg`,
-  description: siteDescription,
-  address: {
-    "@type": "PostalAddress",
-    addressCountry: "IN",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer support",
-    email: SITE.email,
-  },
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(
+              /</g,
+              "\\u003c"
+            ),
+          }}
         />
       </head>
+
       <body className="bg-background font-sans text-foreground antialiased">
         <PublicShell>{children}</PublicShell>
       </body>
