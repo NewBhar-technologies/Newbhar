@@ -6,9 +6,8 @@ import PublicShell from "@/components/public-shell";
 const siteTitle = `${SITE.name} | Custom Software & Digital Engineering`;
 
 const siteDescription =
-  "Custom software development, web platforms, mobile apps, and cloud engineering.";
+  "Custom software development, web platforms, mobile apps, AI solutions, and cloud engineering.";
 
-// Organization + Website Structured Data
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -70,7 +69,6 @@ export const metadata = {
     canonical: "/",
   },
 
-  // Google Search Favicon
   icons: {
     icon: [
       {
@@ -82,32 +80,39 @@ export const metadata = {
     apple: [
       {
         url: "/newbhar-mark.png",
+        type: "image/png",
       },
     ],
   },
 
   openGraph: {
-    title: siteTitle,
-    description: siteDescription,
+    type: "website",
+    locale: "en_IN",
     url: `${SITE.url}/`,
     siteName: SITE.name,
+    title: siteTitle,
+    description: siteDescription,
     images: [
       {
         url: "/newbhar-banner.jpg",
         width: 1200,
         height: 630,
-        alt: `${SITE.name} Digital Engineering`,
+        alt: `${SITE.name} - Custom Software & Digital Engineering`,
+        type: "image/jpeg",
       },
     ],
-    locale: "en_IN",
-    type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/newbhar-banner.jpg"],
+    images: [
+      {
+        url: "/newbhar-banner.jpg",
+        alt: `${SITE.name} Digital Engineering`,
+      },
+    ],
   },
 
   robots: {
@@ -132,15 +137,12 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData).replace(
-              /</g,
-              "\\u003c"
-            ),
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
       </head>
