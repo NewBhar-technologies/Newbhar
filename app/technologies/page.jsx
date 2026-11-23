@@ -1,6 +1,46 @@
 import { PageHeader, Section, CTA, card } from "@/components/section";
-import { TECH, TECH_LOGOS } from "@/lib/site";
-export const metadata = { title: "Technologies" };
+import { SITE, TECH, TECH_LOGOS } from "@/lib/site";
+
+export const metadata = {
+  title: "Technologies & Engineering Stack",
+  description:
+    "Explore the modern engineering stack used by Newbhar Technologies: React, Next.js, Node.js, Python, PostgreSQL, AWS, Docker, AI/LLMs, and React Native.",
+  alternates: {
+    canonical: "/technologies",
+  },
+  openGraph: {
+    title: `Technologies & Engineering Stack | ${SITE.name}`,
+    description:
+      "Explore the modern engineering stack used by Newbhar Technologies: React, Next.js, Node.js, Python, PostgreSQL, AWS, Docker, AI/LLMs, and React Native.",
+    url: `${SITE.url}/technologies`,
+    siteName: SITE.name,
+    locale: "en_IN",
+    type: "website",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `Technologies & Engineering Stack - ${SITE.name}`,
+        type: "image/jpeg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Technologies & Engineering Stack | ${SITE.name}`,
+    description:
+      "Explore the modern engineering stack used by Newbhar Technologies: React, Next.js, Node.js, Python, PostgreSQL, AWS, Docker, AI/LLMs, and React Native.",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `Technologies & Engineering Stack - ${SITE.name}`,
+      },
+    ],
+  },
+};
 export default function Technologies() {
   return (
     <>

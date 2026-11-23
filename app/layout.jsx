@@ -44,7 +44,7 @@ const structuredData = {
 };
 
 export const metadata = {
-  metadataBase: new URL(`${SITE.url}/`),
+  metadataBase: new URL(SITE.url),
 
   title: {
     default: siteTitle,
@@ -94,7 +94,7 @@ export const metadata = {
     description: siteDescription,
     images: [
       {
-        url: "/newbhar-banner.jpg",
+        url: `${SITE.url}/newbhar-banner.jpg`,
         width: 1200,
         height: 630,
         alt: `${SITE.name} - Custom Software & Digital Engineering`,
@@ -109,8 +109,10 @@ export const metadata = {
     description: siteDescription,
     images: [
       {
-        url: "/newbhar-banner.jpg",
-        alt: `${SITE.name} Digital Engineering`,
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `${SITE.name} - Custom Software & Digital Engineering`,
       },
     ],
   },

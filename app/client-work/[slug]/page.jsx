@@ -15,6 +15,9 @@ export const generateMetadata = ({ params }) => {
   if (!project) return { title: "Client Work Not Found" };
   const title = project.title;
   const description = project.summary || project.challenge || "Client engineering showcase by Newbhar Technologies.";
+  const imageUrl = project.cover
+    ? (project.cover.startsWith("http") ? project.cover : `${SITE.url}${project.cover}`)
+    : `${SITE.url}/newbhar-banner.jpg`;
   return {
     title,
     description,
@@ -26,14 +29,25 @@ export const generateMetadata = ({ params }) => {
       description,
       url: `${SITE.url}/client-work/${project.slug}`,
       siteName: SITE.name,
+      locale: "en_IN",
       type: "article",
-      images: project.cover ? [{ url: project.cover, alt: title }] : [],
+      images: [
+        {
+          url: imageUrl,
+          alt: `${title} - ${SITE.name}`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${SITE.name}`,
       description,
-      images: project.cover ? [project.cover] : [],
+      images: [
+        {
+          url: imageUrl,
+          alt: `${title} - ${SITE.name}`,
+        },
+      ],
     },
   };
 };

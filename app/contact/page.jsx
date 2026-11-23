@@ -5,7 +5,43 @@ import ContactForm from "@/components/contact-form";
 
 export const metadata = {
   title: "Contact",
-  description: "Get in touch with Newbhar Technologies. Inquire about custom software development, AI solutions, web and mobile apps, or cloud consulting.",
+  description:
+    "Get in touch with Newbhar Technologies. Inquire about custom software development, AI solutions, web and mobile apps, or cloud consulting.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: `Contact Newbhar Technologies`,
+    description:
+      "Get in touch with Newbhar Technologies. Inquire about custom software development, AI solutions, web and mobile apps, or cloud consulting.",
+    url: `${SITE.url}/contact`,
+    siteName: SITE.name,
+    locale: "en_IN",
+    type: "website",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `Contact Newbhar Technologies`,
+        type: "image/jpeg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Contact Newbhar Technologies`,
+    description:
+      "Get in touch with Newbhar Technologies. Inquire about custom software development, AI solutions, web and mobile apps, or cloud consulting.",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `Contact Newbhar Technologies`,
+      },
+    ],
+  },
 };
 
 export default function Contact() {

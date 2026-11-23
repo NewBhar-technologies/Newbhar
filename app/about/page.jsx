@@ -1,6 +1,47 @@
+import { SITE } from "@/lib/site";
 import { PageHeader, Section, CTA, Visual, card } from "@/components/section";
 import { Target, Eye, Handshake } from "lucide-react";
-export const metadata = { title: "About" };
+
+export const metadata = {
+  title: "About",
+  description:
+    "Learn about Newbhar Technologies. We engineer dependable custom software, web platforms, mobile apps, AI solutions, and cloud infrastructure for businesses.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: `About Newbhar Technologies`,
+    description:
+      "Learn about Newbhar Technologies. We engineer dependable custom software, web platforms, mobile apps, AI solutions, and cloud infrastructure for businesses.",
+    url: `${SITE.url}/about`,
+    siteName: SITE.name,
+    locale: "en_IN",
+    type: "website",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `About Newbhar Technologies`,
+        type: "image/jpeg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `About Newbhar Technologies`,
+    description:
+      "Learn about Newbhar Technologies. We engineer dependable custom software, web platforms, mobile apps, AI solutions, and cloud infrastructure for businesses.",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `About Newbhar Technologies`,
+      },
+    ],
+  },
+};
 
 const values = [
   [Target, "Outcome-first", "We start from your business goal, not a technology wish list."],

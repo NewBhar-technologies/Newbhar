@@ -5,7 +5,43 @@ import StartProjectForm from "@/components/start-project-form";
 
 export const metadata = {
   title: "Start a Project",
-  description: "Initiate a project discussion with Newbhar Technologies. Submit your requirements, timeline, and goals for a clear estimate and roadmap.",
+  description:
+    "Initiate a project discussion with Newbhar Technologies. Submit your requirements, timeline, and goals for a clear estimate and roadmap.",
+  alternates: {
+    canonical: "/start-project",
+  },
+  openGraph: {
+    title: `Start a Project | ${SITE.name}`,
+    description:
+      "Initiate a project discussion with Newbhar Technologies. Submit your requirements, timeline, and goals for a clear estimate and roadmap.",
+    url: `${SITE.url}/start-project`,
+    siteName: SITE.name,
+    locale: "en_IN",
+    type: "website",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `Start a Project - ${SITE.name}`,
+        type: "image/jpeg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Start a Project | ${SITE.name}`,
+    description:
+      "Initiate a project discussion with Newbhar Technologies. Submit your requirements, timeline, and goals for a clear estimate and roadmap.",
+    images: [
+      {
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+        alt: `Start a Project - ${SITE.name}`,
+      },
+    ],
+  },
 };
 
 const subject = encodeURIComponent("New project enquiry");
