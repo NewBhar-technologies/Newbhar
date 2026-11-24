@@ -825,3 +825,68 @@
   .why-grid { grid-template-columns: 1fr; }
   .faq-layout { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 600px) {
+  .home-hero {
+    min-height: 915px;
+    padding-top: 138px;
+    padding-bottom: 36px;
+    align-items: flex-start;
+  }
+  .hero-grid {
+    gap: 8px;
+  }
+  .hero-copy {
+    gap: 18px;
+  }
+  .brandy-badge {
+    width: 100%;
+    min-height: 40px;
+    justify-content: flex-start;
+    padding: 8px 14px;
+    font-size: 10.5px;
+    letter-spacing: 0.055em;
+  }
+  .hero-copy h1 {
+    font-size: clamp(40px, 11vw, 48px);
+    line-height: 1.02;
+  }
+  .hero-description {
+    max-width: 39ch;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .hero-copy .btn-row {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+  .hero-copy .btn-row .vx-button {
+    min-height: 60px;
+    padding: 10px 16px;
+    font-size: 13.5px;
+  }
+  .hero-copy .btn-row .vx-button-label {
+    white-space: nowrap;
+  }
+  .hero-tags {
+    display: grid;
+    gap: 11px;
+    padding-top: 6px;
+  }
+  .hero-tags > span {
+    width: fit-content;
+    min-height: 30px;
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  .hero-art-slot {
+    min-height: 170px;
+    margin-top: 4px;
+  }
+  .particle-status {
+    bottom: 20px;
+  }
+  .hero-scroll {
+    display: none;
+  }
+}
