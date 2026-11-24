@@ -33,11 +33,11 @@ Configure the following environment variables in your production hosting dashboa
 | Variable Name                 | Required | Exposure Level  | Example Value                   | Description                                                                    |
 | :---------------------------- | :------- | :-------------- | :------------------------------ | :----------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`        | **Yes**  | Client & Server | `https://newbhar.com`           | Primary canonical URL (no trailing slash).                                     |
-| `CONTACT_RECIPIENT_EMAIL`     | **Yes**  | **Server Only** | `inquiries@newbhar.com`         | Target inbox for client inquiries.                                             |
+| `CONTACT_RECIPIENT_EMAIL`     | **Yes**  | **Server Only** | `contact@newbhar.com`           | Target inbox for client inquiries.                                             |
 | `RESEND_API_KEY`              | **Yes**  | **Server Only** | `re_1234567890abcdef...`        | Resend API secret key for email dispatch.                                      |
-| `NEXT_PUBLIC_CONTACT_EMAIL`   | Optional | Client & Server | `newbhartechnologies@gmail.com` | Fallback email displayed in UI.                                                |
-| `NEXT_PUBLIC_CONTACT_PHONE`   | Optional | Client & Server | `+91 98765 43210`               | Business phone displayed on site.                                              |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Optional | Client & Server | `919876543210`                  | WhatsApp number (digits only). If omitted, floating WhatsApp button is hidden. |
+| `NEXT_PUBLIC_CONTACT_EMAIL`   | Optional | Client & Server | `contact@newbhar.com`           | Fallback email displayed in UI.                                                |
+| `NEXT_PUBLIC_CONTACT_PHONE`   | Optional | Client & Server | `+91 0000`               | Business phone displayed on site.                                              |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Optional | Client & Server | `0000`                  | WhatsApp number (digits only). If omitted, floating WhatsApp button is hidden. |
 
 > [!CAUTION]
 > Never prefix `RESEND_API_KEY` with `NEXT_PUBLIC_`. Keep it strictly as a server-side environment secret.

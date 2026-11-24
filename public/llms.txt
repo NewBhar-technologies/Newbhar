@@ -83,7 +83,9 @@ For official business inquiries, project discussions, consultations, and service
 
 - Website: https://newbhar.com/
 - Contact page: https://newbhar.com/contact
-- Email: newbhartechnologies@gmail.com
+- General Business Enquiries: info@newbhar.com
+- Contact & Project Enquiries: contact@newbhar.com
+- Technical Support: support@newbhar.com
 
 ## Important Information
 

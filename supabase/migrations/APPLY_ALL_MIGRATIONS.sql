@@ -696,14 +696,14 @@ VALUES
   ('homepage', '{"categoryText": "Software · AI · Cloud · Data", "mainHeading": "Your digital transformation", "highlightedHeading": "partner.", "description": "We turn spreadsheets, paper forms and manual follow-ups into custom software, web platforms, mobile apps and AI tools, built around how your business really works.", "primaryButtonText": "Let''s talk", "primaryButtonUrl": "/start-project", "secondaryButtonText": "See our work", "secondaryButtonUrl": "/projects", "tags": ["100% custom-built", "Web, mobile, AI & cloud under one roof"], "visibility": true}'::jsonb, true),
   ('heroAnimation', '{"enabled": true, "particleCount": 160, "particleSize": 3, "animationSpeed": 1, "visibility": true, "behavior": "interactive-orbit"}'::jsonb, true),
   ('about', '{"heading": "Engineering Digital Excellence for Forward-Thinking Enterprises", "subheading": "Custom solutions crafted around how your business really operates.", "content": "Newbhar Technologies is a premier technology partner specializing in enterprise custom software, cloud architecture, and artificial intelligence solutions. We replace manual friction with seamless, reliable software.", "visibility": true}'::jsonb, true),
-  ('branding', '{"name": "Newbhar Technologies", "tagline": "Your digital transformation partner.", "primaryColor": "#f5c518", "accentInk": "#806000", "darkBackground": "#29251b", "logoText": "Newbhar Technologies", "contactEmail": "newbhartechnologies@gmail.com", "location": "India", "visibility": true}'::jsonb, true)
+  ('branding', '{"name": "Newbhar Technologies", "tagline": "Your digital transformation partner.", "primaryColor": "#f5c518", "accentInk": "#806000", "darkBackground": "#29251b", "logoText": "Newbhar Technologies", "contactEmail": "contact@newbhar.com", "location": "India", "visibility": true}'::jsonb, true)
 ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, visibility = EXCLUDED.visibility, updated_at = NOW();
 
 INSERT INTO cms_footer (id, brand_description, contact_email, meeting_url, meeting_label, admin_login_link, copyright_text, company_links, social_links, visibility)
 VALUES (
   'main',
   'Software, AI and cloud engineering for forward-thinking enterprises.',
-  'newbhartechnologies@gmail.com',
+  'contact@newbhar.com',
   '/contact',
   'Schedule a Consultation',
   '{"label": "Admin Login", "url": "/admin/login", "enabled": true, "displayOrder": 2, "showLockIcon": true}'::jsonb,
@@ -733,7 +733,7 @@ ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, subject = EXCLUDED.subject,
 INSERT INTO system_settings (id, general, security, integrations)
 VALUES (
   'default',
-  '{"siteName": "Newbhar Technologies", "supportEmail": "newbhartechnologies@gmail.com", "timezone": "Asia/Kolkata", "dateFormat": "YYYY-MM-DD", "maintenanceMode": false}'::jsonb,
+  '{"siteName": "Newbhar Technologies", "supportEmail": "support@newbhar.com", "timezone": "Asia/Kolkata", "dateFormat": "YYYY-MM-DD", "maintenanceMode": false}'::jsonb,
   '{"maxLoginAttempts": 5, "lockoutDurationMinutes": 15, "sessionExpiryHours": 24, "enforceStrongPasswords": true}'::jsonb,
   '{"resend": {"status": "Ready", "configured": false}, "supabase": {"status": "Connected (Supabase PostgreSQL)", "configured": true}}'::jsonb
 )

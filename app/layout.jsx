@@ -33,7 +33,27 @@ const structuredData = {
         height: 630,
       },
       description: siteDescription,
-      email: SITE.email,
+      email: SITE.infoEmail || "info@newbhar.com",
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "general inquiries",
+          email: "info@newbhar.com",
+          availableLanguage: ["English", "Hindi"],
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "customer contact",
+          email: "contact@newbhar.com",
+          availableLanguage: ["English", "Hindi"],
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "technical support",
+          email: "support@newbhar.com",
+          availableLanguage: ["English", "Hindi"],
+        },
+      ],
       areaServed: {
         "@type": "Country",
         name: "India",

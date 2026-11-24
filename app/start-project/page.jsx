@@ -70,7 +70,7 @@ export default function StartProject() {
               </ul>
               <div className="border-t border-border pt-4">
                 <p className="mb-3 text-xs text-muted">Prefer emailing your brief directly?</p>
-                <Button href={`mailto:${SITE.email}?subject=${subject}&body=${body}`} variant="secondary">
+                <Button href={`mailto:${SITE.contactEmail || "contact@newbhar.com"}?subject=${subject}&body=${body}`} variant="secondary">
                   Email us your brief
                 </Button>
               </div>

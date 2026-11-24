@@ -40,7 +40,7 @@ VALUES
     "accentInk": "#806000",
     "darkBackground": "#29251b",
     "logoText": "Newbhar Technologies",
-    "contactEmail": "newbhartechnologies@gmail.com",
+    "contactEmail": "contact@newbhar.com",
     "location": "India",
     "visibility": true
   }'::jsonb, true)
@@ -54,7 +54,7 @@ INSERT INTO cms_footer (id, brand_description, contact_email, meeting_url, meeti
 VALUES (
   'main',
   'Software, AI and cloud engineering for forward-thinking enterprises.',
-  'newbhartechnologies@gmail.com',
+  'contact@newbhar.com',
   '/contact',
   'Schedule a Consultation',
   '{"label": "Admin Login", "url": "/admin/login", "enabled": true, "displayOrder": 2, "showLockIcon": true}'::jsonb,
@@ -106,7 +106,7 @@ VALUES (
   'default',
   '{
     "siteName": "Newbhar Technologies",
-    "supportEmail": "newbhartechnologies@gmail.com",
+    "supportEmail": "support@newbhar.com",
     "timezone": "Asia/Kolkata",
     "dateFormat": "YYYY-MM-DD",
     "maintenanceMode": false

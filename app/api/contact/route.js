@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { ContactFormSchema } from "@/lib/validation";
 import { checkRateLimit, isDuplicateSubmission } from "@/lib/rate-limiter";
-import { getContactRecipientEmail, getResendApiKey } from "@/lib/env";
+import { getContactRecipientEmail, getResendApiKey, getEmailFromAddress } from "@/lib/env";
 import { ContactRepository } from "@/lib/repositories/contact.repository";
 import { triggerWorkflow } from "@/lib/automations";
 
@@ -209,7 +209,7 @@ export async function POST(req) {
 						Authorization: `Bearer ${resendApiKey}`,
 					},
 					body: JSON.stringify({
-						from: "Newbhar Technologies Inquiries <onboarding@resend.dev>",
+						from: getEmailFromAddress("contact"),
 						to: [recipientEmail],
 						reply_to: data.email,
 						subject: sanitizedSubject,
@@ -233,7 +233,7 @@ export async function POST(req) {
 						? isPermError
 							? "Database permissions need to be granted in Supabase. Please execute FIX_PERMISSIONS.sql in your Supabase SQL Editor."
 							: "Database table 'contacts' is not yet migrated in Supabase. Please execute APPLY_ALL_MIGRATIONS.sql in your Supabase SQL Editor."
-						: "We are currently experiencing a brief technical maintenance with our database. Please email us directly at newbhartechnologies@gmail.com and we will respond immediately.",
+						: "We are currently experiencing a brief technical maintenance with our database. Please email us directly at contact@newbhar.com and we will respond immediately.",
 				},
 				{ status: 503 },
 			);

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { withAdminAuth } from "@/lib/auth/guard";
 import { SettingsRepository } from "@/lib/repositories/settings.repository";
 import { recordAuditLogSync } from "@/lib/auth/session";
-import { getResendApiKey } from "@/lib/env";
+import { getResendApiKey, getEmailFromAddress } from "@/lib/env";
 
 export async function GET(req) {
   return withAdminAuth(req, "emails", async () => {
@@ -64,7 +64,7 @@ export async function POST(req) {
                 Authorization: `Bearer ${resendApiKey}`,
               },
               body: JSON.stringify({
-                from: email.from || "Newbhar Technologies <onboarding@resend.dev>",
+                from: email.from || getEmailFromAddress(email.category === "Support" ? "support" : "contact"),
                 to: [email.to],
                 subject: email.subject,
                 text: email.body || email.subject,
@@ -83,7 +83,7 @@ export async function POST(req) {
           }
         } else {
           deliveryStatus = "failed";
-          providerResponse = "Cannot send: RESEND_API_KEY is not configured in environment.";
+          providerResponse = "Cannot send: Outgoing email provider is not configured. Configure RESEND_API_KEY or SMTP credentials in environment variables.";
         }
 
         const updated = await SettingsRepository.logEmail({
@@ -103,7 +103,7 @@ export async function POST(req) {
         return NextResponse.json({ success: false, error: "Recipient, subject, and body are required" }, { status: 400 });
       }
 
-      const fromAddress = "Newbhar Technologies <onboarding@resend.dev>";
+      const fromAddress = getEmailFromAddress(category === "Support" ? "support" : "contact");
       let deliveryStatus = "sent";
       let providerResponse = "Sent via Resend REST API";
 
@@ -133,7 +133,7 @@ export async function POST(req) {
         }
       } else {
         deliveryStatus = "failed";
-        providerResponse = "Not Sent: RESEND_API_KEY is not configured. Add a verified Resend key to environment to enable live dispatch.";
+        providerResponse = "Not Sent: Outgoing email provider is not configured. Configure RESEND_API_KEY or SMTP credentials in environment variables.";
       }
 
       const newEmail = await SettingsRepository.logEmail({

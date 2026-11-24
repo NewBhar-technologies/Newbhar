@@ -46,8 +46,34 @@ export const metadata = {
 
 export default function Contact() {
   const items = [
-    [Mail, "Email", SITE.email, `mailto:${SITE.email}`],
-    [MapPin, "Location", SITE.location, null],
+    [
+      Mail,
+      "Contact & Project Enquiries",
+      SITE.contactEmail || "contact@newbhar.com",
+      `mailto:${SITE.contactEmail || "contact@newbhar.com"}?subject=Project%20Enquiry`,
+      "For new project requests, discovery calls, and RFPs",
+    ],
+    [
+      Mail,
+      "General Business Enquiries",
+      SITE.infoEmail || "info@newbhar.com",
+      `mailto:${SITE.infoEmail || "info@newbhar.com"}?subject=General%20Business%20Enquiry`,
+      "For general company enquiries and partnerships",
+    ],
+    [
+      Mail,
+      "Technical Support",
+      SITE.supportEmail || "support@newbhar.com",
+      `mailto:${SITE.supportEmail || "support@newbhar.com"}?subject=Technical%20Support%20Request`,
+      "For existing clients, bug reports, and technical assistance",
+    ],
+    [
+      MapPin,
+      "Headquarters & Operations",
+      SITE.location || "India",
+      null,
+      "Kolkata, India · Serving clients globally",
+    ],
   ];
 
   return (
@@ -62,10 +88,10 @@ export default function Contact() {
           <div className="space-y-4 lg:col-span-1">
             <h2 className="text-xl font-semibold tracking-[-0.03em]">Direct Channels</h2>
             <p className="text-sm text-muted">
-              Prefer direct outreach? Reach us through any of the verified channels below.
+              Prefer direct outreach? Reach us through any of the official verified channels below.
             </p>
             <div className="space-y-4">
-              {items.map(([I, t, v, h]) => (
+              {items.map(([I, t, v, h, d]) => (
                 <div key={t} className={card}>
                   <span className="mb-3 grid h-10 w-10 place-items-center rounded-lg border border-border bg-subtle text-foreground">
                     <I className="h-4 w-4" />
@@ -78,6 +104,7 @@ export default function Contact() {
                   ) : (
                     <p className="mt-1 font-medium">{v}</p>
                   )}
+                  {d && <p className="mt-1 text-xs text-muted">{d}</p>}
                 </div>
               ))}
             </div>

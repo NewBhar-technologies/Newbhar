@@ -6,7 +6,9 @@ import Button from "@/components/ui/button";
 
 export default function Footer() {
 	const footerConfig = {
-		contactEmail: SITE.email || "newbhartechnologies@gmail.com",
+		infoEmail: SITE.infoEmail || "info@newbhar.com",
+		contactEmail: SITE.contactEmail || "contact@newbhar.com",
+		supportEmail: SITE.supportEmail || "support@newbhar.com",
 		meetingUrl: "https://calendly.com/team-newbhar/30min",
 		adminLoginLink: {
 			label: "Admin Portal",
@@ -116,9 +118,35 @@ export default function Footer() {
 						</p>
 
 						<h3>Get in touch</h3>
-						<a href={`mailto:${footerConfig.contactEmail}`} className="text-[#98f90d] font-mono text-sm hover:underline block">
-							{footerConfig.contactEmail}
-						</a>
+						<div className="space-y-2.5 mt-2">
+							<div>
+								<span className="block text-[11px] font-mono text-zinc-500 uppercase tracking-wider">General Enquiries</span>
+								<a
+									href={`mailto:${footerConfig.infoEmail}?subject=General%20Business%20Enquiry`}
+									className="text-[#98f90d] font-mono text-sm hover:underline block transition-colors"
+								>
+									{footerConfig.infoEmail}
+								</a>
+							</div>
+							<div>
+								<span className="block text-[11px] font-mono text-zinc-500 uppercase tracking-wider">Project Enquiries</span>
+								<a
+									href={`mailto:${footerConfig.contactEmail}?subject=Project%20Enquiry`}
+									className="text-[#98f90d] font-mono text-sm hover:underline block transition-colors"
+								>
+									{footerConfig.contactEmail}
+								</a>
+							</div>
+							<div>
+								<span className="block text-[11px] font-mono text-zinc-500 uppercase tracking-wider">Technical Support</span>
+								<a
+									href={`mailto:${footerConfig.supportEmail}?subject=Technical%20Support%20Request`}
+									className="text-[#98f90d] font-mono text-sm hover:underline block transition-colors"
+								>
+									{footerConfig.supportEmail}
+								</a>
+							</div>
+						</div>
 
 						<div className="mt-5">
 							<Button href="/start-project" variant="accent" size="sm">

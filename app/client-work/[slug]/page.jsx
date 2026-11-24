@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MEETING_EMAIL_URL } from "@/lib/meeting";
+import { MEETING_MAILTO_URL } from "@/lib/meeting";
 import { ArrowLeft, Check } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { CLIENT_PROJECTS } from "@/components/client-work-grid";
@@ -144,13 +144,12 @@ export default function ClientWorkPage({ params }) {
               Let&rsquo;s discuss how we can build something great for your business.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link
-                href={MEETING_EMAIL_URL}
-                target="_blank" rel="noopener noreferrer"
+              <a
+                href={MEETING_MAILTO_URL}
                 className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-fg transition-opacity hover:opacity-90"
               >
                 Book a Meeting
-              </Link>
+              </a>
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-subtle"

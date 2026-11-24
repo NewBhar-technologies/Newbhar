@@ -40,7 +40,7 @@ VALUES
     "accentInk": "#806000",
     "darkBackground": "#29251b",
     "logoText": "BytecGlobal",
-    "contactEmail": "bytecglobal@gmail.com",
+    "contactEmail": "contact@newbhar.com",
     "location": "India",
     "visibility": true
   }'::jsonb, true)
@@ -51,7 +51,7 @@ INSERT INTO cms_footer (id, brand_description, contact_email, meeting_url, meeti
 VALUES (
   'main',
   'Software, AI and cloud engineering for ambitious businesses.',
-  'bytecglobal@gmail.com',
+  'contact@newbhar.com',
   'https://calendly.com/team-bytecglobal/30min',
   'Book a Meeting',
   '{"label": "Admin Login", "url": "/admin/login", "enabled": true, "displayOrder": 2, "showLockIcon": true}'::jsonb,
@@ -94,7 +94,7 @@ VALUES (
   'default',
   '{
     "siteName": "BytecGlobal",
-    "supportEmail": "bytecglobal@gmail.com",
+    "supportEmail": "contact@newbhar.com",
     "timezone": "Asia/Kolkata",
     "dateFormat": "YYYY-MM-DD",
     "maintenanceMode": false

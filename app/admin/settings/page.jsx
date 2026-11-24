@@ -7,7 +7,7 @@ export default function SystemSettingsPage() {
 	const [settings, setSettings] = useState({
 		general: {
 			siteName: "Newbhar Technologies",
-			supportEmail: "newbhartechnologies@gmail.com",
+			supportEmail: "support@newbhar.com",
 			timezone: "Asia/Kolkata",
 			dateFormat: "YYYY-MM-DD",
 			maintenanceMode: false,
@@ -179,10 +179,10 @@ export default function SystemSettingsPage() {
 					</div>
 
 					<div className="space-y-1.5">
-						<label className="block font-semibold text-neutral-300">Inquiry Notification Recipient Email</label>
+						<label className="block font-semibold text-neutral-300">Support / Notification Recipient Email</label>
 						<input
 							type="email"
-							value={settings.general?.supportEmail || "newbhartechnologies@gmail.com"}
+							value={settings.general?.supportEmail || "support@newbhar.com"}
 							onChange={(e) =>
 								setSettings({
 									...settings,

@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { MEETING_EMAIL_URL } from "@/lib/meeting";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { NAV, SERVICES, SITE } from "@/lib/site";
@@ -251,7 +250,9 @@ export default function Navbar() {
           </ul>
           <div className="vx-mobile-foot">
             <p>Software, AI and cloud engineering for ambitious businesses.</p>
-            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <a href={`mailto:${SITE.contactEmail || "contact@newbhar.com"}?subject=Project%20Enquiry`}>
+              {SITE.contactEmail || "contact@newbhar.com"}
+            </a>
             <Button href="/start-project" variant="accent" size="sm">
               Start a Project
             </Button>
