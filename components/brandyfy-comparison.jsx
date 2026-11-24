@@ -64,7 +64,7 @@ const COMPARISONS = [
   {
     name: "Self-Service / No-Code",
     highlight: false,
-    tagline: "Template builders & DIY builders",
+    tagline: "Template-based & DIY platforms",
     speed: "Instant setup, weeks fighting limitations",
     flexibility: "Strictly limited to platform capabilities",
     quality: "Generic, bloated DOM, poor SEO performance",
@@ -91,8 +91,7 @@ export default function BrandyfyComparison() {
             Smart Model Comparison
           </div>
           <h2 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
-            Newbhar&rsquo;s Alternative? <br className="hidden sm:inline" />
-            <span className="text-[#98f90d]">Think One More Time!</span>
+            The Newbhar Alternative: Rethink Your Team Model
           </h2>
           <p className="mt-5 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto">
             Strategy-driven digital growth with focused execution, premium engineering, and flexible support — without the overhead of building everything in-house.
@@ -148,15 +147,6 @@ export default function BrandyfyComparison() {
                 ))}
               </div>
             </div>
-
-            <div className="mt-8 pt-6 border-t border-white/[0.08]">
-              <a
-                href="/start-project"
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-[#98f90d] hover:bg-[#86e00b] text-black font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(152,249,13,0.35)] transition-all"
-              >
-                <span>Build with Newbhar</span>
-              </a>
-            </div>
           </div>
 
           {/* Other models in clean cards */}
@@ -201,6 +191,16 @@ export default function BrandyfyComparison() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Centered CTA below table */}
+        <div className="mt-12 text-center">
+          <a
+            href="/start-project"
+            className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-[#98f90d] hover:bg-[#86e00b] text-black font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(152,249,13,0.35)] transition-all"
+          >
+            <span>Build with Newbhar</span>
+          </a>
         </div>
       </div>
     </section>

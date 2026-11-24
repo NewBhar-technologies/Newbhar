@@ -121,8 +121,18 @@
   color: #ffffff;
 }
 
-.vx-button--accent {
-  background: var(--accent);
+.vx-button--accent,
+.vx-meeting,
+.vx-nav-actions .vx-button {
+  background: #98f90d;
+  background-color: #98f90d;
+  color: #000000;
+}
+
+.vx-meeting:is(:hover, :focus-visible),
+.vx-nav-actions .vx-button:is(:hover, :focus-visible) {
+  background: #84dd08;
+  background-color: #84dd08;
   color: #000000;
 }
 
@@ -263,10 +273,11 @@
 .vx-service-toggle {
   display: grid;
   place-items: center;
-  width: 20px;
+  width: 28px;
+  min-width: 24px;
   height: 36px;
-  padding-right: 7px;
-  margin-left: -7px;
+  padding: 0;
+  margin-left: -4px;
   border: 0;
   background: transparent;
   color: var(--fg-muted);

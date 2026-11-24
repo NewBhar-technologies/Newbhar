@@ -31,7 +31,7 @@ export function Introduction() {
 			window.removeEventListener("scroll", onScroll);
 		};
 	}, []);
-	const statement = "Newbhar Technologies helps businesses replace manual processes with reliable digital systems.";
+	const statement = "Newbhar Technologies transforms manual workflows into high-performance digital systems.";
 	return (
 		<section id="introduction" className="home-introduction">
 			<div className="intro-orbit" aria-hidden="true" />
@@ -41,7 +41,7 @@ export function Introduction() {
 				</p>
 				<p className="home-statement" ref={ref}>
 					{statement.split(" ").map((word, i) => (
-						<span className={`statement-word ${i >= 8 ? "highlight" : ""}`} key={i}>
+						<span className={`statement-word ${i >= 6 ? "highlight" : ""}`} key={i}>
 							{word}{" "}
 						</span>
 					))}

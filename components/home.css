@@ -50,6 +50,7 @@
 }
 
 .hero-accent {
+  display: inline;
   color: var(--accent);
   text-shadow: 0 0 35px rgba(152, 249, 13, 0.35);
 }
@@ -258,11 +259,12 @@
 }
 
 .statement-word {
+  color: #767676;
   transition: color 0.25s;
 }
 
 .home-statement.word-reveal .statement-word {
-  color: rgba(255, 255, 255, 0.25);
+  color: #767676;
 }
 
 .home-statement.word-reveal .statement-word.read {
@@ -768,7 +770,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 22px 24px;
+  padding: 28px 24px;
   width: 100%;
   text-align: left;
   border: 0;

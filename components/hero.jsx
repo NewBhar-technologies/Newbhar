@@ -49,15 +49,8 @@ export default function Hero() {
 
       <div className="site-wrap hero-grid">
         <div className="hero-copy">
-          <div className="brandy-badge hero-enter">
-            <span className="pulse-dot" />
-            <span>Creative Intelligence in Every Pixel</span>
-          </div>
-
           <h1 id="hero-title" className="hero-enter">
-            <span>Creative Intelligence</span>
-            <span>in Every</span>
-            <span className="hero-accent">Line of Code.</span>
+            Creative Intelligence in Every <span className="hero-accent">Line of Code.</span>
           </h1>
 
           <p className="hero-description hero-enter">

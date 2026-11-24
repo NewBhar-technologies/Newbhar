@@ -88,7 +88,7 @@ export default function BrandyfyFAQ() {
                   <button
                     type="button"
                     onClick={() => toggle(idx)}
-                    className="w-full flex items-center justify-between gap-4 p-6 text-left cursor-pointer focus:outline-none"
+                    className="w-full flex items-center justify-between gap-4 px-6 sm:px-8 py-7 sm:py-8 text-left cursor-pointer focus:outline-none"
                     aria-expanded={isOpen}
                   >
                     <span className="text-base sm:text-lg font-bold text-white tracking-tight">
