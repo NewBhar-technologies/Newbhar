@@ -19,9 +19,19 @@ const structuredData = {
       url: `${SITE.url}/`,
       logo: {
         "@type": "ImageObject",
+        "@id": `${SITE.url}/#logo`,
         url: `${SITE.url}/newbhar-mark.png`,
+        contentUrl: `${SITE.url}/newbhar-mark.png`,
+        width: 512,
+        height: 512,
+        caption: `${SITE.name} Logo`,
       },
-      image: `${SITE.url}/newbhar-banner.jpg`,
+      image: {
+        "@type": "ImageObject",
+        url: `${SITE.url}/newbhar-banner.jpg`,
+        width: 1200,
+        height: 630,
+      },
       description: siteDescription,
       email: SITE.email,
       areaServed: {
@@ -76,6 +86,21 @@ export const metadata = {
         sizes: "any",
       },
       {
+        url: "/favicon-16x16.png",
+        type: "image/png",
+        sizes: "16x16",
+      },
+      {
+        url: "/favicon-32x32.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        url: "/favicon-48x48.png",
+        type: "image/png",
+        sizes: "48x48",
+      },
+      {
         url: "/favicon-96x96.png",
         type: "image/png",
         sizes: "96x96",
@@ -84,6 +109,11 @@ export const metadata = {
         url: "/icon-192.png",
         type: "image/png",
         sizes: "192x192",
+      },
+      {
+        url: "/icon-512.png",
+        type: "image/png",
+        sizes: "512x512",
       },
     ],
     shortcut: ["/favicon.ico"],

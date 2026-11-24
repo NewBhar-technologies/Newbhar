@@ -23,7 +23,8 @@
   width: 38px;
   height: 38px;
   flex-shrink: 0;
-  transition: transform 0.8s var(--nav-ease);
+  transition: transform 0.8s var(--nav-ease), filter 0.4s ease;
+  filter: drop-shadow(0 0 8px rgba(0, 240, 140, 0.35));
 }
 
 .vx-logo-mark img {
@@ -67,7 +68,8 @@
 }
 
 .vx-logo:hover .vx-logo-mark {
-  transform: rotate(-12deg);
+  transform: rotate(-12deg) scale(1.05);
+  filter: drop-shadow(0 0 14px rgba(0, 240, 140, 0.65));
 }
 
 /* Brandyfy High-Contrast Action Buttons */

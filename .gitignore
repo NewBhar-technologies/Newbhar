@@ -1,74 +1,166 @@
-# Dependencies
+# ==============================================================================
+# Newbhar Technologies - Comprehensive Git Ignore
+# Next.js 14 (App Router) • TypeScript • Tailwind CSS • Supabase
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Dependencies & Package Managers
+# ------------------------------------------------------------------------------
+node_modules/
 /node_modules
 /.pnp
+.pnp
 .pnp.js
+.pnp.*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
 
-# Testing & Coverage
-/coverage
-*.lcov
-
-# Next.js Build Output
+# ------------------------------------------------------------------------------
+# Next.js Build Outputs & Caches
+# ------------------------------------------------------------------------------
 /.next/
+.next/
 /out/
-
-# Production & Packaging
+out/
 /build
+build/
 /dist
+dist/
+.next-dev/
+.next-stale-backup/
 
-# Operating System Files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-desktop.ini
+# ------------------------------------------------------------------------------
+# TypeScript & Bundler Cache
+# ------------------------------------------------------------------------------
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+next-env.d.ts
 
-# Security & Secrets
+# ------------------------------------------------------------------------------
+# Environment Variables & Security Secrets
+# ------------------------------------------------------------------------------
+.env
+.env*.local
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# Allow tracked template example
+!.env.example
+
+# SSL & Crypto Certificates / Keys
 *.pem
 *.key
 *.cert
 *.crt
-.env
-.env*.local
-.env.development
-.env.test
-.env.production
-!.env.example
 
-# Debugging & Error Logs
+# ------------------------------------------------------------------------------
+# Debugging & Process Logs
+# ------------------------------------------------------------------------------
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-*.log
 
-# Editor & IDE Directories
+# ------------------------------------------------------------------------------
+# Testing & Code Coverage
+# ------------------------------------------------------------------------------
+/coverage/
+coverage/
+*.lcov
+.nyc_output/
+
+# ------------------------------------------------------------------------------
+# Supabase & Local Database
+# ------------------------------------------------------------------------------
+supabase/.temp/
+supabase/.branches/
+*.sqlite
+*.sqlite3
+
+# ------------------------------------------------------------------------------
+# Dynamic Backups, Temporary Files & Uploads
+# ------------------------------------------------------------------------------
+/data/backups/
+/public/uploads/
+*.bak
+*.tmp
+*.temp
+
+# ------------------------------------------------------------------------------
+# Hosting & Deployment Platforms
+# ------------------------------------------------------------------------------
+.vercel
+.vercel/
+.netlify
+.netlify/
+
+# ------------------------------------------------------------------------------
+# Operating System Files
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ------------------------------------------------------------------------------
+# IDEs & Text Editors
+# ------------------------------------------------------------------------------
+# VS Code (preserve shared workspace settings if tracked)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# JetBrains (WebStorm, IntelliJ IDEA, etc.)
 .idea/
+*.iml
+*.iws
+out/
+
+# Visual Studio & Windows Development
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+*.user
+*.userosscache
+*.sln.docstates
+
+# Vim / Emacs
 *.sw?
+*.swp
+*.swo
+.#*
 
-# Vercel & Deployment
-.vercel
-
-# TypeScript Caches
-*.tsbuildinfo
-next-env.d.ts
-# Backups & Uploads
-/data/backups/
-/public/uploads/
-.next-dev/
-.next-stale-backup/
-
-# Tool & Agent Cache
+# ------------------------------------------------------------------------------
+# AI Agent & Developer Tool Caches
+# ------------------------------------------------------------------------------
 .agents/
-.aider-desk/
+.aider*
+.cursor/
+.gemini/
+.claude/
 skills-lock.json
-
-# Supabase temp
-supabase/.temp/

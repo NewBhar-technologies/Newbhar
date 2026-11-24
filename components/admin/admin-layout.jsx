@@ -208,8 +208,8 @@ export default function AdminLayout({ children }) {
         {/* Brand Header */}
         <div className="flex h-16 items-center justify-between px-4 border-b border-white/[0.08] bg-[#0c0e15]/90">
           <Link href="/admin/dashboard" className="flex items-center gap-3 overflow-hidden group">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#98f90d] text-[#050505] font-black text-lg shadow-[0_0_15px_rgba(152,249,13,0.35)] transition-transform group-hover:scale-105">
-              N
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-black/60 border border-white/10 p-1 shadow-[0_0_15px_rgba(0,255,170,0.25)] transition-transform group-hover:scale-105">
+              <img src="/newbhar-mark.png" alt="Newbhar Tech" className="h-full w-full object-contain" />
             </div>
             {!collapsed && (
               <div className="flex flex-col">
@@ -303,8 +303,8 @@ export default function AdminLayout({ children }) {
           <div className="relative flex w-80 flex-col bg-[#0c0e15] border-r border-white/10 z-10 shadow-2xl">
             <div className="flex h-16 items-center justify-between px-4 border-b border-white/10">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#98f90d] text-[#050505] font-black text-lg shadow-[0_0_12px_#98f90d]">
-                  N
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/60 border border-white/10 p-1 shadow-[0_0_12px_rgba(0,255,170,0.25)]">
+                  <img src="/newbhar-mark.png" alt="Newbhar Tech" className="h-full w-full object-contain" />
                 </div>
                 <span className="font-extrabold tracking-tight text-white text-base">Newbhar Admin</span>
               </div>

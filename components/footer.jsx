@@ -33,7 +33,7 @@ export default function Footer() {
 
 						<div className="mt-4 flex items-center gap-3 text-zinc-400">
 							<a
-								href="https://linkedin.com"
+								href="https://www.linkedin.com/company/newbhar-technologies/"
 								target="_blank"
 								rel="noreferrer"
 								className="w-9 h-9 rounded-full bg-white/[0.05] border border-white/[0.08] hover:border-[#98f90d] hover:text-[#98f90d] flex items-center justify-center transition-colors"
@@ -42,7 +42,7 @@ export default function Footer() {
 								<Linkedin size={16} />
 							</a>
 							<a
-								href="https://github.com"
+								href="https://github.com/newbhartechnologies"
 								target="_blank"
 								rel="noreferrer"
 								className="w-9 h-9 rounded-full bg-white/[0.05] border border-white/[0.08] hover:border-[#98f90d] hover:text-[#98f90d] flex items-center justify-center transition-colors"
@@ -50,7 +50,7 @@ export default function Footer() {
 							>
 								<Github size={16} />
 							</a>
-							<a
+							{/* <a
 								href="https://twitter.com"
 								target="_blank"
 								rel="noreferrer"
@@ -58,9 +58,9 @@ export default function Footer() {
 								aria-label="Twitter / X"
 							>
 								<Twitter size={16} />
-							</a>
+							</a> */}
 							<a
-								href="https://instagram.com"
+								href="https://www.instagram.com/newbhar_technologies/"
 								target="_blank"
 								rel="noreferrer"
 								className="w-9 h-9 rounded-full bg-white/[0.05] border border-white/[0.08] hover:border-[#98f90d] hover:text-[#98f90d] flex items-center justify-center transition-colors"
