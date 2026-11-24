@@ -704,6 +704,11 @@
   to { clip-path: circle(150% at calc(100% - 45px) 45px); }
 }
 
+@keyframes vx-mobile-drawer {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
 @keyframes vx-menu-item {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -718,8 +723,76 @@
 }
 
 @media (max-width: 600px) {
-  .vx-header { padding-top: calc(12px + env(safe-area-inset-top, 0px)); }
+  .vx-header {
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    left: 12px;
+    right: 12px;
+  }
+  .vx-nav {
+    width: 100%;
+    gap: 0;
+    padding: 7px 7px 7px 14px;
+  }
+  .vx-logo {
+    gap: 8px;
+  }
+  .vx-logo-mark,
+  .vx-logo-mark img {
+    width: 34px;
+    height: 34px;
+  }
+  .vx-logo-word {
+    font-size: 19px;
+  }
+  .vx-logo-tag {
+    font-size: 7px;
+  }
+  /* Hide the CTA button — it lives inside the mobile menu */
+  .vx-meeting {
+    display: none;
+  }
+  .vx-nav-actions {
+    gap: 0;
+    margin-left: auto;
+  }
+  .vx-menu-toggle {
+    position: static;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+  }
+  .vx-mobile-menu {
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    border-left: none;
+    box-shadow: none;
+    padding:
+      calc(96px + env(safe-area-inset-top, 0px))
+      clamp(22px, 6vw, 40px)
+      calc(32px + env(safe-area-inset-bottom, 0px));
+    animation: vx-menu-reveal 0.5s var(--nav-ease) both;
+  }
+  .vx-mobile-item > a {
+    font-size: clamp(28px, 9vw, 42px);
+  }
   .vx-dropdown { display: none; }
   .vx-footer-grid { grid-template-columns: 1fr; }
   .vx-button { padding: 12px 18px; font-size: 14px; }
+}
+
+@media (max-width: 380px) {
+  .vx-header {
+    left: 10px;
+    right: 10px;
+  }
+  .vx-nav {
+    padding-left: 10px;
+  }
+  .vx-logo-text {
+    display: none;
+  }
 }
