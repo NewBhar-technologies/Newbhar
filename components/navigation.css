@@ -703,12 +703,19 @@
   flex-wrap: wrap;
 }
 
-.vx-footer-bottom a {
+.vx-footer-bottom a,
+.vx-footer-bottom button {
   color: var(--fg-muted);
   transition: color 0.25s;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
 }
 
-.vx-footer-bottom a:hover {
+.vx-footer-bottom a:hover,
+.vx-footer-bottom button:hover {
   color: var(--accent);
 }
 

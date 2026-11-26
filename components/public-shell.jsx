@@ -6,6 +6,11 @@ import Footer from "@/components/footer";
 import PageEffects from "@/components/page-effects";
 import CursorTrail from "@/components/cursor-trail";
 import AnalyticsTracker from "@/components/analytics-tracker";
+import {
+  CookieConsentProvider,
+  CookieBanner,
+  CookieSettingsModal,
+} from "@/components/cookie-consent";
 
 export default function PublicShell({ children }) {
   const pathname = usePathname();
@@ -16,7 +21,7 @@ export default function PublicShell({ children }) {
   }
 
   return (
-    <>
+    <CookieConsentProvider>
       <AnalyticsTracker />
       <PageEffects />
       <CursorTrail />
@@ -25,6 +30,8 @@ export default function PublicShell({ children }) {
         <main>{children}</main>
         <Footer />
       </div>
-    </>
+      <CookieBanner />
+      <CookieSettingsModal />
+    </CookieConsentProvider>
   );
 }

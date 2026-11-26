@@ -2,59 +2,49 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useCookieConsent } from "@/components/cookie-consent";
+import {
+  initializeAnalytics,
+  stopAnalytics,
+  trackAnonymousPageView,
+  trackAnonymousEvent,
+} from "@/lib/analytics-client";
 
 export default function AnalyticsTracker() {
   const pathname = usePathname();
-  const initializedRef = useRef(false);
+  const { hasAccepted, isLoaded } = useCookieConsent();
+  const clickListenerAttached = useRef(false);
 
+  // 1. Manage analytics lifecycle based on user consent and page changes
   useEffect(() => {
-    // Avoid tracking admin routes to prevent self-polluting analytics
-    if (pathname.startsWith("/admin")) return;
+    // Wait until consent is determined on client
+    if (!isLoaded) return;
 
-    try {
-      // 1. Get or create persistent anonymous visitor ID
-      let visitorId = localStorage.getItem("newbhar_visitor_id");
-      if (!visitorId) {
-        visitorId = `vis_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-        localStorage.setItem("newbhar_visitor_id", visitorId);
-      }
+    // Strict rule: do not track admin routes
+    if (pathname.startsWith("/admin")) {
+      return;
+    }
 
-      // 2. Get or create session ID (stored in sessionStorage)
-      let sessionId = sessionStorage.getItem("newbhar_session_id");
-      if (!sessionId) {
-        sessionId = `ses_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-        sessionStorage.setItem("newbhar_session_id", sessionId);
-      }
+    if (hasAccepted) {
+      // User has explicitly accepted: initialize and track anonymous page view
+      initializeAnalytics();
+      trackAnonymousPageView(pathname);
+    } else {
+      // User has rejected, undecided, or revoked: immediately stop and purge
+      stopAnalytics();
+    }
+  }, [pathname, hasAccepted, isLoaded]);
 
-      // 3. Send page view beacon
-      const payload = {
-        eventName: "page_view",
-        path: pathname,
-        visitorId,
-        sessionId,
-        referrer: document.referrer || "",
-      };
-
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon("/api/analytics/track", JSON.stringify(payload));
-      } else {
-        fetch("/api/analytics/track", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          keepalive: true,
-        }).catch(() => {});
-      }
-    } catch {}
-  }, [pathname]);
-
-  // Global click listener for important website actions (Calendly, CTA buttons)
+  // 2. Global CTA click listener - active ONLY when consent is granted
   useEffect(() => {
-    if (initializedRef.current) return;
-    initializedRef.current = true;
+    if (!isLoaded || !hasAccepted || clickListenerAttached.current) return;
+    clickListenerAttached.current = true;
 
     function handleClick(e) {
       try {
+        // Double-check consent before tracking any click
+        if (typeof window === "undefined" || window.location.pathname.startsWith("/admin")) return;
+
         const target = e.target.closest("a, button");
         if (!target) return;
 
@@ -64,40 +54,31 @@ export default function AnalyticsTracker() {
         let eventName = null;
         if (href.includes("calendly.com") || text.includes("Book a Meeting")) {
           eventName = "meeting_click";
-        } else if (text.includes("Let's talk") || text.includes("Start Your Software Project") || text.includes("Start a Project")) {
+        } else if (
+          text.includes("Let's talk") ||
+          text.includes("Start Your Software Project") ||
+          text.includes("Start a Project")
+        ) {
           eventName = "lets_talk_click";
         } else if (text.includes("See our work") || href.includes("/projects")) {
           eventName = "see_our_work_click";
         }
 
         if (eventName) {
-          const visitorId = localStorage.getItem("newbhar_visitor_id");
-          const sessionId = sessionStorage.getItem("newbhar_session_id");
-          const payload = {
-            eventName,
-            path: window.location.pathname,
-            visitorId,
-            sessionId,
-            metadata: { targetText: text, targetHref: href },
-          };
-
-          if (navigator.sendBeacon) {
-            navigator.sendBeacon("/api/analytics/track", JSON.stringify(payload));
-          } else {
-            fetch("/api/analytics/track", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-              keepalive: true,
-            }).catch(() => {});
-          }
+          trackAnonymousEvent(eventName, {
+            targetText: text.slice(0, 100),
+            targetHref: href.slice(0, 200),
+          });
         }
       } catch {}
     }
 
     document.addEventListener("click", handleClick, { capture: true });
-    return () => document.removeEventListener("click", handleClick, { capture: true });
-  }, []);
+    return () => {
+      document.removeEventListener("click", handleClick, { capture: true });
+      clickListenerAttached.current = false;
+    };
+  }, [hasAccepted, isLoaded]);
 
   return null;
 }

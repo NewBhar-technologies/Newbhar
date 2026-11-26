@@ -3,6 +3,7 @@ import { Lock, ArrowUpRight, Github, Linkedin, Twitter, Instagram } from "lucide
 import { SITE, SERVICES } from "@/lib/site";
 import Logo from "@/components/logo";
 import Button from "@/components/ui/button";
+import { CookieSettingsButton } from "@/components/cookie-consent";
 
 export default function Footer() {
 	const footerConfig = {
@@ -188,6 +189,7 @@ export default function Footer() {
 					<div>
 						<Link href="/privacy-policy">Privacy Policy</Link>
 						<Link href="/terms-and-conditions">Terms &amp; Conditions</Link>
+						<CookieSettingsButton showIcon={false}>Cookie Settings</CookieSettingsButton>
 					</div>
 				</div>
 			</div>
