@@ -8,29 +8,36 @@ const siteTitle = `${SITE.name} | Custom Software & Digital Engineering`;
 const siteDescription =
   "Custom software development, web platforms, mobile apps, AI solutions, and cloud engineering.";
 
+// Normalize the website URL to prevent duplicate slashes.
+const siteUrl = SITE.url.replace(/\/+$/, "");
+
+const organizationId = `${siteUrl}/#organization`;
+const websiteId = `${siteUrl}/#website`;
+
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
-      "@id": `${SITE.url}/#organization`,
+      "@id": organizationId,
       name: SITE.name,
       alternateName: "Newbhar",
-      url: `${SITE.url}/`,
+      url: `${siteUrl}/`,
       logo: {
         "@type": "ImageObject",
-        "@id": `${SITE.url}/#logo`,
-        url: `${SITE.url}/newbhar-technologies-logo.png`,
-        contentUrl: `${SITE.url}/newbhar-technologies-logo.png`,
+        "@id": `${siteUrl}/#logo`,
+        url: `${siteUrl}/newbhar-technologies-logo.png`,
+        contentUrl: `${siteUrl}/newbhar-technologies-logo.png`,
         width: 512,
         height: 512,
-        caption: `${SITE.name} official company logo`,
+        caption: `${SITE.name} Official Company Logo`,
       },
       image: {
         "@type": "ImageObject",
-        url: `${SITE.url}/newbhar-banner.jpg`,
+        url: `${siteUrl}/newbhar-banner.jpg`,
         width: 1200,
         height: 630,
+        caption: `${SITE.name} Official Website Banner`,
       },
       description: siteDescription,
       email: SITE.infoEmail || "info@newbhar.com",
@@ -61,20 +68,20 @@ const structuredData = {
     },
     {
       "@type": "WebSite",
-      "@id": `${SITE.url}/#website`,
+      "@id": websiteId,
       name: SITE.name,
       alternateName: "Newbhar",
-      url: `${SITE.url}/`,
+      url: `${siteUrl}/`,
       inLanguage: "en-IN",
       publisher: {
-        "@id": `${SITE.url}/#organization`,
+        "@id": organizationId,
       },
     },
   ],
 };
 
 export const metadata = {
-  metadataBase: new URL(SITE.url),
+  metadataBase: new URL(`${siteUrl}/`),
 
   title: {
     default: siteTitle,
@@ -88,7 +95,7 @@ export const metadata = {
   authors: [
     {
       name: SITE.name,
-      url: SITE.url,
+      url: `${siteUrl}/`,
     },
   ],
 
@@ -96,55 +103,20 @@ export const metadata = {
   publisher: SITE.name,
 
   alternates: {
-    canonical: "/",
+    canonical: `${siteUrl}/`,
   },
 
   icons: {
     icon: [
-      {
-        url: "/favicon.ico",
-        sizes: "any",
-      },
-      {
-        url: "/favicon-48x48.png",
-        type: "image/png",
-        sizes: "48x48",
-      },
-      {
-        url: "/favicon.png",
-        type: "image/png",
-        sizes: "48x48",
-      },
-      {
-        url: "/favicon-96x96.png",
-        type: "image/png",
-        sizes: "96x96",
-      },
-      {
-        url: "/icon.png",
-        type: "image/png",
-        sizes: "512x512",
-      },
-      {
-        url: "/icon-192.png",
-        type: "image/png",
-        sizes: "192x192",
-      },
-      {
-        url: "/icon-512.png",
-        type: "image/png",
-        sizes: "512x512",
-      },
-      {
-        url: "/favicon-32x32.png",
-        type: "image/png",
-        sizes: "32x32",
-      },
-      {
-        url: "/favicon-16x16.png",
-        type: "image/png",
-        sizes: "16x16",
-      },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
+      { url: "/favicon.png", type: "image/png", sizes: "48x48" },
+      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
     ],
     shortcut: ["/favicon.ico"],
     apple: [
@@ -166,13 +138,13 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: `${SITE.url}/`,
+    url: `${siteUrl}/`,
     siteName: SITE.name,
     title: siteTitle,
     description: siteDescription,
     images: [
       {
-        url: `${SITE.url}/newbhar-banner.jpg`,
+        url: `${siteUrl}/newbhar-banner.jpg`,
         width: 1200,
         height: 630,
         alt: `${SITE.name} - Custom Software & Digital Engineering`,
@@ -187,9 +159,7 @@ export const metadata = {
     description: siteDescription,
     images: [
       {
-        url: `${SITE.url}/newbhar-banner.jpg`,
-        width: 1200,
-        height: 630,
+        url: `${siteUrl}/newbhar-banner.jpg`,
         alt: `${SITE.name} - Custom Software & Digital Engineering`,
       },
     ],
@@ -220,6 +190,7 @@ export default function RootLayout({ children }) {
     <html lang="en-IN">
       <head>
         <script
+          id="newbhar-structured-data"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
