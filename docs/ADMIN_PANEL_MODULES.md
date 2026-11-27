@@ -84,8 +84,7 @@ This document details the functional specifications, supported operations, and i
 - **Actions:** Mark as read, mark all read, clear notifications.
 
 ### 14. Newsletter (`/admin/newsletter`)
-- **Subscribers:** Email list subscribed via the public site.
-- **Actions:** Search subscribers, filter by status (`subscribed`, `unsubscribed`), remove entries, export.
+- **Status:** **REMOVED** — Newbhar Technologies does not operate a public newsletter subscription list. All inquiries and consultations flow through direct project briefs and contact forms.
 
 ---
 

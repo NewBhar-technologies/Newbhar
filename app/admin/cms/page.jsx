@@ -40,7 +40,7 @@ const CMS_CARDS = [
   },
   {
     title: "Header Navigation",
-    description: "Menu hierarchy, mega dropdown toggles, display ordering, and external booking links.",
+    description: "Menu hierarchy, mega dropdown toggles, display ordering, and action links.",
     href: "/admin/cms/navigation",
     icon: Navigation,
   },

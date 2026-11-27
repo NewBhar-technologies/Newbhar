@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { ShieldCheck, SlidersHorizontal, Check, X } from "lucide-react";
 import { useCookieConsent } from "./cookie-consent-context";
 
@@ -33,11 +34,17 @@ export default function CookieBanner() {
                 We Respect Your Privacy
               </h2>
               <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-zinc-400">
-                GDPR &amp; Privacy
+                DPDP &amp; GDPR
               </span>
             </div>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              We use cookies to improve your browsing experience and understand website traffic. You can accept or reject optional analytics cookies at any time.
+              We use necessary cookies to ensure secure operations. Optional analytics cookies are disabled by default. You can accept or reject optional cookies at any time. Learn more in our{" "}
+              <Link
+                href="/privacy-policy"
+                className="text-[#98f90d] underline underline-offset-2 hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>.
             </p>
           </div>
         </div>

@@ -18,7 +18,7 @@ import {
 } from "../lib/email-service.js";
 import { getNotificationRecipientEmail } from "../lib/env.js";
 import { checkRateLimit, isDuplicateSubmission } from "../lib/rate-limiter.js";
-import { ContactFormSchema, NewsletterFormSchema } from "../lib/validation.js";
+import { ContactFormSchema } from "../lib/validation.js";
 
 async function runTests() {
   console.log("=================================================================");
@@ -58,9 +58,6 @@ async function runTests() {
 
   const careerType = detectFormType({ position: "Senior Fullstack Engineer", portfolioUrl: "https://github.com/developer", message: "Application for engineering role" }, "/careers");
   assert(careerType.id === "career", "Detects Career Application");
-
-  const newsletterType = detectFormType({ email: "subscriber@company.com" }, "/newsletter");
-  assert(newsletterType.id === "newsletter", "Detects Newsletter Subscription");
 
   const meetingType = detectFormType({ meetingDate: "2026-12-01", meetingTime: "14:00", message: "30-min discovery" }, "/meetings");
   assert(meetingType.id === "meeting", "Detects Meeting Request");
@@ -112,11 +109,6 @@ async function runTests() {
     message: "Valid length message here for testing.",
   });
   assert(!crlfInName.success, "CRLF newline in name field is rejected by schema");
-
-  const validNewsletter = NewsletterFormSchema.safeParse({
-    email: "reader@company.com",
-  });
-  assert(validNewsletter.success, "Valid newsletter schema passes");
 
   // 7. Security: Anti-Spam Rate Limiting & Deduplication
   console.log("\n--- 7. Testing Rate Limiting & Deduplication ---");

@@ -52,9 +52,7 @@ export default function AnalyticsTracker() {
         const text = (target.textContent || "").trim();
 
         let eventName = null;
-        if (href.includes("calendly.com") || text.includes("Book a Meeting")) {
-          eventName = "meeting_click";
-        } else if (
+        if (
           text.includes("Let's talk") ||
           text.includes("Start Your Software Project") ||
           text.includes("Start a Project")

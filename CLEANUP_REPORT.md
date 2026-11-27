@@ -11,7 +11,7 @@
 
 In accordance with the advanced cleanup directive, a complete audit was performed across all directories of the Newbhar Technologies project (`app/`, `components/`, `components/ui/`, `lib/`, `public/`, `requirements/`, and root configurations).
 
-All genuinely unnecessary files, unreferenced image duplicates, obsolete assets, specification documents, and dead code have been permanently removed from the project. The recovered WhatsApp contact button and Calendly integration were fully preserved and verified. The codebase size was reduced by **1,784,814 bytes (~1.78 MB)** without any regression in design, functionality, responsive layouts, or performance.
+All genuinely unnecessary files, unreferenced image duplicates, obsolete assets, specification documents, and dead code have been permanently removed from the project. The recovered WhatsApp contact button was fully preserved and verified. The codebase size was reduced by **1,784,814 bytes (~1.78 MB)** without any regression in design, functionality, responsive layouts, or performance.
 
 ---
 
@@ -47,7 +47,7 @@ Every deletion was verified against the codebase using AST/regex reference searc
 
 ---
 
-## 3. Preservation of WhatsApp and Calendly Integrations
+## 3. Preservation of WhatsApp Integration
 
 ### WhatsApp Floating Contact Trigger:
 
@@ -56,13 +56,6 @@ Every deletion was verified against the codebase using AST/regex reference searc
 - **Implementation:** The component is mounted on every page via `app/layout.jsx`. It renders an animated floating action button with the official WhatsApp SVG icon, pulse animation (`vx-wa-pulse`), elevation shadow, and accessible label (`aria-label="Chat on WhatsApp"`).
 - **Target Destination:** Directs to `SITE.whatsapp` (`https://wa.me/${WHATSAPP_NUMBER}` or fallback to `https://wa.me/`), opening in a new secure tab (`target="_blank"` with `rel="noopener noreferrer"`).
 - **Styles:** Fully supported in `components/navigation.css` (`.vx-floating-actions`, `.vx-whatsapp`).
-
-### Calendly Meeting Scheduler Integration:
-
-- **Status:** **FULLY PRESERVED**.
-- **Header Action:** `components/navbar.jsx` line 90 (`<Button href="https://calendly.com/team-newbhar/30min" variant="accent" size="sm" className="vx-meeting">Book a Meeting</Button>`).
-- **Footer Action:** `components/footer.jsx` line 14 (`<Button href="https://calendly.com/team-newbhar/30min" variant="accent" size="sm">Book a Meeting</Button>`).
-- **CSP Compatibility:** Configured in `next.config.mjs` to ensure outbound navigation and meeting scheduling work without restriction.
 
 ---
 

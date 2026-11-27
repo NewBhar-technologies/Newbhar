@@ -52,8 +52,8 @@ VALUES (
   'main',
   'Software, AI and cloud engineering for ambitious businesses.',
   'contact@newbhar.com',
-  'https://calendly.com/team-bytecglobal/30min',
-  'Book a Meeting',
+  '',
+  'Start a Project',
   '{"label": "Admin Login", "url": "/admin/login", "enabled": true, "displayOrder": 2, "showLockIcon": true}'::jsonb,
   '© 2026 BytecGlobal. All rights reserved.',
   '[
@@ -105,12 +105,7 @@ VALUES (
     "sessionExpiryHours": 24,
     "enforceStrongPasswords": true
   }'::jsonb,
-  '{
-    "calendly": {
-      "configured": true,
-      "status": "Connected (Default Meeting Link)"
-    }
-  }'::jsonb
+  '{}'::jsonb
 )
 ON CONFLICT (id) DO NOTHING;
 

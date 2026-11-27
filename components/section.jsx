@@ -101,7 +101,10 @@ export function InfoPage({ eyebrow, title, blocks }) {
           {blocks.map(([h, p], i) => (
             <div key={h} className="vx-info-block">
               <span className="vx-info-number" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-              <div><h2>{h}</h2><p>{p}</p></div>
+              <div className="vx-info-body">
+                <h2>{h}</h2>
+                {typeof p === "string" ? <p>{p}</p> : p}
+              </div>
             </div>
           ))}
         </div>

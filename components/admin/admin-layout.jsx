@@ -18,7 +18,6 @@ import {
   FileCode,
   Bell,
   MessageSquare,
-  Newspaper,
   LayoutTemplate,
   Info,
   Layers,
@@ -71,7 +70,6 @@ const SIDEBAR_SECTIONS = [
       { label: "Automated Workflows", href: "/admin/automations", icon: Zap },
       { label: "Email Templates", href: "/admin/templates", icon: FileCode },
       { label: "Notifications", href: "/admin/notifications", icon: Bell },
-      { label: "Newsletter List", href: "/admin/newsletter", icon: Newspaper },
     ],
   },
   {

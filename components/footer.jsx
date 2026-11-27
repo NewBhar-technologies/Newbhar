@@ -10,7 +10,6 @@ export default function Footer() {
 		infoEmail: SITE.infoEmail || "info@newbhar.com",
 		contactEmail: SITE.contactEmail || "contact@newbhar.com",
 		supportEmail: SITE.supportEmail || "support@newbhar.com",
-		meetingUrl: "https://calendly.com/team-newbhar/30min",
 		adminLoginLink: {
 			label: "Admin Portal",
 			url: "/admin/login",

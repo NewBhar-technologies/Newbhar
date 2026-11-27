@@ -27,7 +27,7 @@ export default function MeetingsManagementPage() {
     date: new Date().toISOString().split("T")[0],
     time: "14:00",
     durationMinutes: 30,
-    meetingLink: "https://calendly.com/team-newbhar/30min",
+    meetingLink: "",
     notes: "",
   });
 
@@ -63,7 +63,7 @@ export default function MeetingsManagementPage() {
           date: new Date().toISOString().split("T")[0],
           time: "14:00",
           durationMinutes: 30,
-          meetingLink: "https://calendly.com/team-newbhar/30min",
+          meetingLink: "",
           notes: "",
         });
         fetchMeetings();
@@ -116,28 +116,6 @@ export default function MeetingsManagementPage() {
           <Plus size={15} />
           <span>Schedule Session</span>
         </button>
-      </div>
-
-      {/* Calendly Integration Notice Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-3xl border border-white/10 bg-[#0f111a]/90 p-4 text-xs text-neutral-300 shadow-xl backdrop-blur-xl">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#98f90d]/10 text-[#98f90d] border border-[#98f90d]/20 shrink-0">
-            <Compass size={18} />
-          </div>
-          <div>
-            <span className="font-bold text-white">Calendly Scheduler Integrated:</span>{" "}
-            <span className="text-neutral-400">Public booking link is enabled across your hero, pricing, and contact pages.</span>
-          </div>
-        </div>
-        <a
-          href="https://calendly.com/team-newbhar/30min"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-[#98f90d] hover:bg-white/10 transition-all shrink-0"
-        >
-          <span>Open Booking Page</span>
-          <ArrowUpRight size={14} />
-        </a>
       </div>
 
       {/* Filter Bar */}
@@ -324,12 +302,12 @@ export default function MeetingsManagementPage() {
               </div>
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-neutral-300">Meeting Link (Meet / Zoom / Calendly)</label>
+              <label className="block font-semibold text-neutral-300">Meeting Link (Google Meet / Zoom)</label>
               <input
                 type="text"
                 value={form.meetingLink}
                 onChange={(e) => setForm({ ...form, meetingLink: e.target.value })}
-                placeholder="https://meet.google.com/xyz or calendly url"
+                placeholder="https://meet.google.com/xyz or Zoom link"
                 className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-xs text-white placeholder-neutral-500 focus:border-[#98f90d] focus:outline-none"
               />
             </div>

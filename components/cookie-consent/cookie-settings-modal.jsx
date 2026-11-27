@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { X, ShieldCheck, Check, Info, Lock } from "lucide-react";
 import { useCookieConsent } from "./cookie-consent-context";
 import { CONSENT_STATES } from "@/lib/cookie-consent";
@@ -116,15 +117,19 @@ export default function CookieSettingsModal() {
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <Lock className="w-4 h-4 text-zinc-400" aria-hidden="true" />
-                <h3 className="text-sm font-semibold text-white">Strictly Necessary Cookies</h3>
+                <h3 className="text-sm font-semibold text-white">Strictly Necessary Cookies &amp; Storage</h3>
               </div>
               <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#98f90d]/10 border border-[#98f90d]/20 text-[#98f90d] font-medium">
                 Always Active
               </span>
             </div>
             <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
-              Essential for security, administrative session routing, and remembering your privacy choices. These do not store personal identifiable information or track browsing habits.
+              Essential for security, cryptographic CSRF mitigation, administrative session authentication, and persisting your cookie preferences. These items do not track browsing behavior.
             </p>
+            <div className="mt-2.5 pt-2 border-t border-white/[0.04] text-[11px] text-zinc-500 font-mono space-y-1">
+              <div><code>newbhar_cookie_consent</code> (LocalStorage) &mdash; Persists your privacy choice</div>
+              <div><code>newbhar_admin_session</code> (HTTP Cookie) &mdash; Authenticated staff portal access only</div>
+            </div>
           </div>
 
           {/* Analytics & Performance */}
@@ -132,7 +137,7 @@ export default function CookieSettingsModal() {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <h3 className="text-sm font-semibold text-white">Analytics &amp; Performance Cookies</h3>
-                <span className="text-[11px] font-mono text-zinc-500">Optional · Disabled by Default</span>
+                <span className="text-[11px] font-mono text-zinc-500">Optional &middot; Disabled by Default</span>
               </div>
 
               {/* Accessible Custom Toggle */}
@@ -148,8 +153,13 @@ export default function CookieSettingsModal() {
               </label>
             </div>
             <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
-              Allows anonymous, aggregated metrics on page views to help us improve site performance.
+              Allows anonymous, aggregated metrics on page views and navigation flows to help us improve site performance.
             </p>
+
+            <div className="mt-2.5 pt-2 border-t border-white/[0.04] text-[11px] text-zinc-500 font-mono space-y-1">
+              <div><code>newbhar_visitor_id</code> &amp; <code>newbhar_session_id</code> &mdash; Anonymous randomized tokens</div>
+              <div><code>_ga</code>, <code>_gid</code> &mdash; Google Analytics 4 (IP anonymized, opt-in only)</div>
+            </div>
 
             <div className="mt-3 pt-3 border-t border-white/[0.04] grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-zinc-400 font-mono">
               <div className="flex items-center gap-1.5">
@@ -172,11 +182,18 @@ export default function CookieSettingsModal() {
           </div>
         </div>
 
-        {/* Database Disclaimer */}
+        {/* Database Disclaimer & Privacy Policy Link */}
         <div className="mt-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-start gap-2.5 text-xs text-zinc-400">
           <Info className="w-4 h-4 text-[#98f90d] shrink-0 mt-0.5" aria-hidden="true" />
           <p>
-            Your choices are saved directly in your browser&apos;s local storage and are never recorded in our database. You can revisit or revoke these preferences at any time.
+            Your preferences are saved directly in your browser&apos;s local storage and are never recorded in our database. You can revisit or revoke these preferences at any time. For full details on data handling, read our{" "}
+            <Link
+              href="/privacy-policy"
+              onClick={closeSettings}
+              className="text-[#98f90d] underline underline-offset-2 hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </Link>.
           </p>
         </div>
 

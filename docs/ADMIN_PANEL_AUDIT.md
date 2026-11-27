@@ -19,7 +19,7 @@ The application architecture includes a custom server-side admin authentication 
 2. **Missing Database Objects:**
    - 26 business and operational tables referenced by the repositories and admin modules (`contacts`, `leads`, `clients`, `projects`, `project_tasks`, `meetings`, `emails`, `automations`, `automation_logs`, `email_templates`, `cms_sections`, `cms_services`, `cms_solutions`, `cms_projects`, `cms_technologies`, `cms_navigation`, `cms_footer`, `visitors`, `analytics_events`, `notifications`, `audit_logs`, `media`, `testimonials`, `newsletter_subscribers`, `seo_settings`, `system_settings`) are pending deployment.
 3. **Legacy Branding & Default Seed Contamination:**
-   - Legacy migration `004_initial_seed.sql` contained hardcoded BytecGlobal branding, emails (`bytecglobal@gmail.com`), Calendly URLs, and metadata.
+   - Legacy migration `004_initial_seed.sql` contained hardcoded BytecGlobal branding, emails (`bytecglobal@gmail.com`), and metadata.
    - `lib/repositories/media.repository.js` hardcoded `const BUCKET_NAME = "bytecglobal-media"`.
    - Admin Layout sidebar rendered a legacy "B" logo icon instead of "N" for Newbhar Technologies.
 4. **RBAC & Permission Inconsistencies:**
@@ -76,7 +76,7 @@ The application follows a strictly layered, decoupled architecture:
 | **Automations** | `app/admin/automations` | `/api/admin/automations` | `automations` | `settings.repository.js` | `automations`, `automation_logs` | Pending |
 | **Templates** | `app/admin/templates` | `/api/admin/templates` | `templates` | `settings.repository.js` | `email_templates` | Pending |
 | **Notifications** | `app/admin/notifications` | `/api/admin/notifications` | `notifications` | `notification.repository.js` | `notifications` | Pending |
-| **Newsletter** | `app/admin/newsletter` | `/api/admin/newsletter` | `newsletter` | `settings.repository.js` | `newsletter_subscribers` | Pending |
+| **Newsletter** | `app/admin/newsletter` | `/api/admin/newsletter` | N/A | Removed | None | **REMOVED** |
 | **CMS (8 subpages)** | `app/admin/cms/*` | `/api/admin/cms` | `cms` | `cms.repository.js` | `cms_sections`, `cms_services`, `cms_solutions`, `cms_projects`, `cms_technologies`, `cms_navigation`, `cms_footer` | Pending |
 | **SEO Settings** | `app/admin/seo` | `/api/admin/seo` | `seo` | `settings.repository.js` | `seo_settings` | Pending |
 | **Media Library** | `app/admin/media` | `/api/admin/media` | `media` | `media.repository.js` | `media`, Supabase Storage bucket | Pending |

@@ -5,7 +5,6 @@ import { ContactRepository } from "../lib/repositories/contact.repository.js";
 import { MeetingRepository } from "../lib/repositories/meeting.repository.js";
 import { SettingsRepository } from "../lib/repositories/settings.repository.js";
 import { POST as contactPostHandler } from "../app/api/contact/route.js";
-import { POST as newsletterPostHandler } from "../app/api/newsletter/route.js";
 import { POST as meetingPostHandler } from "../app/api/meetings/request/route.js";
 import { SUBMISSION_STATUS } from "../lib/email-service.js";
 
@@ -26,12 +25,6 @@ MeetingRepository.create = async (data) => ({
   id: "meeting_mock_" + Math.random().toString(36).substring(7),
   ...data,
   createdAt: new Date().toISOString(),
-});
-
-SettingsRepository.addNewsletterSubscriber = async (email) => ({
-  id: "sub_mock_" + Math.random().toString(36).substring(7),
-  email,
-  subscribedAt: new Date().toISOString(),
 });
 
 SettingsRepository.logEmail = async (data) => ({
@@ -228,27 +221,8 @@ async function runApiTests() {
   assert(adminCareerEmail?.payload?.html?.includes("Senior Next.js &amp; Cloud Architect"), "Email includes position details");
   assert(adminCareerEmail?.payload?.html?.includes("+91 98765 43210"), "Email includes phone number");
 
-  // TEST 5: Newsletter Subscription Submission
-  console.log("\n--- 5. Testing Newsletter Subscription via /api/newsletter ---");
-  resendDispatches.length = 0;
-  const newsletterReq = createMockRequest({
-    ip: "10.0.1.5",
-    body: {
-      email: "subscriber@enterprise.com",
-      sourcePage: "/insights",
-    },
-  });
-  const newsletterRes = await newsletterPostHandler(newsletterReq);
-  const newsletterData = await newsletterRes.json();
-  assert(newsletterRes.status === 200, `Returns HTTP 200 (got ${newsletterRes.status})`);
-  assert(newsletterData.success === true, "Response reports success: true");
-  assert(newsletterData.submissionStatus === SUBMISSION_STATUS.INQUIRY_SAVED, "Submission status is inquiry_saved");
-  assert(newsletterData.emailStatus === SUBMISSION_STATUS.EMAIL_SENT, "Email status is email_sent");
-  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
-  assert(resendDispatches[0]?.payload?.subject?.includes("[Newsletter Subscription]"), "Subject identified as [Newsletter Subscription]");
-
-  // TEST 6: Meeting Request Form Submission
-  console.log("\n--- 6. Testing Meeting Request via /api/meetings/request ---");
+  // TEST 5: Meeting Request Form Submission
+  console.log("\n--- 5. Testing Meeting Request via /api/meetings/request ---");
   resendDispatches.length = 0;
   const meetingReq = createMockRequest({
     ip: "10.0.1.6",

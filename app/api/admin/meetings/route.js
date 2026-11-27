@@ -51,7 +51,7 @@ export async function POST(req) {
         meetingDate: date,
         meetingTime: time,
         durationMinutes: Number(durationMinutes) || 30,
-        meetingLink: meetingLink || "https://calendly.com/team-newbhar/30min",
+        meetingLink: meetingLink || "",
         notes: notes || "",
         status: "confirmed",
         source: "admin",

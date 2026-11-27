@@ -21,7 +21,6 @@ export default function SystemSettingsPage() {
 		integrations: {
 			resend: { configured: false, status: "Not Configured" },
 			supabase: { configured: true, status: "Connected (PostgreSQL)" },
-			calendly: { configured: true, status: "Connected" },
 		},
 	});
 
@@ -138,18 +137,6 @@ export default function SystemSettingsPage() {
 							</span>
 						</div>
 						<p className="text-[11px] text-neutral-400">{settings.integrations?.resend?.status || "Ready for API Key"}</p>
-					</div>
-
-					{/* Calendly Booking */}
-					<div className="rounded-2xl border border-white/10 p-4 bg-white/[0.02] space-y-2 hover:border-white/20 transition-all">
-						<div className="flex items-center justify-between">
-							<span className="font-bold text-white flex items-center gap-2">
-								<Compass size={15} className="text-violet-400" />
-								<span>Calendly Scheduler</span>
-							</span>
-							<span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-400 uppercase">Active</span>
-						</div>
-						<p className="text-[11px] text-neutral-400">{settings.integrations?.calendly?.status || "Live Embed Ready"}</p>
 					</div>
 				</div>
 			</div>

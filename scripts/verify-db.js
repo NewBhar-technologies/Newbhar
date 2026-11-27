@@ -45,7 +45,6 @@ const EXPECTED_TABLES = [
   "audit_logs",
   "media",
   "testimonials",
-  "newsletter_subscribers",
   "seo_settings",
   "system_settings",
 ];

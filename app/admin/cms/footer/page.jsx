@@ -8,7 +8,7 @@ export default function FooterCMSPage() {
     brandDescription: "Software, AI and cloud engineering for ambitious businesses.",
     contactEmail: "contact@newbhar.com",
     meetingUrl: "",
-    meetingLabel: "Book a Meeting",
+    meetingLabel: "Start a Project",
     copyrightText: `© ${new Date().getFullYear()} Newbhar Technologies. All rights reserved.`,
     adminLoginLink: {
       label: "Admin Login",
@@ -66,7 +66,7 @@ export default function FooterCMSPage() {
             Footer Management & Access Links
           </h1>
           <p className="text-xs text-neutral-400 mt-0.5">
-            Configure the 4-column corporate footer, branding copy, meeting button, and public Admin Login entry point.
+            Configure the 4-column corporate footer, branding copy, action button, and public Admin Login entry point.
           </p>
         </div>
 
@@ -120,15 +120,6 @@ export default function FooterCMSPage() {
                 value={footer.contactEmail}
                 onChange={(e) => setFooter({ ...footer, contactEmail: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-black/40 p-2 text-xs text-white focus:border-[#98f90d] focus:outline-none"
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="block font-semibold text-neutral-300">Meeting Booking URL</label>
-              <input
-                type="text"
-                value={footer.meetingUrl}
-                onChange={(e) => setFooter({ ...footer, meetingUrl: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-black/40 p-2 text-xs font-mono text-white focus:border-[#98f90d] focus:outline-none"
               />
             </div>
           </div>
@@ -225,7 +216,7 @@ export default function FooterCMSPage() {
               <div className="text-[11px] text-neutral-400 font-mono uppercase tracking-wider font-semibold">GET IN TOUCH</div>
               <div className="text-xs text-neutral-300">{footer.contactEmail}</div>
               <div className="inline-block rounded-xl bg-[#98f90d] text-black font-bold px-4 py-1.5 text-xs">
-                {footer.meetingLabel || "Book a Meeting"}
+                {footer.meetingLabel || "Start a Project"}
               </div>
               {footer.adminLoginLink?.enabled !== false && (
                 <div className="pt-1">
