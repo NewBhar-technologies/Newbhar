@@ -37,7 +37,7 @@ export default function ProjectsManagementPage() {
     description: "",
     startDate: new Date().toISOString().split("T")[0],
     deadline: "",
-    budget: 35000,
+    budget: 2500,
     priority: "medium",
   });
 
@@ -107,7 +107,7 @@ export default function ProjectsManagementPage() {
           description: "",
           startDate: new Date().toISOString().split("T")[0],
           deadline: "",
-          budget: 35000,
+          budget: 2500,
           priority: "medium",
         });
         fetchProjects();

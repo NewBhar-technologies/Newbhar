@@ -4,6 +4,7 @@ import { withAdminAuth } from "@/lib/auth/guard";
 import { LeadRepository } from "@/lib/repositories/lead.repository";
 import { ClientRepository } from "@/lib/repositories/client.repository";
 import { recordAuditLogSync } from "@/lib/auth/session";
+import { parseBudgetValue } from "@/lib/utils";
 
 export async function GET(req) {
   return withAdminAuth(req, "leads", async () => {
@@ -82,7 +83,7 @@ export async function POST(req) {
         companyName: companyName || "",
         service: service || "General Software Services",
         stage: stage || "new",
-        estimatedValue: Number(estimatedValue) || 10000,
+        estimatedValue: parseBudgetValue(estimatedValue) || 0,
         source: "Admin Created",
         assignedTo: admin.id,
       });
@@ -120,7 +121,9 @@ export async function PATCH(req) {
 
       const updates = {};
       if (stage !== undefined) updates.stage = stage;
-      if (estimatedValue !== undefined) updates.estimatedValue = Number(estimatedValue);
+      if (estimatedValue !== undefined) {
+        updates.estimatedValue = parseBudgetValue(estimatedValue);
+      }
 
       let lead = await LeadRepository.update(id, updates);
 

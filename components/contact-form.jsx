@@ -9,6 +9,7 @@ export default function ContactForm() {
     name: "",
     email: "",
     service: "",
+    budget: "",
     message: "",
     website: "", // Honeypot field
   });
@@ -62,6 +63,7 @@ export default function ContactForm() {
         name: "",
         email: "",
         service: "",
+        budget: "",
         message: "",
         website: "",
       });
@@ -190,6 +192,40 @@ export default function ContactForm() {
             <option value="Technical Project Guidance">Technical Project Guidance</option>
             <option value="SEO">SEO</option>
             <option value="Other">Other / Custom Inquiry</option>
+          </select>
+        </div>
+
+        <div>
+          <div className="flex items-center justify-between mb-1">
+            <label htmlFor="contact-budget" className="block font-mono text-xs uppercase tracking-[0.08em] text-faint">
+              Budget Range (USD)
+            </label>
+            {formData.budget && (
+              <button
+                type="button"
+                onClick={() => setFormData((prev) => ({ ...prev, budget: "" }))}
+                className="text-[11px] font-mono text-muted hover:text-accent-ink transition-colors"
+                title="Clear selected budget"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+          <select
+            id="contact-budget"
+            name="budget"
+            value={formData.budget}
+            onChange={handleChange}
+            className="w-full rounded-lg border border-border bg-subtle px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent-ink"
+          >
+            <option value="">Select budget (optional)</option>
+            <option value="Under $100">Under $100</option>
+            <option value="$100 – $500">$100 – $500</option>
+            <option value="$500 – $1,000">$500 – $1,000</option>
+            <option value="$1,000 – $2,500">$1,000 – $2,500</option>
+            <option value="$2,500 – $5,000">$2,500 – $5,000</option>
+            <option value="$5,000+">$5,000+</option>
+            <option value="Flexible / Undetermined">Flexible / Undetermined</option>
           </select>
         </div>
       </div>
