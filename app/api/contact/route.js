@@ -1,16 +1,11 @@
 import { NextResponse } from "next/server";
 import { ContactFormSchema } from "@/lib/validation";
 import { checkRateLimit, isDuplicateSubmission } from "@/lib/rate-limiter";
-import { getContactRecipientEmail, getResendApiKey, getEmailFromAddress } from "@/lib/env";
 import { ContactRepository } from "@/lib/repositories/contact.repository";
 import { triggerWorkflow } from "@/lib/automations";
+import { sendFormNotificationEmail, generateReferenceId } from "@/lib/email-service";
 
 const MAX_BODY_SIZE_BYTES = 32 * 1024; // 32KB max payload
-
-function escapeHtml(text) {
-	if (!text) return "";
-	return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-}
 
 function getClientIp(req) {
 	const forwardedFor = req.headers.get("x-forwarded-for");
@@ -49,7 +44,7 @@ export async function POST(req) {
 			return NextResponse.json({ success: false, message: "Malformed JSON payload." }, { status: 400 });
 		}
 
-		// 3. Rate limiting check
+		// 3. Rate limiting check (per IP)
 		const clientIp = getClientIp(req);
 		const rateLimit = checkRateLimit(clientIp);
 		if (!rateLimit.allowed) {
@@ -76,13 +71,17 @@ export async function POST(req) {
 
 		const data = validationResult.data;
 
-		// 5. Bot & Honeypot detection
+		// 5. Bot & Honeypot detection (silent success for bots to avoid tipping them off)
 		if (data.website && data.website.trim().length > 0) {
-			return NextResponse.json({ success: true, message: "Thank you for reaching out. We will get back to you shortly." }, { status: 200 });
+			return NextResponse.json(
+				{ success: true, message: "Thank you for reaching out. We will get back to you shortly." },
+				{ status: 200 }
+			);
 		}
 
 		// 6. Duplicate submission detection
-		if (isDuplicateSubmission(clientIp, data.email, data.message)) {
+		const dedupType = data.formType || (data.budget || data.timeline ? "project_inquiry" : "contact");
+		if (isDuplicateSubmission(clientIp, data.email, data.message, dedupType)) {
 			return NextResponse.json(
 				{
 					success: false,
@@ -92,10 +91,17 @@ export async function POST(req) {
 			);
 		}
 
-		// 7. Save inquiry into Supabase PostgreSQL
-		const companyName = data.companyName || data.company || "";
-		const subject = data.subject || `Inquiry: ${data.service || "Software & Cloud Services"}`;
+		// 7. Generate a unique submission reference ID
+		const referenceId = generateReferenceId("NB");
+		const sourcePage =
+			data.sourcePage ||
+			parsedJson.sourcePage ||
+			(data.budget || data.timeline ? "/start-project" : "/contact");
 
+		const companyName = data.companyName || data.company || "";
+		const subject = data.subject || `Inquiry: ${data.service || "Software & Cloud Services"} [${referenceId}]`;
+
+		// 8. Save inquiry into Supabase PostgreSQL contacts table
 		let newContact = null;
 		let dbError = null;
 
@@ -109,7 +115,7 @@ export async function POST(req) {
 				message: data.message,
 				budget: data.budget || "",
 				timeline: data.timeline || "",
-				sourcePage: parsedJson.sourcePage || "/contact",
+				sourcePage,
 				clientIp,
 			});
 		} catch (err) {
@@ -117,11 +123,12 @@ export async function POST(req) {
 			console.error("[Contact API] Supabase contact storage error:", err.message);
 		}
 
-		// 8. Execute automated workflows (creates lead, notifies admins, logs email)
+		// 9. Execute automated internal workflows (CRM lead, in-app admin notifications)
 		if (newContact) {
 			try {
 				await triggerWorkflow("contact_submit", {
 					contactId: newContact.id,
+					referenceId,
 					name: data.name,
 					email: data.email,
 					companyName,
@@ -130,100 +137,33 @@ export async function POST(req) {
 					message: data.message,
 					budget: data.budget,
 					timeline: data.timeline,
+					sourcePage,
 				});
 			} catch (workflowErr) {
 				console.warn("[Contact API] Automated workflow warning:", workflowErr.message);
 			}
 		}
 
-		// 9. Email notification via Resend API if configured
-		const resendApiKey = getResendApiKey();
-		const recipientEmail = getContactRecipientEmail();
-		const sanitizedSubject = `New Website Inquiry from ${data.name.replace(/[\r\n]/g, "")}`;
-		const htmlBody = `
-      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #1f1c1d; border: 1px solid #e9ebf1; border-radius: 8px;">
-        <h2 style="margin-top: 0; color: #29251b; border-bottom: 2px solid #f5c518; padding-bottom: 10px;">New Project / Contact Inquiry</h2>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; width: 140px; color: #646b76;">Full Name:</td>
-            <td style="padding: 8px 0;">${escapeHtml(data.name)}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #646b76;">Email Address:</td>
-            <td style="padding: 8px 0;"><a href="mailto:${escapeHtml(data.email)}" style="color: #806000;">${escapeHtml(data.email)}</a></td>
-          </tr>
-          ${
-				companyName
-					? `
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #646b76;">Company Name:</td>
-            <td style="padding: 8px 0;">${escapeHtml(companyName)}</td>
-          </tr>`
-					: ""
-			}
-          ${
-				data.service
-					? `
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #646b76;">Interested Service:</td>
-            <td style="padding: 8px 0;">${escapeHtml(data.service)}</td>
-          </tr>`
-					: ""
-			}
-          ${
-				data.budget
-					? `
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #646b76;">Budget Range:</td>
-            <td style="padding: 8px 0;">${escapeHtml(data.budget)}</td>
-          </tr>`
-					: ""
-			}
-          ${
-				data.timeline
-					? `
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #646b76;">Target Timeline:</td>
-            <td style="padding: 8px 0;">${escapeHtml(data.timeline)}</td>
-          </tr>`
-					: ""
-			}
-        </table>
-        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e9ebf1;">
-          <h3 style="margin-top: 0; font-size: 15px; color: #646b76;">Message / Project Brief:</h3>
-          <div style="background: #f7f8fb; padding: 16px; border-radius: 6px; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${escapeHtml(data.message)}</div>
-        </div>
-        <p style="margin-top: 24px; font-size: 12px; color: #7b838b;">
-          Submitted via Newbhar Technologies website contact system. Client IP: ${escapeHtml(clientIp)}
-        </p>
-      </div>
-    `;
-
-		let emailSent = false;
-		if (resendApiKey && resendApiKey !== "re_your_api_key_here") {
-			try {
-				const emailRes = await fetch("https://api.resend.com/emails", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${resendApiKey}`,
-					},
-					body: JSON.stringify({
-						from: getEmailFromAddress("contact"),
-						to: [recipientEmail],
-						reply_to: data.email,
-						subject: sanitizedSubject,
-						html: htmlBody,
-					}),
-				});
-				emailSent = emailRes.ok;
-			} catch (err) {
-				console.error("[Contact API] Resend dispatch warning:", err.message);
-			}
+		// 10. Centralized Email Notification via Resend to info@newbhar.com
+		let notificationResult = { success: false, delivered: false };
+		try {
+			notificationResult = await sendFormNotificationEmail({
+				formType: data.formType,
+				data: {
+					...data,
+					companyName,
+					subject,
+				},
+				sourcePage,
+				clientIp,
+				referenceId,
+			});
+		} catch (emailErr) {
+			console.error("[Contact API] Centralized notification dispatch error:", emailErr.message);
 		}
 
-		// If database storage failed and email could not be delivered
-		if (!newContact && !emailSent && dbError) {
+		// 11. Error resilience: If database storage failed and email could not be delivered
+		if (!newContact && !notificationResult.delivered && dbError) {
 			const isDev = process.env.NODE_ENV !== "production";
 			const isPermError = dbError.message && /permission denied/i.test(dbError.message);
 			return NextResponse.json(
@@ -233,21 +173,26 @@ export async function POST(req) {
 						? isPermError
 							? "Database permissions need to be granted in Supabase. Please execute FIX_PERMISSIONS.sql in your Supabase SQL Editor."
 							: "Database table 'contacts' is not yet migrated in Supabase. Please execute APPLY_ALL_MIGRATIONS.sql in your Supabase SQL Editor."
-						: "We are currently experiencing a brief technical maintenance with our database. Please email us directly at contact@newbhar.com and we will respond immediately.",
+						: "We are currently experiencing a brief technical maintenance with our database. Please email us directly at info@newbhar.com and we will respond immediately.",
 				},
 				{ status: 503 },
 			);
 		}
 
+		// 12. Return success response to visitor
 		return NextResponse.json(
 			{
 				success: true,
 				message: "Thank you for reaching out! We will review your inquiry and reply within one business day.",
+				referenceId,
 			},
 			{ status: 200 },
 		);
 	} catch (err) {
-		console.error("Contact API error:", err);
-		return NextResponse.json({ success: false, message: "An unexpected error occurred while processing your request." }, { status: 500 });
+		console.error("Contact API unexpected error:", err);
+		return NextResponse.json(
+			{ success: false, message: "An unexpected error occurred while processing your request." },
+			{ status: 500 }
+		);
 	}
 }

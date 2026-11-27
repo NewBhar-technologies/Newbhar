@@ -35,7 +35,11 @@ export default function StartProjectForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          sourcePage: "/start-project",
+          formType: "project_inquiry",
+        }),
       });
 
       const data = await res.json();
@@ -52,6 +56,7 @@ export default function StartProjectForm() {
       setStatus({
         loading: false,
         success: true,
+        referenceId: data.referenceId || null,
         error: null,
       });
 
@@ -83,13 +88,20 @@ export default function StartProjectForm() {
         <p className="mx-auto max-w-md text-sm text-muted">
           Thank you for detailing your project. Our technical team will review your specifications and schedule a discovery discussion within one business day.
         </p>
-        <button
-          type="button"
-          onClick={() => setStatus({ loading: false, success: false, error: null })}
-          className="mt-6 rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium transition-colors hover:bg-subtle"
-        >
-          Submit another inquiry
-        </button>
+        {status.referenceId && (
+          <div className="mt-3 inline-block rounded-full bg-accent/10 border border-accent/30 px-3.5 py-1 text-xs font-mono text-accent-ink">
+            Reference ID: <strong>{status.referenceId}</strong>
+          </div>
+        )}
+        <div>
+          <button
+            type="button"
+            onClick={() => setStatus({ loading: false, success: false, error: null })}
+            className="mt-6 rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium transition-colors hover:bg-subtle"
+          >
+            Submit another inquiry
+          </button>
+        </div>
       </div>
     );
   }
