@@ -84,7 +84,7 @@ async function runTests() {
 
   // 2. EMAIL HEADER
   console.log("\n--- 2. Testing Email Header ---");
-  assert(html.includes("newbhar-mark.png"), "Includes existing logo asset from repository");
+  assert(html.includes("newbhar-technologies-logo.png") || html.includes("newbhar-mark.png"), "Includes existing logo asset from repository");
   assert(html.includes("Newbhar") && html.includes("TECHNOLOGIES"), "Displays company name wordmark");
   assert(html.includes("height: 2px; background-color: #059669") || html.includes("background-color: #059669; line-height: 2px"), "Includes subtle emerald accent divider");
 

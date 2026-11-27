@@ -10,8 +10,8 @@ export default function Logo({ className = "" }) {
     >
       <span className="vx-logo-mark" aria-hidden="true">
         <img
-          src="/newbhar-mark.png"
-          alt="Newbhar Technologies Logo"
+          src="/newbhar-technologies-logo.png"
+          alt="Newbhar Technologies official company logo"
           width="38"
           height="38"
           loading="eager"

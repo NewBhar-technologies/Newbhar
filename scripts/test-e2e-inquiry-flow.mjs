@@ -148,7 +148,7 @@ async function runE2ETest() {
   assert(!custHtml.includes("#98f90d"), "Customer email does NOT use neon green #98f90d");
 
   // Sections
-  assert(custHtml.includes("newbhar-mark.png"), "Header includes existing logo asset");
+  assert(custHtml.includes("newbhar-technologies-logo.png") || custHtml.includes("newbhar-mark.png"), "Header includes existing logo asset");
   assert(custHtml.includes("Newbhar") && custHtml.includes("TECHNOLOGIES"), "Header includes company name");
   assert(custHtml.includes("PROJECT INQUIRY CONFIRMATION"), "Hero has small label PROJECT INQUIRY CONFIRMATION");
   assert(custHtml.includes("Thank You for Reaching Out!"), "Hero has main heading Thank You for Reaching Out!");

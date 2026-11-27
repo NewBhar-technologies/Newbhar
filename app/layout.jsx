@@ -20,11 +20,11 @@ const structuredData = {
       logo: {
         "@type": "ImageObject",
         "@id": `${SITE.url}/#logo`,
-        url: `${SITE.url}/newbhar-mark.png`,
-        contentUrl: `${SITE.url}/newbhar-mark.png`,
+        url: `${SITE.url}/newbhar-technologies-logo.png`,
+        contentUrl: `${SITE.url}/newbhar-technologies-logo.png`,
         width: 512,
         height: 512,
-        caption: `${SITE.name} Logo`,
+        caption: `${SITE.name} official company logo`,
       },
       image: {
         "@type": "ImageObject",
@@ -106,17 +106,12 @@ export const metadata = {
         sizes: "any",
       },
       {
-        url: "/favicon-16x16.png",
-        type: "image/png",
-        sizes: "16x16",
-      },
-      {
-        url: "/favicon-32x32.png",
-        type: "image/png",
-        sizes: "32x32",
-      },
-      {
         url: "/favicon-48x48.png",
+        type: "image/png",
+        sizes: "48x48",
+      },
+      {
+        url: "/favicon.png",
         type: "image/png",
         sizes: "48x48",
       },
@@ -124,6 +119,11 @@ export const metadata = {
         url: "/favicon-96x96.png",
         type: "image/png",
         sizes: "96x96",
+      },
+      {
+        url: "/icon.png",
+        type: "image/png",
+        sizes: "512x512",
       },
       {
         url: "/icon-192.png",
@@ -135,11 +135,26 @@ export const metadata = {
         type: "image/png",
         sizes: "512x512",
       },
+      {
+        url: "/favicon-32x32.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        url: "/favicon-16x16.png",
+        type: "image/png",
+        sizes: "16x16",
+      },
     ],
     shortcut: ["/favicon.ico"],
     apple: [
       {
         url: "/apple-touch-icon.png",
+        type: "image/png",
+        sizes: "180x180",
+      },
+      {
+        url: "/apple-icon.png",
         type: "image/png",
         sizes: "180x180",
       },

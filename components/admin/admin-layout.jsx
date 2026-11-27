@@ -209,7 +209,7 @@ export default function AdminLayout({ children }) {
         <div className="flex h-16 items-center justify-between px-4 border-b border-white/[0.08] bg-[#0c0e15]/90">
           <Link href="/admin/dashboard" className="flex items-center gap-3 overflow-hidden group">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-black/60 border border-white/10 p-1 shadow-[0_0_15px_rgba(0,255,170,0.25)] transition-transform group-hover:scale-105">
-              <img src="/newbhar-mark.png" alt="Newbhar Tech" className="h-full w-full object-contain" />
+              <img src="/newbhar-technologies-logo.png" alt="Newbhar Technologies" className="h-full w-full object-contain" />
             </div>
             {!collapsed && (
               <div className="flex flex-col">
@@ -304,7 +304,7 @@ export default function AdminLayout({ children }) {
             <div className="flex h-16 items-center justify-between px-4 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/60 border border-white/10 p-1 shadow-[0_0_12px_rgba(0,255,170,0.25)]">
-                  <img src="/newbhar-mark.png" alt="Newbhar Tech" className="h-full w-full object-contain" />
+                  <img src="/newbhar-technologies-logo.png" alt="Newbhar Technologies" className="h-full w-full object-contain" />
                 </div>
                 <span className="font-extrabold tracking-tight text-white text-base">Newbhar Admin</span>
               </div>
