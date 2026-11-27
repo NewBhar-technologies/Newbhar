@@ -131,11 +131,17 @@ async function runApiTests() {
   assert(contactData.submissionStatus === SUBMISSION_STATUS.INQUIRY_SAVED, "Submission status is inquiry_saved");
   assert(contactData.emailStatus === SUBMISSION_STATUS.EMAIL_SENT, "Email status is email_sent");
   assert(contactData.referenceId && contactData.referenceId.startsWith("NB-"), `Generates valid referenceId: ${contactData.referenceId}`);
-  assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
-  assert(resendDispatches[0]?.payload?.from?.includes("contact@newbhar.com"), "Sender is contact@newbhar.com");
-  assert(resendDispatches[0]?.payload?.reply_to === "rohan@enterprise.in", "Reply-To set to rohan@enterprise.in");
-  assert(resendDispatches[0]?.payload?.subject?.includes("[Contact Us]"), "Subject identified as [Contact Us]");
+  assert(resendDispatches.length === 2, "Both admin notification and customer confirmation emails were triggered");
+  const adminContactEmail = resendDispatches.find((d) => d.payload?.to?.[0] === TARGET_EMAIL);
+  const custContactEmail = resendDispatches.find((d) => d.payload?.to?.[0] === "rohan@enterprise.in");
+  assert(adminContactEmail !== undefined, `Notification sent strictly to ${TARGET_EMAIL}`);
+  assert(adminContactEmail?.payload?.from?.includes("contact@newbhar.com"), "Sender is contact@newbhar.com");
+  assert(adminContactEmail?.payload?.reply_to === "rohan@enterprise.in", "Reply-To set to rohan@enterprise.in");
+  assert(adminContactEmail?.payload?.subject?.includes("[Contact Us]"), "Subject identified as [Contact Us]");
+  assert(adminContactEmail?.payload?.html?.includes("#08080a"), "Admin email preserves dark theme (#08080a)");
+  assert(custContactEmail !== undefined, "Customer confirmation email sent to rohan@enterprise.in");
+  assert(custContactEmail?.payload?.html?.includes("#F4F7F5"), "Customer email uses premium light theme (#F4F7F5)");
+  assert(custContactEmail?.payload?.html?.includes("Rohan Sharma"), "Customer email contains customer name");
 
   // TEST 2: Project Brief / Inquiry Submission (Start Project)
   console.log("\n--- 2. Testing Project Brief via /api/contact ---");
@@ -160,10 +166,14 @@ async function runApiTests() {
   assert(projectData.success === true, "Response reports success: true");
   assert(projectData.submissionStatus === SUBMISSION_STATUS.INQUIRY_SAVED, "Submission status is inquiry_saved");
   assert(projectData.emailStatus === SUBMISSION_STATUS.EMAIL_SENT, "Email status is email_sent");
-  assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
-  assert(resendDispatches[0]?.payload?.subject?.includes("[Project Brief]"), "Subject identified as [Project Brief]");
-  assert(resendDispatches[0]?.payload?.html?.includes("$50k+"), "Email includes budget details");
+  assert(resendDispatches.length === 2, "Both admin notification and customer confirmation triggered");
+  const adminProjectEmail = resendDispatches.find((d) => d.payload?.to?.[0] === TARGET_EMAIL);
+  const custProjectEmail = resendDispatches.find((d) => d.payload?.to?.[0] === "elena@fintechglobal.com");
+  assert(adminProjectEmail !== undefined, `Notification sent strictly to ${TARGET_EMAIL}`);
+  assert(adminProjectEmail?.payload?.subject?.includes("[Project Brief]"), "Subject identified as [Project Brief]");
+  assert(adminProjectEmail?.payload?.html?.includes("$50k+"), "Admin email includes budget details");
+  assert(custProjectEmail !== undefined, "Customer confirmation email delivered to elena@fintechglobal.com");
+  assert(custProjectEmail?.payload?.html?.includes("Elena Rostova"), "Customer email includes Elena Rostova");
 
   // TEST 3: Get a Quote Form Submission
   console.log("\n--- 3. Testing Get a Quote Form via /api/contact ---");
@@ -186,8 +196,11 @@ async function runApiTests() {
   const quoteData = await quoteRes.json();
   assert(quoteRes.status === 200, `Returns HTTP 200 (got ${quoteRes.status})`);
   assert(quoteData.success === true, "Response reports success: true");
-  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
-  assert(resendDispatches[0]?.payload?.subject?.includes("[Get a Quote]"), "Subject identified as [Get a Quote]");
+  const adminQuoteEmail = resendDispatches.find((d) => d.payload?.to?.[0] === TARGET_EMAIL);
+  const custQuoteEmail = resendDispatches.find((d) => d.payload?.to?.[0] === "marcus@retailflow.org");
+  assert(adminQuoteEmail !== undefined, `Notification sent strictly to ${TARGET_EMAIL}`);
+  assert(adminQuoteEmail?.payload?.subject?.includes("[Get a Quote]"), "Subject identified as [Get a Quote]");
+  assert(custQuoteEmail !== undefined, "Customer confirmation sent to marcus@retailflow.org");
 
   // TEST 4: Career Application Form Submission
   console.log("\n--- 4. Testing Career Application via /api/contact ---");
@@ -209,10 +222,11 @@ async function runApiTests() {
   const careerData = await careerRes.json();
   assert(careerRes.status === 200, `Returns HTTP 200 (got ${careerRes.status})`);
   assert(careerData.success === true, "Response reports success: true");
-  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
-  assert(resendDispatches[0]?.payload?.subject?.includes("[Career Application]"), "Subject identified as [Career Application]");
-  assert(resendDispatches[0]?.payload?.html?.includes("Senior Next.js &amp; Cloud Architect"), "Email includes position details");
-  assert(resendDispatches[0]?.payload?.html?.includes("+91 98765 43210"), "Email includes phone number");
+  const adminCareerEmail = resendDispatches.find((d) => d.payload?.to?.[0] === TARGET_EMAIL);
+  assert(adminCareerEmail !== undefined, `Notification sent strictly to ${TARGET_EMAIL}`);
+  assert(adminCareerEmail?.payload?.subject?.includes("[Career Application]"), "Subject identified as [Career Application]");
+  assert(adminCareerEmail?.payload?.html?.includes("Senior Next.js &amp; Cloud Architect"), "Email includes position details");
+  assert(adminCareerEmail?.payload?.html?.includes("+91 98765 43210"), "Email includes phone number");
 
   // TEST 5: Newsletter Subscription Submission
   console.log("\n--- 5. Testing Newsletter Subscription via /api/newsletter ---");

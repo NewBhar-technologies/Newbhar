@@ -3,7 +3,12 @@ import { ContactFormSchema } from "@/lib/validation";
 import { checkRateLimit, isDuplicateSubmission } from "@/lib/rate-limiter";
 import { ContactRepository } from "@/lib/repositories/contact.repository";
 import { triggerWorkflow } from "@/lib/automations";
-import { sendFormNotificationEmail, generateReferenceId, SUBMISSION_STATUS } from "@/lib/email-service";
+import {
+	sendFormNotificationEmail,
+	sendCustomerConfirmationEmail,
+	generateReferenceId,
+	SUBMISSION_STATUS,
+} from "@/lib/email-service";
 
 const MAX_BODY_SIZE_BYTES = 32 * 1024; // 32KB max payload
 
@@ -138,6 +143,7 @@ export async function POST(req) {
 					budget: data.budget,
 					timeline: data.timeline,
 					sourcePage,
+					customerEmailSent: true,
 				});
 			} catch (workflowErr) {
 				console.warn("[Contact API] Automated workflow warning:", workflowErr.message);
@@ -145,6 +151,7 @@ export async function POST(req) {
 		}
 
 		// 10. Centralized Email Notification via Resend directly to newbhartechnologies@gmail.com
+		// STRICTLY PRESERVED: Dark theme admin notification unchanged
 		let notificationResult = {
 			success: false,
 			delivered: false,
@@ -169,7 +176,7 @@ export async function POST(req) {
 				try {
 					await ContactRepository.addNote(
 						newContact.id,
-						`Email notification: ${notificationResult.emailStatus} (Provider ID: ${notificationResult.providerMessageId || "N/A"}). Sent to: ${notificationResult.recipient}`,
+						`Admin email notification: ${notificationResult.emailStatus} (Provider ID: ${notificationResult.providerMessageId || "N/A"}). Sent to: ${notificationResult.recipient}`,
 						"EmailNotifier"
 					);
 				} catch (noteErr) {
@@ -179,6 +186,41 @@ export async function POST(req) {
 		} catch (emailErr) {
 			console.error("[Contact API] Centralized notification dispatch error:", emailErr.message);
 			notificationResult.emailStatus = SUBMISSION_STATUS.EMAIL_FAILED;
+		}
+
+		// 11. Customer-Facing Automated Confirmation Email (Premium Light Theme)
+		// Delivered independently to customer's email address
+		let customerConfirmationResult = {
+			success: false,
+			delivered: false,
+		};
+
+		if (data.email && typeof data.email === "string" && data.email.includes("@")) {
+			try {
+				customerConfirmationResult = await sendCustomerConfirmationEmail({
+					data: {
+						...data,
+						companyName,
+						subject,
+					},
+					referenceId,
+					timestamp: new Date(),
+				});
+
+				if (newContact) {
+					try {
+						await ContactRepository.addNote(
+							newContact.id,
+							`Customer confirmation email: ${customerConfirmationResult.delivered ? "sent" : "pending/failed"} to ${data.email} (Provider ID: ${customerConfirmationResult.providerMessageId || "N/A"}).`,
+							"CustomerEmailNotifier"
+						);
+					} catch (noteErr) {
+						console.warn("[Contact API] Customer note recording warning:", noteErr.message);
+					}
+				}
+			} catch (custEmailErr) {
+				console.error("[Contact API] Customer confirmation email dispatch error:", custEmailErr.message);
+			}
 		}
 
 		// 11. Error resilience: If database storage failed and email could not be delivered
@@ -206,6 +248,7 @@ export async function POST(req) {
 				referenceId,
 				submissionStatus: newContact ? SUBMISSION_STATUS.INQUIRY_SAVED : "received",
 				emailStatus: notificationResult.emailStatus,
+				customerConfirmation: customerConfirmationResult.delivered ? "sent" : "queued",
 			},
 			{ status: 200 },
 		);
