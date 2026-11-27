@@ -9,6 +9,10 @@ export async function resolve(specifier, context, nextResolve) {
     const nextServerPath = path.join(projectRoot, "node_modules", "next", "server.js");
     return nextResolve(pathToFileURL(nextServerPath).href, context);
   }
+  if (specifier === "next/headers") {
+    const nextHeadersPath = path.join(projectRoot, "node_modules", "next", "headers.js");
+    return nextResolve(pathToFileURL(nextHeadersPath).href, context);
+  }
 
   if (specifier.startsWith("@/")) {
     const relPath = specifier.slice(2);
