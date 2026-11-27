@@ -87,7 +87,7 @@ async function runTests() {
   // 5. Security: Fixed Notification Recipient
   console.log("\n--- 5. Testing Enforced Notification Recipient ---");
   const enforcedRecipient = getNotificationRecipientEmail();
-  assert(enforcedRecipient.includes("info@newbhar.com"), `Enforced recipient is info@newbhar.com (got: ${enforcedRecipient})`);
+  assert(enforcedRecipient === "newbhartechnologies@gmail.com", `Enforced recipient is newbhartechnologies@gmail.com (got: ${enforcedRecipient})`);
 
   // 6. Security: Schema Validation
   console.log("\n--- 6. Testing Schema Validation ---");
@@ -156,7 +156,7 @@ async function runTests() {
   assert(htmlOutput.includes("TechCorp Global"), "HTML contains customer company");
   assert(htmlOutput.includes("$50k+"), "HTML contains budget specification");
   assert(htmlOutput.includes("3 - 6 months"), "HTML contains timeline specification");
-  assert(htmlOutput.includes("info@newbhar.com"), "HTML confirms target recipient info@newbhar.com");
+  assert(htmlOutput.includes("newbhartechnologies@gmail.com"), "HTML confirms target recipient newbhartechnologies@gmail.com");
   assert(htmlOutput.includes("@media screen and (max-width: 600px)"), "HTML contains mobile-responsive styles");
 
   const textOutput = buildNotificationEmailText({

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit, isDuplicateSubmission } from "@/lib/rate-limiter";
 import { MeetingRepository } from "@/lib/repositories/meeting.repository";
-import { sendFormNotificationEmail, generateReferenceId } from "@/lib/email-service";
+import { sendFormNotificationEmail, generateReferenceId, SUBMISSION_STATUS } from "@/lib/email-service";
 import { z } from "zod";
 
 const noCrlf = (val) => !/[\r\n\u0085\u2028\u2029]/.test(val) && !/%0[ad]/i.test(val);
@@ -91,7 +91,7 @@ export async function POST(req) {
     const referenceId = generateReferenceId("NB-MTG");
     const sourcePage = data.sourcePage || "/meetings";
 
-    // Save into Supabase meetings table
+    // Save into Supabase meetings table (Status: inquiry_saved)
     let meeting = null;
     try {
       meeting = await MeetingRepository.create({
@@ -109,9 +109,15 @@ export async function POST(req) {
       console.warn("[Meeting Request API] Database save warning:", dbErr.message);
     }
 
-    // Send centralized notification email to info@newbhar.com
+    // Send centralized notification email directly to newbhartechnologies@gmail.com
+    let notificationResult = {
+      success: false,
+      delivered: false,
+      emailStatus: SUBMISSION_STATUS.EMAIL_PENDING,
+    };
+
     try {
-      await sendFormNotificationEmail({
+      notificationResult = await sendFormNotificationEmail({
         formType: "meeting",
         data: {
           ...data,
@@ -126,6 +132,7 @@ export async function POST(req) {
       });
     } catch (emailErr) {
       console.error("[Meeting Request API] Notification dispatch error:", emailErr.message);
+      notificationResult.emailStatus = SUBMISSION_STATUS.EMAIL_FAILED;
     }
 
     return NextResponse.json(
@@ -133,6 +140,8 @@ export async function POST(req) {
         success: true,
         message: "Your meeting request has been received. Our team will review availability and confirm with you shortly.",
         referenceId,
+        submissionStatus: meeting ? SUBMISSION_STATUS.INQUIRY_SAVED : "received",
+        emailStatus: notificationResult.emailStatus,
       },
       { status: 200 }
     );

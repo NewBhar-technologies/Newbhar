@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { NewsletterFormSchema } from "@/lib/validation";
 import { checkRateLimit, isDuplicateSubmission } from "@/lib/rate-limiter";
 import { SettingsRepository } from "@/lib/repositories/settings.repository";
-import { sendFormNotificationEmail, generateReferenceId } from "@/lib/email-service";
+import { sendFormNotificationEmail, generateReferenceId, SUBMISSION_STATUS } from "@/lib/email-service";
 
 const MAX_BODY_SIZE_BYTES = 8 * 1024; // 8KB max payload
 
@@ -75,17 +75,24 @@ export async function POST(req) {
     }
 
     const referenceId = generateReferenceId("NB-NL");
+    let subscriber = null;
 
-    // Save subscriber into Supabase database
+    // Save subscriber into Supabase database (Status: inquiry_saved)
     try {
-      await SettingsRepository.addNewsletterSubscriber(email);
+      subscriber = await SettingsRepository.addNewsletterSubscriber(email);
     } catch (dbErr) {
       console.warn("[Newsletter API] Supabase subscriber save warning:", dbErr.message);
     }
 
-    // Send centralized notification email to info@newbhar.com
+    // Send centralized notification email to newbhartechnologies@gmail.com
+    let notificationResult = {
+      success: false,
+      delivered: false,
+      emailStatus: SUBMISSION_STATUS.EMAIL_PENDING,
+    };
+
     try {
-      await sendFormNotificationEmail({
+      notificationResult = await sendFormNotificationEmail({
         formType: "newsletter",
         data: {
           name: "Newsletter Subscriber",
@@ -98,6 +105,7 @@ export async function POST(req) {
       });
     } catch (emailErr) {
       console.error("[Newsletter API] Notification dispatch error:", emailErr.message);
+      notificationResult.emailStatus = SUBMISSION_STATUS.EMAIL_FAILED;
     }
 
     return NextResponse.json(
@@ -105,6 +113,8 @@ export async function POST(req) {
         success: true,
         message: "Thank you for subscribing to Newbhar Technologies updates!",
         referenceId,
+        submissionStatus: subscriber ? SUBMISSION_STATUS.INQUIRY_SAVED : "received",
+        emailStatus: notificationResult.emailStatus,
       },
       { status: 200 }
     );

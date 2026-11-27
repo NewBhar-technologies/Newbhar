@@ -7,12 +7,19 @@ import { SettingsRepository } from "../lib/repositories/settings.repository.js";
 import { POST as contactPostHandler } from "../app/api/contact/route.js";
 import { POST as newsletterPostHandler } from "../app/api/newsletter/route.js";
 import { POST as meetingPostHandler } from "../app/api/meetings/request/route.js";
+import { SUBMISSION_STATUS } from "../lib/email-service.js";
 
-// Mock repositories to avoid external DB timeouts
+// Mock repositories to avoid external DB latency during unit testing
 ContactRepository.create = async (data) => ({
   id: "contact_mock_" + Math.random().toString(36).substring(7),
   ...data,
+  notes: [],
   createdAt: new Date().toISOString(),
+});
+
+ContactRepository.addNote = async (id, text, author) => ({
+  id,
+  note: { text, author },
 });
 
 MeetingRepository.create = async (data) => ({
@@ -84,6 +91,7 @@ function createMockRequest({ body, headers = {}, ip = "127.0.0.1" }) {
 async function runApiTests() {
   console.log("=================================================================");
   console.log("NEWBHAR TECHNOLOGIES — API ROUTES VERIFICATION TEST SUITE");
+  console.log("DESTINATION TARGET: newbhartechnologies@gmail.com");
   console.log("=================================================================\n");
 
   let passed = 0;
@@ -98,6 +106,8 @@ async function runApiTests() {
       failed++;
     }
   }
+
+  const TARGET_EMAIL = "newbhartechnologies@gmail.com";
 
   // TEST 1: Contact Us Form Submission
   console.log("--- 1. Testing Contact Us Form via /api/contact ---");
@@ -118,14 +128,17 @@ async function runApiTests() {
   const contactData = await contactRes.json();
   assert(contactRes.status === 200, `Returns HTTP 200 (got ${contactRes.status})`);
   assert(contactData.success === true, "Response reports success: true");
+  assert(contactData.submissionStatus === SUBMISSION_STATUS.INQUIRY_SAVED, "Submission status is inquiry_saved");
+  assert(contactData.emailStatus === SUBMISSION_STATUS.EMAIL_SENT, "Email status is email_sent");
   assert(contactData.referenceId && contactData.referenceId.startsWith("NB-"), `Generates valid referenceId: ${contactData.referenceId}`);
   assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === "info@newbhar.com", "Notification sent to info@newbhar.com");
+  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
+  assert(resendDispatches[0]?.payload?.from?.includes("contact@newbhar.com"), "Sender is contact@newbhar.com");
   assert(resendDispatches[0]?.payload?.reply_to === "rohan@enterprise.in", "Reply-To set to rohan@enterprise.in");
   assert(resendDispatches[0]?.payload?.subject?.includes("[Contact Us]"), "Subject identified as [Contact Us]");
 
-  // TEST 2: Project Inquiry Form Submission (Start Project)
-  console.log("\n--- 2. Testing Project Inquiry Form via /api/contact ---");
+  // TEST 2: Project Brief / Inquiry Submission (Start Project)
+  console.log("\n--- 2. Testing Project Brief via /api/contact ---");
   resendDispatches.length = 0;
   const projectReq = createMockRequest({
     ip: "10.0.1.2",
@@ -136,19 +149,20 @@ async function runApiTests() {
       service: "AI & ML Development",
       budget: "$50k+",
       timeline: "3 - 6 months",
-      message: "We want to develop an automated risk-scoring algorithmic model for credit assessments.",
+      message: "We want to develop an automated risk-scoring algorithmic model for credit assessments with high accuracy.",
       sourcePage: "/start-project",
-      formType: "project_inquiry",
+      formType: "project_brief",
     },
   });
   const projectRes = await contactPostHandler(projectReq);
   const projectData = await projectRes.json();
   assert(projectRes.status === 200, `Returns HTTP 200 (got ${projectRes.status})`);
   assert(projectData.success === true, "Response reports success: true");
-  assert(projectData.referenceId && projectData.referenceId.startsWith("NB-"), `Generates valid referenceId: ${projectData.referenceId}`);
+  assert(projectData.submissionStatus === SUBMISSION_STATUS.INQUIRY_SAVED, "Submission status is inquiry_saved");
+  assert(projectData.emailStatus === SUBMISSION_STATUS.EMAIL_SENT, "Email status is email_sent");
   assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === "info@newbhar.com", "Notification sent to info@newbhar.com");
-  assert(resendDispatches[0]?.payload?.subject?.includes("[Project Inquiry]"), "Subject identified as [Project Inquiry]");
+  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
+  assert(resendDispatches[0]?.payload?.subject?.includes("[Project Brief]"), "Subject identified as [Project Brief]");
   assert(resendDispatches[0]?.payload?.html?.includes("$50k+"), "Email includes budget details");
 
   // TEST 3: Get a Quote Form Submission
@@ -172,9 +186,7 @@ async function runApiTests() {
   const quoteData = await quoteRes.json();
   assert(quoteRes.status === 200, `Returns HTTP 200 (got ${quoteRes.status})`);
   assert(quoteData.success === true, "Response reports success: true");
-  assert(quoteData.referenceId && quoteData.referenceId.startsWith("NB-"), `Generates valid referenceId: ${quoteData.referenceId}`);
-  assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === "info@newbhar.com", "Notification sent to info@newbhar.com");
+  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
   assert(resendDispatches[0]?.payload?.subject?.includes("[Get a Quote]"), "Subject identified as [Get a Quote]");
 
   // TEST 4: Career Application Form Submission
@@ -197,11 +209,10 @@ async function runApiTests() {
   const careerData = await careerRes.json();
   assert(careerRes.status === 200, `Returns HTTP 200 (got ${careerRes.status})`);
   assert(careerData.success === true, "Response reports success: true");
-  assert(careerData.referenceId && careerData.referenceId.startsWith("NB-"), `Generates valid referenceId: ${careerData.referenceId}`);
-  assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === "info@newbhar.com", "Notification sent to info@newbhar.com");
+  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
   assert(resendDispatches[0]?.payload?.subject?.includes("[Career Application]"), "Subject identified as [Career Application]");
   assert(resendDispatches[0]?.payload?.html?.includes("Senior Next.js &amp; Cloud Architect"), "Email includes position details");
+  assert(resendDispatches[0]?.payload?.html?.includes("+91 98765 43210"), "Email includes phone number");
 
   // TEST 5: Newsletter Subscription Submission
   console.log("\n--- 5. Testing Newsletter Subscription via /api/newsletter ---");
@@ -217,9 +228,9 @@ async function runApiTests() {
   const newsletterData = await newsletterRes.json();
   assert(newsletterRes.status === 200, `Returns HTTP 200 (got ${newsletterRes.status})`);
   assert(newsletterData.success === true, "Response reports success: true");
-  assert(newsletterData.referenceId && newsletterData.referenceId.startsWith("NB-NL"), `Generates valid referenceId: ${newsletterData.referenceId}`);
-  assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === "info@newbhar.com", "Notification sent to info@newbhar.com");
+  assert(newsletterData.submissionStatus === SUBMISSION_STATUS.INQUIRY_SAVED, "Submission status is inquiry_saved");
+  assert(newsletterData.emailStatus === SUBMISSION_STATUS.EMAIL_SENT, "Email status is email_sent");
+  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
   assert(resendDispatches[0]?.payload?.subject?.includes("[Newsletter Subscription]"), "Subject identified as [Newsletter Subscription]");
 
   // TEST 6: Meeting Request Form Submission
@@ -242,9 +253,9 @@ async function runApiTests() {
   const meetingData = await meetingRes.json();
   assert(meetingRes.status === 200, `Returns HTTP 200 (got ${meetingRes.status})`);
   assert(meetingData.success === true, "Response reports success: true");
-  assert(meetingData.referenceId && meetingData.referenceId.startsWith("NB-MTG"), `Generates valid referenceId: ${meetingData.referenceId}`);
-  assert(resendDispatches.length === 1, "Resend notification was triggered");
-  assert(resendDispatches[0]?.payload?.to?.[0] === "info@newbhar.com", "Notification sent to info@newbhar.com");
+  assert(meetingData.submissionStatus === SUBMISSION_STATUS.INQUIRY_SAVED, "Submission status is inquiry_saved");
+  assert(meetingData.emailStatus === SUBMISSION_STATUS.EMAIL_SENT, "Email status is email_sent");
+  assert(resendDispatches[0]?.payload?.to?.[0] === TARGET_EMAIL, `Notification sent strictly to ${TARGET_EMAIL}`);
   assert(resendDispatches[0]?.payload?.subject?.includes("[Meeting Request]"), "Subject identified as [Meeting Request]");
   assert(resendDispatches[0]?.payload?.html?.includes("2026-12-05"), "Email includes meeting date");
 

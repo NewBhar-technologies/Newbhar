@@ -3,7 +3,7 @@ import { ContactFormSchema } from "@/lib/validation";
 import { checkRateLimit, isDuplicateSubmission } from "@/lib/rate-limiter";
 import { ContactRepository } from "@/lib/repositories/contact.repository";
 import { triggerWorkflow } from "@/lib/automations";
-import { sendFormNotificationEmail, generateReferenceId } from "@/lib/email-service";
+import { sendFormNotificationEmail, generateReferenceId, SUBMISSION_STATUS } from "@/lib/email-service";
 
 const MAX_BODY_SIZE_BYTES = 32 * 1024; // 32KB max payload
 
@@ -101,7 +101,7 @@ export async function POST(req) {
 		const companyName = data.companyName || data.company || "";
 		const subject = data.subject || `Inquiry: ${data.service || "Software & Cloud Services"} [${referenceId}]`;
 
-		// 8. Save inquiry into Supabase PostgreSQL contacts table
+		// 8. Save inquiry into Supabase PostgreSQL contacts table (Status: inquiry_saved)
 		let newContact = null;
 		let dbError = null;
 
@@ -144,8 +144,13 @@ export async function POST(req) {
 			}
 		}
 
-		// 10. Centralized Email Notification via Resend to info@newbhar.com
-		let notificationResult = { success: false, delivered: false };
+		// 10. Centralized Email Notification via Resend directly to newbhartechnologies@gmail.com
+		let notificationResult = {
+			success: false,
+			delivered: false,
+			emailStatus: SUBMISSION_STATUS.EMAIL_PENDING,
+		};
+
 		try {
 			notificationResult = await sendFormNotificationEmail({
 				formType: data.formType,
@@ -158,8 +163,22 @@ export async function POST(req) {
 				clientIp,
 				referenceId,
 			});
+
+			// Update contact record with email notification result
+			if (newContact) {
+				try {
+					await ContactRepository.addNote(
+						newContact.id,
+						`Email notification: ${notificationResult.emailStatus} (Provider ID: ${notificationResult.providerMessageId || "N/A"}). Sent to: ${notificationResult.recipient}`,
+						"EmailNotifier"
+					);
+				} catch (noteErr) {
+					console.warn("[Contact API] Status note recording warning:", noteErr.message);
+				}
+			}
 		} catch (emailErr) {
 			console.error("[Contact API] Centralized notification dispatch error:", emailErr.message);
+			notificationResult.emailStatus = SUBMISSION_STATUS.EMAIL_FAILED;
 		}
 
 		// 11. Error resilience: If database storage failed and email could not be delivered
@@ -173,7 +192,7 @@ export async function POST(req) {
 						? isPermError
 							? "Database permissions need to be granted in Supabase. Please execute FIX_PERMISSIONS.sql in your Supabase SQL Editor."
 							: "Database table 'contacts' is not yet migrated in Supabase. Please execute APPLY_ALL_MIGRATIONS.sql in your Supabase SQL Editor."
-						: "We are currently experiencing a brief technical maintenance with our database. Please email us directly at info@newbhar.com and we will respond immediately.",
+						: "We are currently experiencing a brief technical maintenance with our database. Please email us directly at contact@newbhar.com and we will respond immediately.",
 				},
 				{ status: 503 },
 			);
@@ -185,6 +204,8 @@ export async function POST(req) {
 				success: true,
 				message: "Thank you for reaching out! We will review your inquiry and reply within one business day.",
 				referenceId,
+				submissionStatus: newContact ? SUBMISSION_STATUS.INQUIRY_SAVED : "received",
+				emailStatus: notificationResult.emailStatus,
 			},
 			{ status: 200 },
 		);
